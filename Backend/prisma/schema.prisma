@@ -23,8 +23,7 @@ model User {
   Restaurant      Restaurant[]
   Reservation     Reservation[]
   Review          Review[]
-  sender          Message[]     @relation("sender")
-  customer        Message[]     @relation("customer")
+  customer        Message[]
 }
 
 model Restaurant {
@@ -38,6 +37,8 @@ model Restaurant {
   extra_images      String[]      @default([]) @db.Text
   phone_number      Int
   reservation_quota Int
+  latitude          Float
+  longtitude        Float
   opening_time      DateTime      @db.Time()
   closing_time      DateTime      @db.Time()
   isPremium         Boolean       @default(false)
@@ -81,8 +82,7 @@ model Message {
   id           Int        @id @default(autoincrement())
   createdAt    DateTime   @default(now())
   message      String     @db.Text
-  sender       User       @relation("sender", fields: [senderId], references: [id])
-  customer     User       @relation("customer", fields: [customerId], references: [id])
+  customer     User       @relation(fields: [customerId], references: [id])
   restaurant   Restaurant @relation(fields: [restaurantId], references: [id])
   senderId     Int
   customerId   Int
