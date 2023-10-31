@@ -2,9 +2,9 @@ const express = require('express');
 const router = express.Router();
 
 
-const { createCustomer } = require('../controller/users');
+const { getCustomers } = require('../controller/customers');
 
 router.route('/')
-    .get(createCustomer)
+    .get(getCustomers)
 
 module.exports = router;
