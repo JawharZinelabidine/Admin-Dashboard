@@ -4,7 +4,7 @@ const createMany = async () => {
   await prisma.restaurant.createMany({
     data: [
       {
-        name: "La Closerie ",
+        name: "La Closerie",
         category: ["Italian"],
         description:
           "La Closerie is a combination of worlds: the glamour of LA meets laidback Mediterranean at this lively resto-club. The dishes are inspired by Italian classics, with a tinge of the French Riviera (look out for the steamed mussels with mustard).",
@@ -23,7 +23,7 @@ const createMany = async () => {
         ownerId: 1,
       },
       {
-        name: "La Villa ",
+        name: "La Villa",
         category: ["Tunisian"],
         description:
           "Discover a combination of different emotions from the romantic and eccentric chimney bar to the minimalist charm of the lounge and its onyx white counter. Pass by the refined, yet youthful Moroccan Café after having savoured the Mediterranean fusion cuisine of La Villa's Fine Dining room. Choose between terraces and lounges, to be seen or remain discreet",
@@ -41,7 +41,7 @@ const createMany = async () => {
         ownerId: 2,
       },
       {
-        name: " Dar El Jeld",
+        name: "Dar El Jeld",
         category: ["Tunisian"],
         description:
           "Dar El Jeld Restaurant Set in a beautiful restored traditional medina style house just in front of the hotel offers tunisian meals prepared to the highest strandart.Open noon and evening.Closed on sundays.",
@@ -59,8 +59,8 @@ const createMany = async () => {
         ownerId: 3,
       },
       {
-        name: "  L'Astragale",
-        category: ["Tunisian"],
+        name: "L'Astragale",
+        category: ["French"],
         description:
           "Originally, Astragale was a colonial house in the very chic and popular “French” district of Tunis, its ideal location enjoys exceptional calm and serenity. Today, the restaurant has continued to welcome lovers of taste and pleasure, for moments of happiness and wonder.",
         main_image:
@@ -75,7 +75,7 @@ const createMany = async () => {
         ownerId: 4,
       },
       {
-        name: " Dar Belhadj",
+        name: "Dar Belhadj",
         category: ["Tunisian"],
         description:
           "Dar Belhadj was once a 17th-century mansion and is decorated in a wonderfully sumptuous manner with beautiful traditional Tunisian mosaic tiles lining the walls. But here is where the grand European gestures come in – the tables are laid with white-linen and the maitre’d greats you in a suit and bow tie to give the restaurant a touch of the fine dining, Tunisian style.",
@@ -93,7 +93,7 @@ const createMany = async () => {
         ownerId: 5,
       },
       {
-        name: " La Villa Bleue",
+        name: "La Villa Bleue",
         category: ["Steakhouse"],
         description:
           "In Sidi Bou Said, this bleu and White village, you will discover While you are taking à walk this beautiful traditional wide and residential house built on 1991. Thanks to the famous architect Tarek Ben Miled, it combines Arabic and Andalusian style. The designer Édoardo Palermo created a unique décoration in a fresh contemporary style, chosen to get along with the old ceramic and the authentic materials. Each of the 13 rooms and suites have a magnificent sea view and provide you a perfect balance between tradition and modernity. You will also enjoy the romantic lounge facing the sea and the gourmet restaurant famous for its fine and creative cuisine with International dishes.",
@@ -111,7 +111,7 @@ const createMany = async () => {
         ownerId: 6,
       },
       {
-        name: "Fondouk El Attarine ",
+        name: "Fondouk El Attarine",
         category: ["Tunisian"],
         description:
           "In the heart of the souks, Fondouk el Attarine, Can be privatized in the evening for family or professional receptions.",
@@ -180,5 +180,5 @@ const createOwner = async () => {
   });
 };
 
-//   createOwner()
+createOwner()
 createMany();
