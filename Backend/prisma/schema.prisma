@@ -32,6 +32,7 @@ model Restaurant {
   updatedAt         DateTime      @updatedAt
   name              String        @unique @db.VarChar(255)
   category          Category[]
+  description       String        @db.Text
   main_image        String        @db.Text
   menu_images       String[]      @db.Text
   extra_images      String[]      @default([]) @db.Text
@@ -39,8 +40,8 @@ model Restaurant {
   reservation_quota Int
   latitude          Float
   longtitude        Float
-  opening_time      DateTime      @db.Time()
-  closing_time      DateTime      @db.Time()
+  opening_time      DateTime      @db.Time
+  closing_time      DateTime      @db.Time
   isPremium         Boolean       @default(false)
   rating            Float?
   rating_count      Int?
