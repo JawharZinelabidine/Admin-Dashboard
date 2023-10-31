@@ -40,8 +40,8 @@ model Restaurant {
   reservation_quota Int
   latitude          Float
   longtitude        Float
-  opening_time      DateTime      @db.Time()
-  closing_time      DateTime      @db.Time()
+  opening_time      DateTime      @db.Time
+  closing_time      DateTime      @db.Time
   isPremium         Boolean       @default(false)
   rating            Float?
   rating_count      Int?

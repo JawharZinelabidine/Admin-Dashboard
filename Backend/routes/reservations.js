@@ -2,9 +2,10 @@ const express = require('express');
 const router = express.Router();
 
 
-const { } = require('../controller/reservations');
+const { sendReservationRequest, fetchReservationRequests } = require('../controller/reservations');
 
-router.route('/')
-    .get()
+router.route('/:customerId/:restaurantId')
+    .get(fetchReservationRequests)
+    .post(sendReservationRequest)
 
 module.exports = router;

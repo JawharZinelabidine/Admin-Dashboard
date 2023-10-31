@@ -1,13 +1,13 @@
 const express = require('express')
 const cors = require('cors')
-const adminRouter = require('./routes/customers')
+const adminRouter = require('./routes/admin')
 const customersRouter = require('./routes/customers')
-const ownersRouter = require('./routes/customers')
-const restaurantsRouter = require('./routes/customers')
-const reservationsRouter = require('./routes/customers')
-const reviewsRouter = require('./routes/customers')
-const messagesRouter = require('./routes/customers')
-const paymentsRouter = require('./routes/customers')
+const ownersRouter = require('./routes/owners')
+const restaurantsRouter = require('./routes/restaurants')
+const reservationsRouter = require('./routes/reservations')
+const reviewsRouter = require('./routes/reviews')
+const messagesRouter = require('./routes/messages')
+const paymentsRouter = require('./routes/payments')
 const prisma = require("./model/index");
 
 
