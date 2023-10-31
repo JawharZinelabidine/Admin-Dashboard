@@ -1,10 +1,10 @@
-const express = require('express');
+const express = require("express");
 const router = express.Router();
 
+const { getOwners, createOwner, signin } = require("../controller/owners");
 
-const { createOwner } = require('../controller/owners');
+router.route("/").get(getOwners).post(createOwner);
+router.route("/signin").post(signin);
 
-router.route('/')
-    .get()
-    .post(createOwner)
 module.exports = router;
+
