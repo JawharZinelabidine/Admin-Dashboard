@@ -1,6 +1,6 @@
 const express = require('express')
 const cors = require('cors')
-const usersRouter = require('./routes/users')
+const usersRouter = require('./routes/customers')
 const prisma = require("./model/index");
 
 
