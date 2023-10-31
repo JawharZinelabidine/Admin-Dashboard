@@ -1,6 +1,13 @@
 const express = require('express')
 const cors = require('cors')
-const usersRouter = require('./routes/customers')
+const adminRouter = require('./routes/customers')
+const customersRouter = require('./routes/customers')
+const ownersRouter = require('./routes/customers')
+const restaurantsRouter = require('./routes/customers')
+const reservationsRouter = require('./routes/customers')
+const reviewsRouter = require('./routes/customers')
+const messagesRouter = require('./routes/customers')
+const paymentsRouter = require('./routes/customers')
 const prisma = require("./model/index");
 
 
@@ -24,7 +31,14 @@ const connect = async () => {
 
 connect()
 
-app.use('/api/users', usersRouter)
+app.use('/api/admin', adminRouter)
+app.use('/api/customers', customersRouter)
+app.use('/api/owners', ownersRouter)
+app.use('/api/restaurants', restaurantsRouter)
+app.use('/api/reservations', reservationsRouter)
+app.use('/api/reviews', reviewsRouter)
+app.use('/api/messages', messagesRouter)
+app.use('/api/payments', paymentsRouter)
 
 app.listen(port, () => {
     console.log(`app listening on port ${port}`)
