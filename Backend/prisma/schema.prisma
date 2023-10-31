@@ -32,6 +32,7 @@ model Restaurant {
   updatedAt         DateTime      @updatedAt
   name              String        @unique @db.VarChar(255)
   category          Category[]
+  description       String        @db.Text
   main_image        String        @db.Text
   menu_images       String[]      @db.Text
   extra_images      String[]      @default([]) @db.Text
@@ -110,6 +111,7 @@ enum Category {
   Steakhouse
   Breakfast
   Mexican
+  French
 }
 
 enum Status {
