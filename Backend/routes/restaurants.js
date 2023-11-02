@@ -2,10 +2,14 @@ const express = require('express');
 const router = express.Router();
 
 
-const { createRestaurant } = require('../controller/restaurants');
+const {getRestaurants, getOne, createRestaurant} = require('../controller/restaurants');
 
 router.route('/')
-    .get()
+    .get(getRestaurants)
     .post(createRestaurant)
+
+router.route('/:id')
+    .get(getOne)
+
 
 module.exports = router;

@@ -1,3 +1,4 @@
+const prisma = require("../model/index");
 const { user } = require("../model/index");
 const bcrypt = require("bcrypt");
 
@@ -6,11 +7,13 @@ module.exports = {
         try {
             const owners = await user.findMany();
             res.status(200).json(owners);
+
         } catch (error) {
             console.error(error);
             res.status(500).send(error);
         }
     },
+
     createOwner: async (req, res) => {
         const { fullname, email, password } = req.body;
         try {
