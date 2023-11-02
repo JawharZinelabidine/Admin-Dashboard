@@ -238,7 +238,7 @@ const createMany = async () => {
         ownerId: 24,
         opening_time: new Date("2019-01-16 08:00:00"),
         closing_time: new Date("2019-01-16 01:00:00"),
-        ownerId: 7,
+        ownerId: 12,
       },
     ],
   });
@@ -322,5 +322,5 @@ const createOwner = async () => {
   });
 };
 
-// createOwner()
+createOwner()
 createMany();
