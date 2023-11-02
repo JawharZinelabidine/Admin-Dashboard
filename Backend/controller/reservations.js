@@ -19,6 +19,13 @@ module.exports = {
 
             }
 
+            if (thisRestaurant.daily_quotas && !thisRestaurant.daily_quotas[date]) {
+                thisRestaurant = await restaurant.update({
+                    where: { id: +restaurantId },
+                    data: { daily_quotas: { ...thisRestaurant.daily_quotas, [date]: thisRestaurant.reservation_quota } }
+                })
+            }
+
             console.log(thisRestaurant)
 
             if (thisRestaurant.daily_quotas[date]) {
@@ -72,8 +79,6 @@ module.exports = {
             res.status(500).send(error);
 
         }
-
-
     },
 
     fetchResolvedReservationRequests: async (req, res) => {
@@ -101,8 +106,6 @@ module.exports = {
             res.status(500).send(error);
 
         }
-
-
     },
 
     approveReservation: async (req, res) => {
@@ -181,8 +184,6 @@ module.exports = {
             res.status(500).send(error)
 
         }
-
-
     },
 
 
