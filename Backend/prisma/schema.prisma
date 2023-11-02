@@ -33,7 +33,6 @@ model Restaurant {
   name              String        @unique @db.VarChar(255)
   description       String        @db.Text
   category          Category[]
-  description       String        @db.Text
   main_image        String        @db.Text
   menu_images       String[]      @db.Text
   extra_images      String[]      @default([]) @db.Text
