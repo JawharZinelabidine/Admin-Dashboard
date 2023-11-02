@@ -21,7 +21,7 @@ const createMany = async () => {
         longtitude: 10.2887,
         opening_time: new Date("2019-01-16 12:00:00"),
         closing_time: new Date("2019-01-16 22:00:00"),
-        ownerId: 13,
+        ownerId: 1,
       },
       {
         name: "La Villa",
@@ -63,7 +63,7 @@ const createMany = async () => {
         longtitude: 10.1688,
         opening_time: new Date("2019-01-16 12:00:00"),
         closing_time: new Date("2019-01-16 23:00:00"),
-        ownerId: 15,
+        ownerId: 3,
       },
       {
         name: "L'Astragale",
@@ -102,7 +102,7 @@ const createMany = async () => {
         longtitude: 10.2887,
         opening_time: new Date("2019-01-16 09:00:00"),
         closing_time: new Date("2019-01-16 01:00:00"),
-        ownerId: 17,
+        ownerId: 5,
       },
       {
         name: "La Villa Bleue",
@@ -121,7 +121,7 @@ const createMany = async () => {
         longtitude: 102107.5,
         opening_time: new Date("2019-01-16 12:00:00"),
         closing_time: new Date("2019-01-16 01:00:00"),
-        ownerId: 18,
+        ownerId: 6,
       },
       {
         name: "Fondouk El Attarine",
@@ -140,7 +140,7 @@ const createMany = async () => {
         longtitude: 10.2887,
         opening_time: new Date("2019-01-16 12:00:00"),
         closing_time: new Date("2019-01-16 01:00:00"),
-        ownerId: 19,
+        ownerId: 7,
       },
       {
         name: "El Fondouk",
@@ -152,13 +152,14 @@ const createMany = async () => {
         menu_images: [
           "https://lh3.googleusercontent.com/p/AF1QipPuyPAR7uF5JQUCziXrsRBibhQISANjjyKvcRQd=s680-w680-h510",
         ],
+        City: 'Djerba',
         phone_number: 28988276,
         reservation_quota: 20,
         latitude: 33.8777,
         longtitude: 10.8591,
         opening_time: new Date("2019-01-16 12:00:00"),
         closing_time: new Date("2019-01-16 23:00:00"),
-        ownerId: 20,
+        ownerId: 8,
       },
       {
         name: "Farmers",
@@ -170,13 +171,14 @@ const createMany = async () => {
         menu_images: [
           "https://lh3.googleusercontent.com/p/AF1QipOCzr-R6LMCFFsxc_xr_0dcNWLhvRivzDRw32hz=s680-w680-h510",
         ],
+        City: 'Sousse',
         phone_number: 20155733,
         reservation_quota: 20,
         latitude: 35.8515,
         longtitude: 10.6153,
         opening_time: new Date("2019-01-16 20:00:00"),
         closing_time: new Date("2019-01-16 00:00:00"),
-        ownerId: 21,
+        ownerId: 9,
       },
       {
         name: "L'AROMATE",
@@ -188,13 +190,14 @@ const createMany = async () => {
         menu_images: [
           "https://www.kharjet.tn/wp-content/uploads/2019/12/LAromate-Restaurant-Pizzeria-menu-5.jpg",
         ],
+        City: 'Sousse',
         phone_number: 23732731,
         reservation_quota: 20,
         latitude: 35.8399,
         longtitude: 10.6033,
         opening_time: new Date("2019-01-16 21:00:00"),
         closing_time: new Date("2019-01-16 00:00:00"),
-        ownerId: 22,
+        ownerId: 10,
       },
       {
         name: "Le Pirate",
@@ -206,13 +209,14 @@ const createMany = async () => {
         menu_images: [
           "https://lh3.googleusercontent.com/p/AF1QipOynfMjD74ka9CHzLHy_NbvXtIwj31v6g48azTp=s680-w680-h510",
         ],
+        City: 'Djerba',
         phone_number: 73468126,
         reservation_quota: 20,
         latitude: 35.7602,
         longtitude: 10.8386,
         opening_time: new Date("2019-01-16 21:00:00"),
         closing_time: new Date("2019-01-16 00:00:00"),
-        ownerId: 23,
+        ownerId: 11,
       },
       {
         name: "Sushi&Co",
@@ -224,6 +228,7 @@ const createMany = async () => {
         menu_images: [
           "https://www.restorani.com.mk/storage/images/restaurants/menu/%D0%A0%D0%B5%D1%81%D1%82%D0%BE%D1%80%D0%B0%D0%BD%20%D0%A1%D1%83%D1%88%D0%B8%D0%BA%D0%BE_1551348631_en_photo.jpg",
         ],
+        City: 'Nabel',
         phone_number: 29250150,
         reservation_quota: 20,
         latitude: 362721.82,
@@ -317,5 +322,5 @@ const createOwner = async () => {
   });
 };
 
-createOwner()
+// createOwner()
 createMany();
