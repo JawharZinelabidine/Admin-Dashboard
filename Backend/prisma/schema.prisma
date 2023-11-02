@@ -31,8 +31,9 @@ model Restaurant {
   createdAt         DateTime      @default(now())
   updatedAt         DateTime      @updatedAt
   name              String        @unique @db.VarChar(255)
-  category          Category[]
   description       String        @db.Text
+  category          Category[]
+  City              City
   main_image        String        @db.Text
   menu_images       String[]      @db.Text
   extra_images      String[]      @default([]) @db.Text
@@ -40,12 +41,12 @@ model Restaurant {
   reservation_quota Int
   latitude          Float
   longtitude        Float
-  opening_time      DateTime      @db.Time()
-  closing_time      DateTime      @db.Time()
+  opening_time      DateTime      @db.Time
+  closing_time      DateTime      @db.Time
   isPremium         Boolean       @default(false)
   rating            Float?
   rating_count      Int?
-  owner             User          @relation(fields: [ownerId], references: [id])
+  owner             User          @relation(fields: [ownerId], references: [id], onDelete: Cascade)
   ownerId           Int
   Reservation       Reservation[]
   Review            Review[]
@@ -61,8 +62,8 @@ model Reservation {
   date         DateTime   @db.Date
   time         DateTime   @db.Time()
   guest_number Int
-  customer     User       @relation(fields: [customerId], references: [id])
-  restaurant   Restaurant @relation(fields: [restaurantId], references: [id])
+  customer     User       @relation(fields: [customerId], references: [id], onDelete: Cascade)
+  restaurant   Restaurant @relation(fields: [restaurantId], references: [id], onDelete: Cascade)
   customerId   Int
   restaurantId Int
 }
@@ -73,8 +74,8 @@ model Review {
   updatedAt    DateTime   @updatedAt
   review_title String     @db.VarChar(500)
   review_body  String     @db.Text
-  customer     User       @relation(fields: [customerId], references: [id])
-  restaurant   Restaurant @relation(fields: [restaurantId], references: [id])
+  customer     User       @relation(fields: [customerId], references: [id], onDelete: Cascade)
+  restaurant   Restaurant @relation(fields: [restaurantId], references: [id], onDelete: Cascade)
   customerId   Int
   restaurantId Int
 }
@@ -83,8 +84,8 @@ model Message {
   id           Int        @id @default(autoincrement())
   createdAt    DateTime   @default(now())
   message      String     @db.Text
-  customer     User       @relation(fields: [customerId], references: [id])
-  restaurant   Restaurant @relation(fields: [restaurantId], references: [id])
+  customer     User       @relation(fields: [customerId], references: [id], onDelete: Cascade)
+  restaurant   Restaurant @relation(fields: [restaurantId], references: [id], onDelete: Cascade)
   senderId     Int
   customerId   Int
   restaurantId Int
@@ -118,4 +119,19 @@ enum Status {
   Pending
   Approved
   Rejected
+}
+
+enum City {
+  Tunis
+  Sousse
+  Sfax
+  Kairouan
+  Mahdia
+  Monastir
+  Bizerte
+  Touzeur
+  Djerba
+  Nabel
+  Kelibia
+  Gabes
 }
