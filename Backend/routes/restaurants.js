@@ -2,9 +2,15 @@ const express = require('express');
 const router = express.Router();
 
 
-const { } = require('../controller/restaurants');
+const {getRestaurants, getOne} = require('../controller/restaurants');
 
 router.route('/')
-    .get()
+    .get(getRestaurants)
+    router.route('/:id')
+    .get(getOne)
+
+
+
+    
 
 module.exports = router;

@@ -2,9 +2,9 @@ const express = require('express');
 const router = express.Router();
 
 
-const { } = require('../controller/owners');
+const {getOwners } = require('../controller/owners');
 
 router.route('/')
-    .get()
+    .get(getOwners)
 
 module.exports = router;

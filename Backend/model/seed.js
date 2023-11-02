@@ -13,14 +13,13 @@ const createMany = async () => {
         menu_images: [
           "https://res.cloudinary.com/tf-lab/image/upload/w_1200,c_fill,g_auto:subject,q_auto,f_auto/pg_5/menu/20914b87-3a53-4e55-8e18-5ce5730457bb/0e179cc4-6886-49db-a103-80946a773db5.jpg",
         ],
-
         phone_number: 70938537,
         reservation_quota: 20,
         latitude: 36.8677,
         longtitude: 10.2887,
-        opening_time: new Date("2019-01-16 08:00:00"),
+        opening_time: new Date("2019-01-16 12:00:00"),
         closing_time: new Date("2019-01-16 22:00:00"),
-        ownerId: 1,
+        ownerId: 13,
       },
       {
         name: "La Villa ",
@@ -36,12 +35,12 @@ const createMany = async () => {
         reservation_quota: 20,
         latitude: 35.8425,
         longtitude: 10.6273,
-        opening_time: new Date("2019-01-16 08:00:00"),
+        opening_time: new Date("2019-01-16 12:00:00"),
         closing_time: new Date("2019-01-16 23:00:00"),
-        ownerId: 2,
+        ownerId: 14,
       },
       {
-        name: " Dar El Jeld",
+        name: "Dar El Jeld",
         category: ["Tunisian"],
         description:
           "Dar El Jeld Restaurant Set in a beautiful restored traditional medina style house just in front of the hotel offers tunisian meals prepared to the highest strandart.Open noon and evening.Closed on sundays.",
@@ -54,28 +53,30 @@ const createMany = async () => {
         reservation_quota: 20,
         latitude: 36.799,
         longtitude: 10.1688,
-        opening_time: new Date("2019-01-16 08:00:00"),
+        opening_time: new Date("2019-01-16 12:00:00"),
         closing_time: new Date("2019-01-16 23:00:00"),
-        ownerId: 3,
+        ownerId: 15,
       },
       {
-        name: "  L'Astragale",
+        name: "L'Astragale",
         category: ["Tunisian"],
         description:
           "Originally, Astragale was a colonial house in the very chic and popular “French” district of Tunis, its ideal location enjoys exceptional calm and serenity. Today, the restaurant has continued to welcome lovers of taste and pleasure, for moments of happiness and wonder.",
         main_image:
-          " https://lh3.googleusercontent.com/geougc/AF1QipNiED2dvZlhswRKnHlu-vsVEyGFAJShDNy4IT3e=w573-h573-p-no",
-        menu_images: ["https://www.kharjet.tn/wp-content/uploads/2019/03/LAstragale.jpg"],
+          "https://lh3.googleusercontent.com/p/AF1QipNw-cgCyAx-4RbP9TaY22q2ukJyetbPzl_bUEE8=s680-w680-h510",
+        menu_images: [
+          "https://www.kharjet.tn/wp-content/uploads/2019/03/LAstragale.jpg",
+        ],
         phone_number: 71785080,
         reservation_quota: 20,
         latitude: 364929.748,
         longtitude: 101044.616,
-        opening_time: new Date("2019-01-16 08:00:00"),
+        opening_time: new Date("2019-01-16 12:00:00"),
         closing_time: new Date("2019-01-16 01:00:00"),
-        ownerId: 4,
+        ownerId: 16,
       },
       {
-        name: " Dar Belhadj",
+        name: "Dar Belhadj",
         category: ["Tunisian"],
         description:
           "Dar Belhadj was once a 17th-century mansion and is decorated in a wonderfully sumptuous manner with beautiful traditional Tunisian mosaic tiles lining the walls. But here is where the grand European gestures come in – the tables are laid with white-linen and the maitre’d greats you in a suit and bow tie to give the restaurant a touch of the fine dining, Tunisian style.",
@@ -90,10 +91,10 @@ const createMany = async () => {
         longtitude: 10.2887,
         opening_time: new Date("2019-01-16 09:00:00"),
         closing_time: new Date("2019-01-16 01:00:00"),
-        ownerId: 5,
+        ownerId: 17,
       },
       {
-        name: " La Villa Bleue",
+        name: "La Villa Bleue",
         category: ["Steakhouse"],
         description:
           "In Sidi Bou Said, this bleu and White village, you will discover While you are taking à walk this beautiful traditional wide and residential house built on 1991. Thanks to the famous architect Tarek Ben Miled, it combines Arabic and Andalusian style. The designer Édoardo Palermo created a unique décoration in a fresh contemporary style, chosen to get along with the old ceramic and the authentic materials. Each of the 13 rooms and suites have a magnificent sea view and provide you a perfect balance between tradition and modernity. You will also enjoy the romantic lounge facing the sea and the gourmet restaurant famous for its fine and creative cuisine with International dishes.",
@@ -106,9 +107,9 @@ const createMany = async () => {
         reservation_quota: 20,
         latitude: 365213.8,
         longtitude: 102107.5,
-        opening_time: new Date("2019-01-16 08:00:00"),
+        opening_time: new Date("2019-01-16 12:00:00"),
         closing_time: new Date("2019-01-16 01:00:00"),
-        ownerId: 6,
+        ownerId: 18,
       },
       {
         name: "Fondouk El Attarine ",
@@ -124,9 +125,99 @@ const createMany = async () => {
         reservation_quota: 20,
         latitude: 36.8677,
         longtitude: 10.2887,
-        opening_time: new Date("2019-01-16 08:00:00"),
+        opening_time: new Date("2019-01-16 12:00:00"),
         closing_time: new Date("2019-01-16 01:00:00"),
-        ownerId: 7,
+        ownerId: 19,
+      },
+      {
+        name: "ElFondouk",
+        category: ["Tunisian"],
+        description:
+          "Unique style and design. An old local-hotel transformed into a modern restaurant.",
+        main_image:
+          "https://lh3.googleusercontent.com/p/AF1QipN-VHzLRvf5SD06jLuQjnEIMCd4x6DLlquflXMH=s680-w680-h510",
+        menu_images: [
+          "https://lh3.googleusercontent.com/p/AF1QipPuyPAR7uF5JQUCziXrsRBibhQISANjjyKvcRQd=s680-w680-h510",
+        ],
+        phone_number: 28988276,
+        reservation_quota: 20,
+        latitude: 33.8777,
+        longtitude: 10.8591,
+        opening_time: new Date("2019-01-16 12:00:00"),
+        closing_time: new Date("2019-01-16 23:00:00"),
+        ownerId: 20,
+      },
+      {
+        name: "Farmers",
+        category: ["Steakhouse"],
+        description:
+          "A classic steakhouse known for its premium cuts of meat, expertly grilled to perfection, and complemented by a selection of fine wines and indulgent sides.",
+        main_image:
+          "https://lh3.googleusercontent.com/p/AF1QipOHEWzT-R4B4AEWpAhKlkt8a6wxqm_ggFuWoxse=s680-w680-h510",
+        menu_images: [
+          "https://lh3.googleusercontent.com/p/AF1QipOCzr-R6LMCFFsxc_xr_0dcNWLhvRivzDRw32hz=s680-w680-h510",
+        ],
+        phone_number: 20155733,
+        reservation_quota: 20,
+        latitude: 35.8515,
+        longtitude: 10.6153,
+        opening_time: new Date("2019-01-16 20:00:00"),
+        closing_time: new Date("2019-01-16 00:00:00"),
+        ownerId: 21,
+      },
+      {
+        name: "L'AROMATE",
+        category: ["Italian"],
+        description:
+          "L'aromate is Restaurant Pizzeria, in an exceptional modern and refined setting. A must have in Sousse to enjoy succulent dishes from time to time.",
+        main_image:
+          "https://lh3.googleusercontent.com/p/AF1QipPL0xds8MSxciwQ_RZhPvIx0_vAmZmwC9wJ0mTp=s680-w680-h510",
+        menu_images: [
+          "https://www.kharjet.tn/wp-content/uploads/2019/12/LAromate-Restaurant-Pizzeria-menu-5.jpg",
+        ],
+        phone_number: 23732731,
+        reservation_quota: 20,
+        latitude: 35.8399,
+        longtitude: 10.6033,
+        opening_time: new Date("2019-01-16 21:00:00"),
+        closing_time: new Date("2019-01-16 00:00:00"),
+        ownerId: 22,
+      },
+      {
+        name: "Le Pirate",
+        category: ["Tunisian"],
+        description:
+          "All visitors love the superb Tunisian cuisine of this restaurant. Here where you can  eat tasty shrimps at Le Pirate.",
+        main_image:
+          "https://lh3.googleusercontent.com/p/AF1QipOZn1A4VZDRSg0RXYhPDonDAMiYdmWJekMzOBfM=s680-w680-h510",
+        menu_images: [
+          "https://lh3.googleusercontent.com/p/AF1QipOynfMjD74ka9CHzLHy_NbvXtIwj31v6g48azTp=s680-w680-h510",
+        ],
+        phone_number: 73468126,
+        reservation_quota: 20,
+        latitude: 35.7602,
+        longtitude: 10.8386,
+        opening_time: new Date("2019-01-16 21:00:00"),
+        closing_time: new Date("2019-01-16 00:00:00"),
+        ownerId: 23,
+      },
+      {
+        name: "Sushi&Co",
+        category: ["Japanese"],
+        description:
+          "The restaurants offer specialties from the modern Japanese, Thai and Chinese cuisines as well as highly professional catering services and qualities.",
+        main_image:
+          "https://i.pinimg.com/originals/45/39/12/45391276436556adda14a800ea4df9df.jpg",
+        menu_images: [
+          "https://www.restorani.com.mk/storage/images/restaurants/menu/%D0%A0%D0%B5%D1%81%D1%82%D0%BE%D1%80%D0%B0%D0%BD%20%D0%A1%D1%83%D1%88%D0%B8%D0%BA%D0%BE_1551348631_en_photo.jpg",
+        ],
+        phone_number: 29250150,
+        reservation_quota: 20,
+        latitude: 362721.82,
+        longtitude: 104415.47,
+        opening_time: new Date("2019-01-16 13:00:00"),
+        closing_time: new Date("2019-01-16 22:00:00"),
+        ownerId: 24,
       },
     ],
   });
@@ -176,9 +267,39 @@ const createOwner = async () => {
         password: "123336",
         role: "OWNER",
       },
+      {
+        fullname: "Michelle Choi",
+        email: "choi@gmail.com",
+        password: "12336",
+        role: "OWNER",
+      },
+      {
+        fullname: "Kelly Wakasa",
+        email: "kelly@gmail.com",
+        password: "3336",
+        role: "OWNER",
+      },
+      {
+        fullname: "hela jlassi",
+        email: "mayssa@gmail.com",
+        password: "1236",
+        role: "OWNER",
+      },
+      {
+        fullname: "yossra selmi",
+        email: "selmi@gmail.com",
+        password: "1233444",
+        role: "OWNER",
+      },
+      {
+        fullname: "Nejya Farhat",
+        email: "nejya@gmail.com",
+        password: "123884",
+        role: "OWNER",
+      },
     ],
   });
 };
 
-//   createOwner()
+// createOwner()
 createMany();
