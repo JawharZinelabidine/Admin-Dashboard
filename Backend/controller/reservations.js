@@ -7,46 +7,70 @@ module.exports = {
         const { customerId, restaurantId } = req.params
         try {
 
-            let thisRestaurant = await restaurant.findUnique({
+            const thisRestaurant = await restaurant.findUnique({
                 where: { id: +restaurantId }
             })
-
-            if (!thisRestaurant.daily_quotas) {
-                thisRestaurant = await restaurant.update({
-                    where: { id: +restaurantId },
-                    data: { daily_quotas: { [date]: thisRestaurant.reservation_quota } }
-                })
-
-            }
-
-            if (thisRestaurant.daily_quotas && !thisRestaurant.daily_quotas[date]) {
-                thisRestaurant = await restaurant.update({
-                    where: { id: +restaurantId },
-                    data: { daily_quotas: { ...thisRestaurant.daily_quotas, [date]: thisRestaurant.reservation_quota } }
-                })
-            }
-
-            console.log(thisRestaurant)
-
-            if (thisRestaurant.daily_quotas[date]) {
-                const dailyQuota = thisRestaurant.daily_quotas[date]
-
-
-                if (dailyQuota >= guest_number) {
-                    const request = await reservation.create({
-                        data: {
-                            date: new Date(date), time: new Date(time), guest_number: guest_number, customerId: +customerId, restaurantId: +restaurantId
-                        }
-                    })
-
-                    res.status(201).json(request);
-
-                } else {
-                    res.status(400).send('Daily quota exceeded for this date')
+            const reservations = await reservation.findMany({
+                where: {
+                    date: new Date(date),
+                    restaurantId: +restaurantId,
+                    status: 'Approved'
                 }
+            })
+
+            const spotsTaken = reservations.reduce((total, el) => total + el.guest_number, 0)
+
+            if (spotsTaken + guest_number < thisRestaurant.reservation_quota) {
+                const request = await reservation.create({
+                    data: {
+                        date: new Date(date), time: new Date(time), guest_number: guest_number, customerId: +customerId, restaurantId: +restaurantId
+                    }
+                })
+
+                res.status(201).json(request);
+
             } else {
-                res.status(404).send('Daily quota information not set for this date')
+                res.status(400).send('Daily quota exceeded for this date')
             }
+
+
+
+            // if (!thisRestaurant.daily_quotas) {
+            //     thisRestaurant = await restaurant.update({
+            //         where: { id: +restaurantId },
+            //         data: { daily_quotas: { [date]: thisRestaurant.reservation_quota } }
+            //     })
+
+            // }
+
+            // if (thisRestaurant.daily_quotas && !thisRestaurant.daily_quotas[date]) {
+            //     thisRestaurant = await restaurant.update({
+            //         where: { id: +restaurantId },
+            //         data: { daily_quotas: { ...thisRestaurant.daily_quotas, [date]: thisRestaurant.reservation_quota } }
+            //     })
+            // }
+
+            // console.log(thisRestaurant)
+
+            // if (thisRestaurant.daily_quotas[date]) {
+            //     const dailyQuota = thisRestaurant.daily_quotas[date]
+
+
+            //     if (dailyQuota >= guest_number) {
+            //         const request = await reservation.create({
+            //             data: {
+            //                 date: new Date(date), time: new Date(time), guest_number: guest_number, customerId: +customerId, restaurantId: +restaurantId
+            //             }
+            //         })
+
+            //         res.status(201).json(request);
+
+            //     } else {
+            //         res.status(400).send('Daily quota exceeded for this date')
+            //     }
+            // } else {
+            //     res.status(404).send('Daily quota information not set for this date')
+            // }
 
         }
         catch (error) {
@@ -125,10 +149,17 @@ module.exports = {
                 where: { id: thisReservation.restaurantId }
             })
 
-            const date = thisReservation.date.toISOString().slice(0, 10)
-            console.log(date)
-            if (thisRestaurant.daily_quotas[date] >= guestNumber) {
+            const reservations = await reservation.findMany({
+                where: {
+                    date: thisReservation.date,
+                    restaurantId: thisReservation.restaurantId,
+                    status: 'Approved'
+                }
+            })
 
+            const spotsTaken = reservations.reduce((total, el) => total + el.guest_number, 0)
+
+            if (spotsTaken + guestNumber < thisRestaurant.reservation_quota) {
                 const approved = await reservation.update({
                     where: {
                         id: +reservationId
@@ -138,25 +169,47 @@ module.exports = {
                     }
                 })
 
-                thisRestaurant.daily_quotas[date] -= guestNumber
+                res.status(201).json(approved);
 
-                await restaurant.update({
-                    where: {
-                        id: thisRestaurant.id
-                    },
-                    data: {
-                        daily_quotas: thisRestaurant.daily_quotas
-                    }
-
-                })
-
-                res.status(200).json(approved)
-
-            }
-
-            else {
+            } else {
                 res.status(400).send('Daily quota exceeded for this date')
             }
+
+
+
+
+            // const date = thisReservation.date.toISOString().slice(0, 10)
+            // console.log(date)
+            // if (thisRestaurant.daily_quotas[date] >= guestNumber) {
+
+            //     const approved = await reservation.update({
+            //         where: {
+            //             id: +reservationId
+            //         },
+            //         data: {
+            //             status: "Approved"
+            //         }
+            //     })
+
+            //     thisRestaurant.daily_quotas[date] -= guestNumber
+
+            //     await restaurant.update({
+            //         where: {
+            //             id: thisRestaurant.id
+            //         },
+            //         data: {
+            //             daily_quotas: thisRestaurant.daily_quotas
+            //         }
+
+            //     })
+
+            //     res.status(200).json(approved)
+
+            // }
+
+            // else {
+            //     res.status(400).send('Daily quota exceeded for this date')
+            // }
 
         } catch (error) {
             console.log(error)
