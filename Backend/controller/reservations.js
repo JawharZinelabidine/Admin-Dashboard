@@ -1,4 +1,4 @@
-const { reservation } = require("../model/index");
+const { reservation, restaurant } = require("../model/index");
 
 module.exports = {
 
@@ -7,13 +7,47 @@ module.exports = {
         const { customerId, restaurantId } = req.params
         try {
 
-            const request = await reservation.create({
-                data: {
-                    date: new Date(date), time: new Date(time), guest_number: guest_number, customerId: +customerId, restaurantId: +restaurantId
-                }
+            let thisRestaurant = await restaurant.findUnique({
+                where: { id: +restaurantId }
             })
 
-            res.status(201).json(request);
+            if (!thisRestaurant.daily_quotas) {
+                thisRestaurant = await restaurant.update({
+                    where: { id: +restaurantId },
+                    data: { daily_quotas: { [date]: thisRestaurant.reservation_quota } }
+                })
+
+            }
+
+            if (thisRestaurant.daily_quotas && !thisRestaurant.daily_quotas[date]) {
+                thisRestaurant = await restaurant.update({
+                    where: { id: +restaurantId },
+                    data: { daily_quotas: { ...thisRestaurant.daily_quotas, [date]: thisRestaurant.reservation_quota } }
+                })
+            }
+
+            console.log(thisRestaurant)
+
+            if (thisRestaurant.daily_quotas[date]) {
+                const dailyQuota = thisRestaurant.daily_quotas[date]
+
+
+                if (dailyQuota >= guest_number) {
+                    const request = await reservation.create({
+                        data: {
+                            date: new Date(date), time: new Date(time), guest_number: guest_number, customerId: +customerId, restaurantId: +restaurantId
+                        }
+                    })
+
+                    res.status(201).json(request);
+
+                } else {
+                    res.status(400).send('Daily quota exceeded for this date')
+                }
+            } else {
+                res.status(404).send('Daily quota information not set for this date')
+            }
+
         }
         catch (error) {
             console.error(error);
@@ -45,8 +79,6 @@ module.exports = {
             res.status(500).send(error);
 
         }
-
-
     },
 
     fetchResolvedReservationRequests: async (req, res) => {
@@ -74,8 +106,6 @@ module.exports = {
             res.status(500).send(error);
 
         }
-
-
     },
 
     approveReservation: async (req, res) => {
@@ -83,22 +113,56 @@ module.exports = {
 
         try {
 
-            const approved = await reservation.update({
+            const thisReservation = await reservation.findUnique({
                 where: {
                     id: +reservationId
-                },
-                data: {
-                    status: "Approved"
                 }
             })
-            res.status(200).json(approved)
+
+            const guestNumber = thisReservation.guest_number
+
+            const thisRestaurant = await restaurant.findUnique({
+                where: { id: thisReservation.restaurantId }
+            })
+
+            const date = thisReservation.date.toISOString().slice(0, 10)
+            console.log(date)
+            if (thisRestaurant.daily_quotas[date] >= guestNumber) {
+
+                const approved = await reservation.update({
+                    where: {
+                        id: +reservationId
+                    },
+                    data: {
+                        status: "Approved"
+                    }
+                })
+
+                thisRestaurant.daily_quotas[date] -= guestNumber
+
+                await restaurant.update({
+                    where: {
+                        id: thisRestaurant.id
+                    },
+                    data: {
+                        daily_quotas: thisRestaurant.daily_quotas
+                    }
+
+                })
+
+                res.status(200).json(approved)
+
+            }
+
+            else {
+                res.status(400).send('Daily quota exceeded for this date')
+            }
+
         } catch (error) {
             console.log(error)
             res.status(500).send(error)
 
         }
-
-
     },
 
     rejectReservation: async (req, res) => {
@@ -120,8 +184,6 @@ module.exports = {
             res.status(500).send(error)
 
         }
-
-
     },
 
 
