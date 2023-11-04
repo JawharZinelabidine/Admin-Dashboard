@@ -96,7 +96,11 @@ module.exports = {
 
             const requests = await reservation.findMany({
                 where: {
+
                     restaurantId: +restaurantId,
+                    date: {
+                        gte: new Date().toISOString()
+                    },
                     status: "Pending"
                 }
             })
@@ -256,9 +260,17 @@ module.exports = {
                     customerId: +customerId,
                     date: {
                         gte: new Date().toISOString()
-                    }
+                    },
+                    OR: [
+                        { status: "Approved" },
+                        { status: "Pending" }
+                    ]
+
                 }
             })
+
+
+
 
             res.status(200).json(upcoming)
         }
