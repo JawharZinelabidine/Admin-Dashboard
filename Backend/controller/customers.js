@@ -55,8 +55,8 @@ module.exports = {
                 return res.status(410).json({ error: "Email doesn't exist" });
             const passwordMatch = await bcrypt.compare(password, customer.password);
             if (!passwordMatch)
-            return res.status(411).json({ error: "unvalid password" });
-            return res.status(201).json({ meesage: "customer successfully logged in" });
+                return res.status(411).json({ error: "unvalid password" });
+            return res.status(201).json({ meesage: "customer successfully logged in", customer });
         } catch (error) {
             res.status(500).send(error);
             console.log(error);
