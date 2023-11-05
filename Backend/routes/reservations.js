@@ -2,9 +2,31 @@ const express = require('express');
 const router = express.Router();
 
 
-const { } = require('../controller/reservations');
+const { sendReservationRequest, fetchPendingReservationRequests, fetchResolvedReservationRequests,
+    approveReservation, rejectReservation, fetchUpcomingReservations, fetchExpiredReservations } = require('../controller/reservations');
 
-router.route('/')
+router.route('/:customerId/:restaurantId')
     .get()
+    .post(sendReservationRequest)
+
+router.route('/pending/:restaurantId')
+    .get(fetchPendingReservationRequests)
+
+router.route('/resolved/:restaurantId')
+    .get(fetchResolvedReservationRequests)
+
+router.route('/upcoming/:customerId')
+    .get(fetchUpcomingReservations)
+
+router.route('/expired/:customerId')
+    .get(fetchExpiredReservations)
+
+router.route('/approve/:reservationId')
+    .put(approveReservation)
+
+router.route('/reject/:reservationId')
+    .put(rejectReservation)
+
+
 
 module.exports = router;

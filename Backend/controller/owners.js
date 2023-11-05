@@ -1,3 +1,4 @@
+const prisma = require("../model/index");
 const { user } = require("../model/index");
 const bcrypt = require("bcrypt");
 
