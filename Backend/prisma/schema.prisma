@@ -39,6 +39,7 @@ model Restaurant {
   extra_images      String[]      @default([]) @db.Text
   phone_number      Int
   reservation_quota Int
+  daily_quotas      Json?
   latitude          Float
   longtitude        Float
   opening_time      DateTime      @db.Time
