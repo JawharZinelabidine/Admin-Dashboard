@@ -1,3 +1,4 @@
+const prisma = require("../model/index");
 const { user } = require("../model/index");
 const bcrypt = require("bcrypt");
 
@@ -39,11 +40,9 @@ module.exports = {
     const { email, password } = req.body;
     try {
       const owner = await user.findUnique({
-        where: { email },
+        where: { email }
       });
-      console.log(owner);
-      if (!owner)
-        return res.status(410).json({ error: "Email doesn't exist" });
+      if (!owner) return res.status(410).json({ error: "Email doesn't exist" });
       const passwordMatch = await bcrypt.compare(password, owner.password);
       if (!passwordMatch)
         return res.status(411).json({ error: "unvalid password" });
