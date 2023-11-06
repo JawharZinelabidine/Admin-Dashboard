@@ -46,6 +46,7 @@ module.exports = {
         mainImage,
         menuImages,
         extraImages,
+        ownerId
       } = req.body;
       console.log(req.body);
       const mainImageUrl = await uploadToCloudinary(mainImage);
@@ -75,7 +76,7 @@ module.exports = {
           extra_images: extraImageUrls,
           latitude: latitude,
           longtitude: longtitude,
-          ownerId: 13,
+          ownerId: +ownerId,
         },
       });
       res.status(201).json(createdRestaurant);

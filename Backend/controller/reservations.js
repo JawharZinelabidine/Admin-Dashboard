@@ -7,6 +7,12 @@ module.exports = {
         const { customerId, restaurantId } = req.params
         try {
 
+            if (!date || !time || !guest_number) {
+
+                return res.status(422).send('missing information')
+
+            }
+
             const thisRestaurant = await restaurant.findUnique({
                 where: { id: +restaurantId }
             })
@@ -30,7 +36,8 @@ module.exports = {
                 res.status(201).json(request);
 
             } else {
-                res.status(400).send('Daily quota exceeded for this date')
+                const remaining = thisRestaurant.reservation_quota - spotsTaken
+                res.status(400).json(remaining)
             }
 
 
@@ -89,7 +96,11 @@ module.exports = {
 
             const requests = await reservation.findMany({
                 where: {
+
                     restaurantId: +restaurantId,
+                    date: {
+                        gte: new Date().toISOString()
+                    },
                     status: "Pending"
                 }
             })
@@ -116,7 +127,7 @@ module.exports = {
                     restaurantId: +restaurantId,
                     OR: [
                         { status: "Approved" },
-                        { status: "Rejected" }
+                        { status: "Declined" }
                     ]
                 }
             })
@@ -223,15 +234,15 @@ module.exports = {
 
         try {
 
-            const rejected = await reservation.update({
+            const Declined = await reservation.update({
                 where: {
                     id: +reservationId
                 },
                 data: {
-                    status: "Rejected"
+                    status: "Declined"
                 }
             })
-            res.status(200).json(rejected)
+            res.status(200).json(Declined)
         } catch (error) {
             console.log(error)
             res.status(500).send(error)
@@ -249,9 +260,17 @@ module.exports = {
                     customerId: +customerId,
                     date: {
                         gte: new Date().toISOString()
-                    }
+                    },
+                    OR: [
+                        { status: "Approved" },
+                        { status: "Pending" }
+                    ]
+
                 }
             })
+
+
+
 
             res.status(200).json(upcoming)
         }
@@ -269,9 +288,15 @@ module.exports = {
             const expired = await reservation.findMany({
                 where: {
                     customerId: +customerId,
-                    date: {
-                        lte: new Date().toISOString()
-                    }
+
+                    OR: [
+                        {
+                            date: {
+                                lte: new Date().toISOString()
+                            },
+                        },
+                        { status: "Declined" }
+                    ]
                 }
             })
             res.status(200).json(expired)
