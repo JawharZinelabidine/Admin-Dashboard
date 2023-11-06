@@ -203,7 +203,7 @@ const createMany = async () => {
         menu_images: [
           "https://lh3.googleusercontent.com/p/AF1QipOynfMjD74ka9CHzLHy_NbvXtIwj31v6g48azTp=s680-w680-h510",
         ],
-        City: 'Djerba',
+        City: 'Monastir',
         phone_number: 73468126,
         reservation_quota: 20,
         latitude: 35.7602,
