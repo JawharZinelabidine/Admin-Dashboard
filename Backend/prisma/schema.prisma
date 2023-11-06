@@ -17,6 +17,7 @@ model User {
   fullname        String        @db.VarChar(255)
   email           String        @unique @db.VarChar(255)
   password        String        @db.VarChar(255)
+  isVerified      Boolean       @default(false)
   role            Role
   personalID      String?       @db.Text
   tax_declaration String?       @db.Text
