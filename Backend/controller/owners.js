@@ -1,5 +1,5 @@
 const prisma = require("../model/index");
-const { user } = require("../model/index");
+const { user, restaurant } = require("../model/index");
 const bcrypt = require("bcrypt");
 
 module.exports = {
@@ -44,9 +44,17 @@ module.exports = {
       });
       if (!owner) return res.status(410).json({ error: "Email doesn't exist" });
       const passwordMatch = await bcrypt.compare(password, owner.password);
-      if (!passwordMatch)
-        return res.status(411).json({ error: "unvalid password" });
-      return res.status(201).json({ meesage: "owner successfully logged in" });
+      if (!passwordMatch) return res.status(411).json({ error: "unvalid password" });
+      const myRestaurant = await restaurant.findFirst({
+        where: {
+          ownerId: owner.id
+        }
+      })
+      console.log(myRestaurant.name)
+      if (!myRestaurant) {
+        res.status(201).json({ message: "User hasn't created a restaurant" })
+      }
+      else return res.status(201).json({ message: "owner successfully logged in", owner: owner.id });
     } catch (error) {
       res.status(500).send(error);
       console.log(error);
