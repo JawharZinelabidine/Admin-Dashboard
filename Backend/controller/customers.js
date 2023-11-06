@@ -2,11 +2,10 @@ const prisma = require("../model/index");
 const { user } = require("../model/index");
 const bcrypt = require("bcrypt");
 
-
 module.exports = {
     getCustomers: async (req, res) => {
         try {
-            const customers = await prisma.user.findMany()
+            const customers = await prisma.user.findMany();
 
             res.status(201).json(customers);
         } catch (error) {
@@ -14,6 +13,22 @@ module.exports = {
             res.status(500).send(error);
         }
     },
+    getOneCustomers: async (req, res) => {
+        const id = req.params.id
+        try {
+            const customer = await prisma.user.findUnique({
+                where: {
+                    id: +id
+                }
+            });
+
+            res.status(201).json(customer);
+        } catch (error) {
+            console.error(error);
+            res.status(500).send(error);
+        }
+    },
+
 
 
     createCustomers: async (req, res) => {
@@ -63,3 +78,4 @@ module.exports = {
         }
     },
 }
+

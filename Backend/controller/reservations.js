@@ -127,7 +127,7 @@ module.exports = {
                     restaurantId: +restaurantId,
                     OR: [
                         { status: "Approved" },
-                        { status: "Rejected" }
+                        { status: "Declined" }
                     ]
                 }
             })
@@ -234,15 +234,15 @@ module.exports = {
 
         try {
 
-            const rejected = await reservation.update({
+            const Declined = await reservation.update({
                 where: {
                     id: +reservationId
                 },
                 data: {
-                    status: "Rejected"
+                    status: "Declined"
                 }
             })
-            res.status(200).json(rejected)
+            res.status(200).json(Declined)
         } catch (error) {
             console.log(error)
             res.status(500).send(error)
@@ -288,9 +288,15 @@ module.exports = {
             const expired = await reservation.findMany({
                 where: {
                     customerId: +customerId,
-                    date: {
-                        lte: new Date().toISOString()
-                    }
+
+                    OR: [
+                        {
+                            date: {
+                                lte: new Date().toISOString()
+                            },
+                        },
+                        { status: "Declined" }
+                    ]
                 }
             })
             res.status(200).json(expired)
