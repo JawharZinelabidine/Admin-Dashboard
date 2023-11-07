@@ -50,9 +50,8 @@ module.exports = {
           ownerId: owner.id
         }
       })
-      console.log(myRestaurant.name)
       if (!myRestaurant) {
-        res.status(201).json({ message: "User hasn't created a restaurant" })
+        res.status(201).json({ message: "User hasn't created a restaurant", owner: owner.id })
       }
       else return res.status(201).json({ message: "owner successfully logged in", owner: owner.id });
     } catch (error) {

@@ -77,5 +77,26 @@ module.exports = {
             console.log(error);
         }
     },
+
+    getExpoToken: async (req, res) => {
+        const id = req.params.id
+        const { expoToken } = req.body
+
+        try {
+            await user.update({
+                where: {
+                    id: id
+                },
+                data: {
+                    expoToken: expoToken
+                }
+            })
+
+            res.status(201).json({ message: 'Expo token successfully received!' })
+
+        } catch (error) {
+
+        }
+    }
 }
 
