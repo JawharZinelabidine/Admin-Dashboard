@@ -118,7 +118,7 @@ enum Category {
 enum Status {
   Pending
   Approved
-  Rejected
+  Declined
 }
 
 enum City {

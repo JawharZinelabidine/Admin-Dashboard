@@ -7,6 +7,9 @@
 -- CreateEnum
 CREATE TYPE "City" AS ENUM ('Tunis', 'Sousse', 'Sfax', 'Kairouan', 'Mahdia', 'Monastir', 'Bizerte', 'Touzeur', 'Djerba', 'Nabel', 'Kelibia', 'Gabes');
 
+-- AlterEnum
+ALTER TYPE "Category" ADD VALUE 'French';
+
 -- DropForeignKey
 ALTER TABLE "Message" DROP CONSTRAINT "Message_customerId_fkey";
 
