@@ -12,10 +12,8 @@ module.exports = {
             console.error(error);
             res.status(500).send(error);
         }
-    }
-}
-
     },
+
     createOwner: async (req, res) => {
         const { fullname, email, password } = req.body;
         try {
