@@ -10,6 +10,9 @@ router.route("/")
 router.route("/signin")
   .post(signin);
 
+router.route("/home")
+   .get(getOwners)
+
 module.exports = router;
 
 
