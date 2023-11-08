@@ -87,6 +87,26 @@ module.exports = {
       });
       if (!owner) return res.status(410).json({ error: "Email doesn't exist" });
       const passwordMatch = await bcrypt.compare(password, owner.password);
+      if (!owner.isVerified) {
+        const verifyToken = crypto.randomBytes(32).toString("hex");
+        await user.update({
+          where: { id: owner.id },
+          data: {
+            verifyToken,
+          },
+        });
+        const verificationLink = `http://localhost:5173/owners/verify/${verifyToken}`;
+        await sendingMail({
+          from: process.env.EMAIL,
+          to: owner.email,
+          subject: "Email Verification",
+          text: `Click the following link to verify your email: ${verificationLink}`,
+        });
+
+        return res.status(401).json({
+          error: "Account not verified. Another verification email has been sent. Please check your email for instructions.",
+        });
+      }
       if (!passwordMatch)
         return res.status(411).json({ error: "unvalid password" });
       const myRestaurant = await restaurant.findFirst({
@@ -95,7 +115,10 @@ module.exports = {
         },
       });
       if (!myRestaurant) {
-        res.status(201).json({ message: "User hasn't created a restaurant" });
+        res.status(201).json({
+          message: "User hasn't created a restaurant",
+          owner: owner.id,
+        });
       } else
         return res
           .status(201)

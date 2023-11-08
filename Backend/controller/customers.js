@@ -28,8 +28,6 @@ module.exports = {
             res.status(500).send(error);
         }
     },
-
-
     createCustomers: async (req, res) => {
         const { fullname, email, password } = req.body;
         try {
@@ -53,17 +51,13 @@ module.exports = {
             res.status(500).send(error);
             console.log(error);
         }
-
-
     },
-
     customerSignin: async (req, res) => {
         const { email, password } = req.body;
         try {
             const customer = await user.findUnique({
                 where: { email },
             });
-            console.log(customer);
             if (!customer)
                 return res.status(410).json({ error: "Email doesn't exist" });
             const passwordMatch = await bcrypt.compare(password, customer.password);
@@ -75,4 +69,23 @@ module.exports = {
             console.log(error);
         }
     },
+    getExpoToken: async (req, res) => {
+        const id = req.params.id
+        const token = req.body.token
+
+        try {
+            await user.update({
+                where: {
+                    id: +id
+                },
+                data: {
+                    expoToken: token
+                }
+            })
+            res.status(201).json({ message: 'Expo token successfully received!', token: token })
+
+        } catch (error) {
+            res.status(500).json({ message: "no Expo token" })
+        }
+    }
 }
