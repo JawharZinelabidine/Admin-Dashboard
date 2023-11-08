@@ -9,5 +9,5 @@ router.route("/home")
    .get(getOwners)
 
 router.route("/signin").post(signin);
-router.route("/verify/:token").get(verifyEmail);
+router.route("/verify/:token").post(verifyEmail);
 module.exports = router;
