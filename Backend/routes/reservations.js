@@ -21,10 +21,10 @@ router.route('/upcoming/:customerId')
 router.route('/expired/:customerId')
     .get(fetchExpiredReservations)
 
-router.route('/approve/:reservationId')
+router.route('/approve/:reservationId/:expoToken')
     .put(approveReservation)
 
-router.route('/reject/:reservationId')
+router.route('/reject/:reservationId/:expoToken')
     .put(rejectReservation)
 
 

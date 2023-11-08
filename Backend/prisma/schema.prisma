@@ -20,6 +20,7 @@ model User {
   role            Role
   personalID      String?       @db.Text
   tax_declaration String?       @db.Text
+  expoToken       String?       @db.Text
   Restaurant      Restaurant[]
   Reservation     Reservation[]
   Review          Review[]
