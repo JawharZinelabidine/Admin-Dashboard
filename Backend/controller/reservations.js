@@ -1,4 +1,5 @@
-const { reservation } = require("../model/index");
+const { reservation, restaurant } = require("../model/index");
+const axios = require('axios');
 
 module.exports = {
 
@@ -7,13 +8,39 @@ module.exports = {
         const { customerId, restaurantId } = req.params
         try {
 
-            const request = await reservation.create({
-                data: {
-                    date: new Date(date), time: new Date(time), guest_number: guest_number, customerId: +customerId, restaurantId: +restaurantId
+            if (!date || !time || !guest_number) {
+
+                return res.status(422).send('missing information')
+
+            }
+
+            const thisRestaurant = await restaurant.findUnique({
+                where: { id: +restaurantId }
+            })
+            const reservations = await reservation.findMany({
+                where: {
+                    date: new Date(date),
+                    restaurantId: +restaurantId,
+                    status: 'Approved'
                 }
             })
 
-            res.status(201).json(request);
+            const spotsTaken = reservations.reduce((total, el) => total + el.guest_number, 0)
+
+            if (spotsTaken + guest_number < thisRestaurant.reservation_quota) {
+                const request = await reservation.create({
+                    data: {
+                        date: new Date(date), time: new Date(time), guest_number: guest_number, customerId: +customerId, restaurantId: +restaurantId
+                    }
+                })
+
+                res.status(201).json(request);
+
+            } else {
+                const remaining = thisRestaurant.reservation_quota - spotsTaken
+                res.status(400).json(remaining)
+            }
+
         }
         catch (error) {
             console.error(error);
@@ -31,7 +58,11 @@ module.exports = {
 
             const requests = await reservation.findMany({
                 where: {
+
                     restaurantId: +restaurantId,
+                    date: {
+                        gte: new Date().toISOString()
+                    },
                     status: "Pending"
                 }
             })
@@ -45,8 +76,6 @@ module.exports = {
             res.status(500).send(error);
 
         }
-
-
     },
 
     fetchResolvedReservationRequests: async (req, res) => {
@@ -60,7 +89,7 @@ module.exports = {
                     restaurantId: +restaurantId,
                     OR: [
                         { status: "Approved" },
-                        { status: "Rejected" }
+                        { status: "Declined" }
                     ]
                 }
             })
@@ -74,8 +103,6 @@ module.exports = {
             res.status(500).send(error);
 
         }
-
-
     },
 
     approveReservation: async (req, res) => {
@@ -83,45 +110,122 @@ module.exports = {
 
         try {
 
-            const approved = await reservation.update({
+            const thisReservation = await reservation.findUnique({
                 where: {
                     id: +reservationId
-                },
-                data: {
-                    status: "Approved"
                 }
             })
-            res.status(200).json(approved)
+
+            const guestNumber = thisReservation.guest_number
+
+            const thisRestaurant = await restaurant.findUnique({
+                where: { id: thisReservation.restaurantId }
+            })
+
+            const reservations = await reservation.findMany({
+                where: {
+                    date: thisReservation.date,
+                    restaurantId: thisReservation.restaurantId,
+                    status: 'Approved'
+                }
+            })
+
+            const spotsTaken = reservations.reduce((total, el) => total + el.guest_number, 0)
+
+            if (spotsTaken + guestNumber < thisRestaurant.reservation_quota) {
+                const approved = await reservation.update({
+                    where: {
+                        id: +reservationId
+                    },
+                    data: {
+                        status: "Approved"
+                    }
+                })
+
+                if (approved) {
+                    const { expoToken } = req.params
+                    const title = 'Reservation approved!';
+                    const body = `Your reservation with ${thisRestaurant.name} has been approved.`;
+                    try {
+                        const { data } = await axios.post(
+                            'https://exp.host/--/api/v2/push/send',
+                            {
+                                to: expoToken,
+                                title,
+                                body,
+                            }
+                        );
+
+                        console.log('Notification sent:', data);
+                    } catch (notificationError) {
+                        console.error('Failed to send notification:', notificationError);
+                    }
+                }
+
+                res.status(201).json(approved);
+
+            } else {
+                res.status(400).send('Daily quota exceeded for this date')
+            }
+
         } catch (error) {
             console.log(error)
             res.status(500).send(error)
 
         }
-
-
     },
 
     rejectReservation: async (req, res) => {
         const { reservationId } = req.params
 
+        const thisReservation = await reservation.findUnique({
+            where: {
+                id: +reservationId
+            }
+        })
+
+        const thisRestaurant = await restaurant.findUnique({
+            where: { id: thisReservation.restaurantId }
+        })
+
         try {
 
-            const rejected = await reservation.update({
+            const Declined = await reservation.update({
                 where: {
                     id: +reservationId
                 },
                 data: {
-                    status: "Rejected"
+                    status: "Declined"
                 }
             })
-            res.status(200).json(rejected)
+
+            if (Declined) {
+                const { expoToken } = req.params
+                const title = 'Your reservation was declined.';
+                const body = `Your reservation with ${thisRestaurant.name} has been declined.`;
+                try {
+                    const { data } = await axios.post(
+                        'https://exp.host/--/api/v2/push/send',
+                        {
+                            to: expoToken,
+                            title,
+                            body,
+                        }
+                    );
+
+                    console.log('Notification sent:', data);
+                } catch (notificationError) {
+                    console.error('Failed to send notification:', notificationError);
+                }
+            }
+
+
+            res.status(200).json(Declined)
         } catch (error) {
             console.log(error)
             res.status(500).send(error)
 
         }
-
-
     },
 
 
@@ -134,9 +238,17 @@ module.exports = {
                     customerId: +customerId,
                     date: {
                         gte: new Date().toISOString()
-                    }
+                    },
+                    OR: [
+                        { status: "Approved" },
+                        { status: "Pending" }
+                    ]
+
                 }
             })
+
+
+
 
             res.status(200).json(upcoming)
         }
@@ -154,9 +266,15 @@ module.exports = {
             const expired = await reservation.findMany({
                 where: {
                     customerId: +customerId,
-                    date: {
-                        lte: new Date().toISOString()
-                    }
+
+                    OR: [
+                        {
+                            date: {
+                                lte: new Date().toISOString()
+                            },
+                        },
+                        { status: "Declined" }
+                    ]
                 }
             })
             res.status(200).json(expired)
