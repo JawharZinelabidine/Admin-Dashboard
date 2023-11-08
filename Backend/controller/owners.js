@@ -1,6 +1,7 @@
 const { user, restaurant } = require("../model/index");
 const bcrypt = require("bcrypt");
 const crypto = require("crypto");
+const jwt = require("jsonwebtoken");
 const { sendingMail } = require("../utils/mailing");
 require("dotenv").config();
 
@@ -73,7 +74,10 @@ module.exports = {
 
       res
         .status(200)
-        .json({ message: "Email verified successfully. You can now log in." });
+        .json({
+          message: "Email verified successfully. You can now log in.",
+          owner: owner.id,
+        });
     } catch (error) {
       res.status(500).send(error);
       console.log(error);
@@ -87,6 +91,9 @@ module.exports = {
       });
       if (!owner) return res.status(410).json({ error: "Email doesn't exist" });
       const passwordMatch = await bcrypt.compare(password, owner.password);
+      if (!passwordMatch)
+      return res.status(411).json({ error: "unvalid password" });
+
       if (!owner.isVerified) {
         const verifyToken = crypto.randomBytes(32).toString("hex");
         await user.update({
@@ -104,25 +111,31 @@ module.exports = {
         });
 
         return res.status(401).json({
-          error: "Account not verified. Another verification email has been sent. Please check your email for instructions.",
+          error:
+            "Account not verified. Another verification email has been sent. Please check your email for instructions.",
         });
       }
-      if (!passwordMatch)
-        return res.status(411).json({ error: "unvalid password" });
-      const myRestaurant = await restaurant.findFirst({
-        where: {
-          ownerId: owner.id,
-        },
-      });
-      if (!myRestaurant) {
-        res.status(201).json({
-          message: "User hasn't created a restaurant",
-          owner: owner.id,
+      else {      
+        const token = jwt.sign ({ownerId: owner.id, role: owner.role}, process.env.JWT_SECRET, {expiresIn:"1d"});
+        const base64Url = token.split('.')[1];
+        const base64 = base64Url.replace('-', '+').replace('_', '/');
+        const payload = JSON.parse(atob(base64));
+  
+        const myRestaurant = await restaurant.findFirst({
+          where: {
+            ownerId: owner.id,
+          },
         });
-      } else
-        return res
-          .status(201)
-          .json({ message: "owner successfully logged in", owner: owner.id });
+        if (!myRestaurant) {
+          res.status(201).json({
+            message: "User hasn't created a restaurant",
+            owner: owner.id,
+          });
+        } else 
+          return res
+            .status(201)
+            .json({ message: "owner successfully logged in", payload, token });
+      }
     } catch (error) {
       res.status(500).send(error);
       console.log(error);

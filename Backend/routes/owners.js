@@ -1,6 +1,8 @@
 const express = require("express");
 const router = express.Router();
 
+const isOwnerAuthenticated = require("../middlwares/isOwnerAuthenticated")
+
 const {
   getOwners,
   createOwner,
