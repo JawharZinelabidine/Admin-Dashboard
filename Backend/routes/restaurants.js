@@ -20,6 +20,7 @@ router
     createRestaurant
   );
 
-router.route("/:id").get(getOne);
+router.route("/:id")
+  .get(getOne);
 
 module.exports = router;
