@@ -91,15 +91,14 @@ module.exports = {
         return res.status(411).json({ error: "unvalid password" });
       const myRestaurant = await restaurant.findFirst({
         where: {
-          ownerId: owner.id,
-        },
-      });
+          ownerId: owner.id
+        }
+      })
+      console.log(myRestaurant)
       if (!myRestaurant) {
-        res.status(201).json({ message: "User hasn't created a restaurant" });
-      } else
-        return res
-          .status(201)
-          .json({ message: "owner successfully logged in", owner: owner.id });
+        res.status(201).json({ message: "User hasn't created a restaurant", owner: owner.id })
+      }
+      else return res.status(201).json({ message: "owner successfully logged in", owner: owner.id });
     } catch (error) {
       res.status(500).send(error);
       console.log(error);
