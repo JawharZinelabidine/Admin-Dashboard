@@ -30,7 +30,6 @@ module.exports = {
     },
 
 
-
     createCustomers: async (req, res) => {
         const { fullname, email, password } = req.body;
         try {
@@ -57,7 +56,6 @@ module.exports = {
 
 
     },
-
 
     customerSignin: async (req, res) => {
         const { email, password } = req.body;
@@ -98,4 +96,3 @@ module.exports = {
         }
     }
 }
-
