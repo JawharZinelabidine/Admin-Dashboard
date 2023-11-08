@@ -19,6 +19,7 @@ model User {
   password        String        @db.VarChar(255)
   isVerified      Boolean       @default(false)
   verifyToken     String?
+  otp             Int?          
   role            Role
   personalID      String?       @db.Text
   tax_declaration String?       @db.Text

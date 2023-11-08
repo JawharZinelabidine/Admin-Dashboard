@@ -5,6 +5,9 @@ const { getOwners, createOwner, signin, verifyEmail } = require("../controller/o
 
 router.route("/").get(getOwners).post(createOwner);
 
+router.route("/home")
+   .get(getOwners)
+
 router.route("/signin").post(signin);
 router.route("/verify/:token").post(verifyEmail);
 module.exports = router;
