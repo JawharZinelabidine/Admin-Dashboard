@@ -1,5 +1,6 @@
 const prisma = require("../model/index");
 const { restaurant } = require("../model/index");
+const uploadToCloudinary = require("./helpers/cloudinary");
 
 module.exports = {
   getRestaurants: async (req, res) => {
@@ -52,42 +53,41 @@ module.exports = {
     
 
 
- updloadRestaurantImages: async (req, res) => {
-  try {
-     
-       const restaurantId = req.params.id;
-      
-        const mainImage = await cloudinary.uploader.upload(req.files.main_image.path);
-   
+    updloadRestaurantImages: async (req, res) => {
+      try {
+        const restaurantId = req.params.id;
+        console.log(req.body);
 
-      
-       const menuImages = req.files.menu_images.map(async (image) => {
-         const result = await cloudinary.uploader.upload(image.path);
-         return result.secure_url;
-       });
-   
-   
-       const extraImages = req.files.extra_images.map(async (image) => {
-         const result = await cloudinary.uploader.upload(image.path);
-         return result.secure_url;
-       });
-   
-      const business = await restaurant.create({
-        where: {
-          id:restaurantId
-        },
+    
+        const mainImage = await uploadToCloudinary(req.body.main_image);
+            console.log(req.body.main_image)
+        const menuImages = await Promise.all(req.body.menu_images.map((image) => uploadToCloudinary(image)));
+        
+        console.log(req.body);
+    
+        let extraImages = [];
+        if (req.body.extra_images && req.body.extra_images.length > 0) {
+          extraImages = await Promise.all(
+            req.body.extra_images.map((extraImage) => uploadToCloudinary(extraImage))
+          );
+        }
+    
+        const business = await restaurant.update({
+          where: {
+            id: restaurantId,
+          },
           data: {
             menuImages: { set: menuImages },
             extraImages: { set: extraImages },
             mainImage: mainImage.secure_url,
-          }
-      })
-
-      res.status(201).json(business);
-  } catch (error) {
-      console.error(error);
-      res.status(500).send(error);
-  }
-}
-
+          },
+        });
+    
+        res.status(201).json(business);
+      } catch (error) {
+        console.error(error);
+        res.status(500).send(error);
+      }
+    }
+    
 }
