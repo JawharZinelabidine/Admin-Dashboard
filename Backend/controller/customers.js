@@ -28,6 +28,7 @@ module.exports = {
             res.status(500).send(error);
         }
     },
+
     createCustomers: async (req, res) => {
         const { fullname, email, password } = req.body;
         try {
@@ -52,6 +53,7 @@ module.exports = {
             console.log(error);
         }
     },
+
     customerSignin: async (req, res) => {
         const { email, password } = req.body;
         try {
