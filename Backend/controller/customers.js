@@ -29,7 +29,6 @@ module.exports = {
         }
     },
 
-
     createCustomers: async (req, res) => {
         const { fullname, email, password } = req.body;
         try {
@@ -53,8 +52,6 @@ module.exports = {
             res.status(500).send(error);
             console.log(error);
         }
-
-
     },
 
     customerSignin: async (req, res) => {
@@ -74,7 +71,6 @@ module.exports = {
             console.log(error);
         }
     },
-
     getExpoToken: async (req, res) => {
         const id = req.params.id
         const token = req.body.token
@@ -88,7 +84,6 @@ module.exports = {
                     expoToken: token
                 }
             })
-
             res.status(201).json({ message: 'Expo token successfully received!', token: token })
 
         } catch (error) {
