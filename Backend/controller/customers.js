@@ -25,6 +25,7 @@ module.exports = {
         },
       });
 
+
       res.status(201).json(customer);
     } catch (error) {
       console.error(error);
@@ -137,10 +138,7 @@ module.exports = {
           expoToken: token,
         },
       });
-
-      res
-        .status(201)
-        .json({ message: "Expo token successfully received!", token: token });
+      res.status(201).json({ message: "Expo token successfully received!", token: token });
     } catch (error) {
       res.status(500).json({ message: "no Expo token" });
     }
