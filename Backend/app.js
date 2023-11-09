@@ -12,6 +12,7 @@ const prisma = require("./model/index");
 
 
 const app = express()
+
 const port = 3000
 
 app.use(cors())

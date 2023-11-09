@@ -48,6 +48,46 @@ module.exports = {
             console.error(error);
             res.status(500).send(error);
         }
-    }
+    },
+    
+
+
+ updloadRestaurantImages: async (req, res) => {
+  try {
+     
+       const restaurantId = req.params.id;
+      
+        const mainImage = await cloudinary.uploader.upload(req.files.main_image.path);
+   
+
+      
+       const menuImages = req.files.menu_images.map(async (image) => {
+         const result = await cloudinary.uploader.upload(image.path);
+         return result.secure_url;
+       });
+   
+   
+       const extraImages = req.files.extra_images.map(async (image) => {
+         const result = await cloudinary.uploader.upload(image.path);
+         return result.secure_url;
+       });
+   
+      const business = await restaurant.create({
+        where: {
+          id:restaurantId
+        },
+          data: {
+            menuImages: { set: menuImages },
+            extraImages: { set: extraImages },
+            mainImage: mainImage.secure_url,
+          }
+      })
+
+      res.status(201).json(business);
+  } catch (error) {
+      console.error(error);
+      res.status(500).send(error);
+  }
 }
 
+}
