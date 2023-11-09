@@ -77,10 +77,12 @@ module.exports = {
     const { token } = req.params;
     try {
       const customer = await user.findFirst({
-        where: { OR: [{ verifyToken: token }, { otp: +token }] }
+        where: { OR: [{ verifyToken: token }, { otp: +token }] },
       });
       if (!customer) {
-        return res.status(404).json({ error: "Invalid verification token or OTP" });
+        return res
+          .status(404)
+          .json({ error: "Invalid verification token or OTP" });
       }
       let updateData = {
         isVerified: true,
@@ -89,12 +91,12 @@ module.exports = {
       if (customer.otp) {
         updateData.otp = null;
       }
-  
+
       await user.update({
         where: { id: customer.id },
         data: updateData,
       });
-  
+
       res.status(200).json({
         message: "Email/OTP verified successfully. You can now log in.",
       });
@@ -103,21 +105,41 @@ module.exports = {
       console.log(error);
     }
   },
-
   customerSignin: async (req, res) => {
     const { email, password } = req.body;
     try {
       const customer = await user.findUnique({
         where: { email },
       });
-      if (!customer)
+      if (!customer) {
         return res.status(410).json({ error: "Email doesn't exist" });
+      }
+      if (!customer.isVerified) {
+        const newOtp = Math.floor(1000 + Math.random() * 9000);
+
+        await user.update({
+          where: { id: customer.id },
+          data: { otp: newOtp },
+        });
+        const emailText = `Your new OTP is: ${newOtp}.`;
+        await sendingMail({
+          from: process.env.EMAIL,
+          to: customer.email,
+          subject: "New OTP for Verification",
+          text: emailText,
+        });
+        return res
+          .status(412)
+          .json({ error: "User not verified. New OTP sent." });
+      }
       const passwordMatch = await bcrypt.compare(password, customer.password);
-      if (!passwordMatch)
-        return res.status(411).json({ error: "unvalid password" });
-      return res
-        .status(201)
-        .json({ meesage: "customer successfully logged in", customer });
+      if (!passwordMatch) {
+        return res.status(411).json({ error: "Invalid password" });
+      }
+      return res.status(201).json({
+        message: "Customer successfully logged in",
+        customer,
+      });
     } catch (error) {
       res.status(500).send(error);
       console.log(error);
