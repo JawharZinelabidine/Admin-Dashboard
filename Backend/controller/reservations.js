@@ -26,8 +26,9 @@ module.exports = {
             })
 
             const spotsTaken = reservations.reduce((total, el) => total + el.guest_number, 0)
+            console.log(spotsTaken)
 
-            if (spotsTaken + guest_number < thisRestaurant.reservation_quota) {
+            if (spotsTaken + guest_number <= thisRestaurant.reservation_quota) {
                 const request = await reservation.create({
                     data: {
                         date: new Date(date), time: new Date(time), guest_number: guest_number, customerId: +customerId, restaurantId: +restaurantId
@@ -132,7 +133,7 @@ module.exports = {
 
             const spotsTaken = reservations.reduce((total, el) => total + el.guest_number, 0)
 
-            if (spotsTaken + guestNumber < thisRestaurant.reservation_quota) {
+            if (spotsTaken + guestNumber <= thisRestaurant.reservation_quota) {
                 const approved = await reservation.update({
                     where: {
                         id: +reservationId

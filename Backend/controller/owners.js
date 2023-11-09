@@ -73,9 +73,7 @@ module.exports = {
         },
       });
 
-      res
-        .status(200)
-        .json({
+      res.status(200).json({
           message: "Email verified successfully. You can now log in.",
           owner: owner.id,
         });
@@ -122,6 +120,8 @@ module.exports = {
         .status(200)
         .json({ message: "Email verified successfully. You can now log in." });
 
+
+        .json({ message: "Email verified successfully. You can now log in.", ownerId: owner.id });
     } catch (error) {
       res.status(500).send(error);
       console.log(error);
