@@ -1,7 +1,9 @@
 const express = require("express");
 const router = express.Router();
+const multer = require("multer");
+const upload = multer();
 
-const isOwnerAuthenticated = require("../middlwares/isOwnerAuthenticated")
+const isOwnerAuthenticated = require("../middlwares/isOwnerAuthenticated");
 
 const {
   getOwners,
@@ -9,12 +11,22 @@ const {
   signin,
   verifyEmail,
   removeNotification,
-  checkNotification
+  checkNotification,
 } = require("../controller/owners");
 
-router.route("/").get(getOwners).post(createOwner);
+router
+  .route("/")
+  .get(getOwners)
+  .post(
+    upload.fields([
+      { name: "personalId", maxCount: 1 },
+      { name: "taxDeclaration", maxCount: 1 },
+    ]),
+    createOwner
+  );
 
-router.route('/notification/:id')
+router
+  .route("/notification/:id")
   .get(checkNotification)
   .put(removeNotification);
 

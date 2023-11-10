@@ -21,13 +21,13 @@ module.exports = {
     const { fullname, email, password, personalId, taxDeclaration } = req.body;
     try {
       const checkemail = await user.findUnique({
-        where: { email },
+        where: { email: email },
       });
       if (checkemail) {
         return res.status(400).json({ error: "Email already exists" });
       }
       const hashpassword = await bcrypt.hash(password, 10);
-      const personalIdUrl = await uploadToCloudinary(personalID);
+      const personalIdUrl = await uploadToCloudinary(personalId);
       const taxDeclarationUrl = await uploadToCloudinary(taxDeclaration);
       const verifyToken = crypto.randomBytes(32).toString("hex");
       const owner = await user.create({
@@ -76,12 +76,10 @@ module.exports = {
         },
       });
 
-      res
-        .status(200)
-        .json({
-          message: "Email verified successfully. You can now log in.",
-          owner: owner.id,
-        });
+      res.status(200).json({
+        message: "Email verified successfully. You can now log in.",
+        owner: owner.id,
+      });
     } catch (error) {
       res.status(500).send(error);
       console.log(error);
@@ -134,12 +132,10 @@ module.exports = {
           },
         });
         if (!myRestaurant) {
-          res
-            .status(201)
-            .json({
-              message: "User hasn't created a restaurant",
-              owner: owner.id,
-            });
+          res.status(201).json({
+            message: "User hasn't created a restaurant",
+            owner: owner.id,
+          });
         } else
           return res
             .status(201)
