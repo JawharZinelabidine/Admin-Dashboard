@@ -18,9 +18,7 @@ module.exports = {
     }
   },
   createOwner: async (req, res) => {
-    const { fullname, email, password, personalID, taxDeclaration } = req.body;
-    const personalIDUrl = await uploadToCloudinary(personalID);
-    const taxDeclarationUrl = await uploadToCloudinary(taxDeclaration);
+    const { fullname, email, password, personalId, taxDeclaration } = req.body;
     try {
       const checkemail = await user.findUnique({
         where: { email },
@@ -29,13 +27,15 @@ module.exports = {
         return res.status(400).json({ error: "Email already exists" });
       }
       const hashpassword = await bcrypt.hash(password, 10);
+      const personalIdUrl = await uploadToCloudinary(personalID);
+      const taxDeclarationUrl = await uploadToCloudinary(taxDeclaration);
       const verifyToken = crypto.randomBytes(32).toString("hex");
       const owner = await user.create({
         data: {
           fullname,
           email,
           password: hashpassword,
-          personalID: personalIDUrl,
+          personalID: personalIdUrl,
           tax_declaration: taxDeclarationUrl,
           role: "OWNER",
           verifyToken,
@@ -76,7 +76,12 @@ module.exports = {
         },
       });
 
-      res.status(200).json({ message: "Email verified successfully. You can now log in.", owner: owner.id, });
+      res
+        .status(200)
+        .json({
+          message: "Email verified successfully. You can now log in.",
+          owner: owner.id,
+        });
     } catch (error) {
       res.status(500).send(error);
       console.log(error);
@@ -113,11 +118,14 @@ module.exports = {
           error:
             "Account not verified. Another verification email has been sent. Please check your email for instructions.",
         });
-      }
-      else {
-        const token = jwt.sign({ ownerId: owner.id, role: owner.role }, process.env.JWT_SECRET, { expiresIn: "1d" });
-        const base64Url = token.split('.')[1];
-        const base64 = base64Url.replace('-', '+').replace('_', '/');
+      } else {
+        const token = jwt.sign(
+          { ownerId: owner.id, role: owner.role },
+          process.env.JWT_SECRET,
+          { expiresIn: "1d" }
+        );
+        const base64Url = token.split(".")[1];
+        const base64 = base64Url.replace("-", "+").replace("_", "/");
         const payload = JSON.parse(atob(base64));
 
         const myRestaurant = await restaurant.findFirst({
@@ -126,58 +134,57 @@ module.exports = {
           },
         });
         if (!myRestaurant) {
-          res.status(201).json({ message: "User hasn't created a restaurant", owner: owner.id })
-        }
-        else return res.status(201).json({ message: "owner successfully logged in", owner: owner.id });
+          res
+            .status(201)
+            .json({
+              message: "User hasn't created a restaurant",
+              owner: owner.id,
+            });
+        } else
+          return res
+            .status(201)
+            .json({ message: "owner successfully logged in", owner: owner.id });
       }
-    }
-    catch (error) {
+    } catch (error) {
       res.status(500).send(error);
       console.log(error);
     }
-
   },
   checkNotification: async (req, res) => {
-    const id = req.params.id
+    const id = req.params.id;
 
     try {
       const { hasNotification } = await user.findUnique({
         where: {
-          id: +id
-        }
-      })
-      console.log(hasNotification)
-      res.status(200).send(hasNotification)
-
+          id: +id,
+        },
+      });
+      console.log(hasNotification);
+      res.status(200).send(hasNotification);
     } catch (error) {
-
-      console.log(error)
-      res.status(500).json({ message: 'Failed to retrieve notification status' })
-
+      console.log(error);
+      res
+        .status(500)
+        .json({ message: "Failed to retrieve notification status" });
     }
-
   },
   removeNotification: async (req, res) => {
-    const id = req.params.id
+    const id = req.params.id;
 
     try {
       const { hasNotification } = await user.update({
         where: {
-          id: +id
+          id: +id,
         },
         data: {
-          hasNotification: false
-        }
-      })
-      console.log(hasNotification)
-      res.status(200).send(hasNotification)
-
+          hasNotification: false,
+        },
+      });
+      console.log(hasNotification);
+      res.status(200).send(hasNotification);
     } catch (error) {
-
-      console.log(error)
-      res.status(500).json({ message: 'Failed to update notification status' })
-
+      console.log(error);
+      res.status(500).json({ message: "Failed to update notification status" });
     }
-
   },
-}
+};

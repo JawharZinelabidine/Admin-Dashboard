@@ -1,5 +1,6 @@
 const { user, restaurant } = require("../model/index");
 const { sendingMail } = require("../utils/mailing");
+require("dotenv").config();
 
 module.exports = {
   getPendingRestaurants: async (req, res) => {
@@ -54,15 +55,17 @@ module.exports = {
           status: decision === "approve" ? "Approved" : "Declined",
         },
       });
-
+      console.log(updatedRestaurant);
       const owner = await user.findUnique({
         where: { id: requestedRestaurant.ownerId },
       });
 
-      const subject = decision === "approve" ? "Restaurant Approved" : "Restaurant Declined";
-      const message = decision === "approve"
-        ? "Congratulations! Your restaurant request has been approved."
-        : "We regret to inform you that your restaurant request has been declined.";
+      const subject =
+        decision === "approve" ? "Restaurant Approved" : "Restaurant Declined";
+      const message =
+        decision === "approve"
+          ? "Congratulations! Your restaurant request has been approved."
+          : "We regret to inform you that your restaurant request has been declined.";
 
       await sendingMail({
         from: process.env.EMAIL,
@@ -71,7 +74,9 @@ module.exports = {
         text: message,
       });
 
-      res.status(200).json({ message: "Restaurant request reviewed successfully" });
+      res
+        .status(200)
+        .json({ message: "Restaurant request reviewed successfully" });
     } catch (error) {
       console.error(error);
       res.status(500).send(error);

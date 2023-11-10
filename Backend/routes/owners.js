@@ -14,12 +14,12 @@ const {
 
 router.route("/").get(getOwners).post(createOwner);
 
-router.route("/home")
-  .get(getOwners)
 router.route('/notification/:id')
   .get(checkNotification)
-  .put(removeNotification)
+  .put(removeNotification);
+
 router.route("/signin").post(signin);
+
 router.route("/verify/:token").post(verifyEmail);
 
 module.exports = router;
