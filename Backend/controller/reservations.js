@@ -299,7 +299,6 @@ module.exports = {
 
     fetchUpcomingReservations: async (req, res) => {
         const id = req.userId
-
         try {
             const upcoming = await reservation.findMany({
                 where: {

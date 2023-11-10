@@ -9,6 +9,7 @@ module.exports = isAuthenticated = (req, res, next) => {
 
   if (token === 'null') {
     res.status(401).send("No access token");
+
   }
 
 
