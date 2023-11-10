@@ -1,4 +1,4 @@
-const { reservation, restaurant } = require("../model/index");
+const { reservation, restaurant, user } = require("../model/index");
 const axios = require('axios');
 
 module.exports = {
@@ -26,8 +26,9 @@ module.exports = {
             })
 
             const spotsTaken = reservations.reduce((total, el) => total + el.guest_number, 0)
+            console.log(spotsTaken)
 
-            if (spotsTaken + guest_number < thisRestaurant.reservation_quota) {
+            if (spotsTaken + guest_number <= thisRestaurant.reservation_quota) {
                 const request = await reservation.create({
                     data: {
                         date: new Date(date), time: new Date(time), guest_number: guest_number, customerId: +customerId, restaurantId: +restaurantId
@@ -35,6 +36,27 @@ module.exports = {
                 })
 
                 res.status(201).json(request);
+
+                if (request) {
+                    try {
+
+                        await user.update({
+                            where: {
+                                id: thisRestaurant.ownerId
+                            },
+                            data: {
+                                hasNotification: true
+                            }
+                        })
+
+                        console.log(true)
+                    } catch (error) {
+                        console.log('Failed to change notification status:', error)
+
+
+                    }
+
+                }
 
             } else {
                 const remaining = thisRestaurant.reservation_quota - spotsTaken
@@ -132,7 +154,7 @@ module.exports = {
 
             const spotsTaken = reservations.reduce((total, el) => total + el.guest_number, 0)
 
-            if (spotsTaken + guestNumber < thisRestaurant.reservation_quota) {
+            if (spotsTaken + guestNumber <= thisRestaurant.reservation_quota) {
                 const approved = await reservation.update({
                     where: {
                         id: +reservationId
@@ -146,6 +168,7 @@ module.exports = {
                     const { expoToken } = req.params
                     const title = 'Reservation approved!';
                     const body = `Your reservation with ${thisRestaurant.name} has been approved.`;
+                    const route = 'Reservation'
                     try {
                         const { data } = await axios.post(
                             'https://exp.host/--/api/v2/push/send',
@@ -153,6 +176,10 @@ module.exports = {
                                 to: expoToken,
                                 title,
                                 body,
+                                data: {
+                                    route
+                                }
+
                             }
                         );
 
@@ -160,6 +187,24 @@ module.exports = {
                     } catch (notificationError) {
                         console.error('Failed to send notification:', notificationError);
                     }
+                    try {
+
+                        await user.update({
+                            where: {
+                                id: thisReservation.customerId
+                            },
+                            data: {
+                                hasNotification: true
+                            }
+                        })
+
+                        console.log(true)
+                    } catch (error) {
+                        console.log('Failed to change notification status:', error)
+
+
+                    }
+
                 }
 
                 res.status(201).json(approved);
@@ -203,6 +248,7 @@ module.exports = {
                 const { expoToken } = req.params
                 const title = 'Your reservation was declined.';
                 const body = `Your reservation with ${thisRestaurant.name} has been declined.`;
+                const route = 'History'
                 try {
                     const { data } = await axios.post(
                         'https://exp.host/--/api/v2/push/send',
@@ -210,12 +256,33 @@ module.exports = {
                             to: expoToken,
                             title,
                             body,
+                            data: {
+                                route
+                            }
+
                         }
                     );
 
                     console.log('Notification sent:', data);
                 } catch (notificationError) {
                     console.error('Failed to send notification:', notificationError);
+                }
+                try {
+
+                    await user.update({
+                        where: {
+                            id: thisReservation.customerId
+                        },
+                        data: {
+                            hasNotification: true
+                        }
+                    })
+
+
+                } catch (error) {
+                    console.log('Failed to change notification status:', error)
+
+
                 }
             }
 
