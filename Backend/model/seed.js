@@ -54,6 +54,7 @@ const createMany = async () => {
         longtitude: 10.6273,
         opening_time: new Date("2019-01-16 12:00:00"),
         closing_time: new Date("2019-01-16 23:00:00"),
+        status: "Approved",
         ownerId: 2,
       },
       {
