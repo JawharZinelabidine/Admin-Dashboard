@@ -50,7 +50,6 @@ module.exports = {
                             }
                         })
 
-                        console.log(true)
                     } catch (error) {
                         console.log('Failed to change notification status:', error)
 
@@ -184,7 +183,6 @@ module.exports = {
                             }
                         );
 
-                        console.log('Notification sent:', data);
                     } catch (notificationError) {
                         console.error('Failed to send notification:', notificationError);
                     }
@@ -199,7 +197,6 @@ module.exports = {
                             }
                         })
 
-                        console.log(true)
                     } catch (error) {
                         console.log('Failed to change notification status:', error)
 
@@ -264,7 +261,6 @@ module.exports = {
                         }
                     );
 
-                    console.log('Notification sent:', data);
                 } catch (notificationError) {
                     console.error('Failed to send notification:', notificationError);
                 }

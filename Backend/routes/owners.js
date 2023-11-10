@@ -5,6 +5,7 @@ const isAuthenticated = require('../middlwares/isAuthenticated')
 const isOwnerAuthorized = require('../middlwares/isOwnerAuthorized')
 
 const {
+  getOneCustomers,
   getOwners,
   createOwner,
   signin,
@@ -14,6 +15,8 @@ const {
 } = require("../controller/owners");
 
 router.route("/").get(getOwners).post(createOwner);
+router.route("/customers/:customerId").get(isAuthenticated, isOwnerAuthorized, getOneCustomers)
+
 
 router.route("/home")
   .get(isAuthenticated, getOwners)
