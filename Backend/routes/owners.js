@@ -8,6 +8,7 @@ const isAuthenticated = require('../middlwares/isAuthenticated')
 const isOwnerAuthorized = require('../middlwares/isOwnerAuthorized')
 
 const {
+  getOneCustomers,
   getOwners,
   createOwner,
   signin,
@@ -17,8 +18,7 @@ const {
 } = require("../controller/owners");
 
 
-router
-  .route("/")
+router.route("/")
   .get(getOwners)
   .post(
     upload.fields([
@@ -29,6 +29,7 @@ router
   );
 
 
+router.route("/customers/:customerId").get(isAuthenticated, isOwnerAuthorized, getOneCustomers)
 
 
 router.route("/home")
