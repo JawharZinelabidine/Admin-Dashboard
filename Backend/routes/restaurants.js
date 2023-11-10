@@ -2,6 +2,8 @@ const express = require("express");
 const router = express.Router();
 const multer = require("multer");
 const upload = multer();
+const isAuthenticated = require('../middlwares/isAuthenticated')
+
 const {
   getRestaurants,
   getOne,
@@ -21,6 +23,6 @@ router
   );
 
 router.route("/:id")
-  .get(getOne);
+  .get(isAuthenticated, getOne);
 
 module.exports = router;

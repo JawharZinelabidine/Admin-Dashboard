@@ -1,31 +1,32 @@
 const express = require('express');
 const router = express.Router();
+const isAuthenticated = require('../middlwares/isAuthenticated')
 
 
 const { sendReservationRequest, fetchPendingReservationRequests, fetchResolvedReservationRequests,
     approveReservation, rejectReservation, fetchUpcomingReservations, fetchExpiredReservations } = require('../controller/reservations');
 
-router.route('/:customerId/:restaurantId')
+router.route('/:restaurantId')
     .get()
-    .post(sendReservationRequest)
+    .post(isAuthenticated, sendReservationRequest)
 
 router.route('/pending/:restaurantId')
-    .get(fetchPendingReservationRequests)
+    .get(isAuthenticated, fetchPendingReservationRequests)
 
 router.route('/resolved/:restaurantId')
-    .get(fetchResolvedReservationRequests)
+    .get(isAuthenticated, fetchResolvedReservationRequests)
 
-router.route('/upcoming/:customerId')
-    .get(fetchUpcomingReservations)
+router.route('/upcoming')
+    .get(isAuthenticated, fetchUpcomingReservations)
 
-router.route('/expired/:customerId')
-    .get(fetchExpiredReservations)
+router.route('/expired')
+    .get(isAuthenticated, fetchExpiredReservations)
 
 router.route('/approve/:reservationId/:expoToken')
-    .put(approveReservation)
+    .put(isAuthenticated, approveReservation)
 
 router.route('/reject/:reservationId/:expoToken')
-    .put(rejectReservation)
+    .put(isAuthenticated, rejectReservation)
 
 
 
