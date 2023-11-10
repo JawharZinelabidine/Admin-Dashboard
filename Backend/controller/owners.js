@@ -3,6 +3,7 @@ const uploadToCloudinary = require("../helpers/CloudinaryUpload");
 const bcrypt = require("bcrypt");
 const crypto = require("crypto");
 const jwt = require("jsonwebtoken");
+
 const { sendingMail } = require("../utils/mailing");
 require("dotenv").config();
 
@@ -75,10 +76,7 @@ module.exports = {
         },
       });
 
-      res.status(200).json({
-        message: "Email verified successfully. You can now log in.",
-        owner: owner.id,
-      });
+      res.status(200).json({ message: "Email verified successfully. You can now log in.", owner: owner.id, });
     } catch (error) {
       res.status(500).send(error);
       console.log(error);
@@ -115,14 +113,11 @@ module.exports = {
           error:
             "Account not verified. Another verification email has been sent. Please check your email for instructions.",
         });
-      } else {
-        const token = jwt.sign(
-          { ownerId: owner.id, role: owner.role },
-          process.env.JWT_SECRET,
-          { expiresIn: "1d" }
-        );
-        const base64Url = token.split(".")[1];
-        const base64 = base64Url.replace("-", "+").replace("_", "/");
+      }
+      else {
+        const token = jwt.sign({ ownerId: owner.id, role: owner.role }, process.env.JWT_SECRET, { expiresIn: "1d" });
+        const base64Url = token.split('.')[1];
+        const base64 = base64Url.replace('-', '+').replace('_', '/');
         const payload = JSON.parse(atob(base64));
 
         const myRestaurant = await restaurant.findFirst({
@@ -131,18 +126,58 @@ module.exports = {
           },
         });
         if (!myRestaurant) {
-          res.status(201).json({
-            message: "User hasn't created a restaurant",
-            owner: owner.id,
-          });
-        } else
-          return res
-            .status(201)
-            .json({ message: "owner successfully logged in", payload, token });
+          res.status(201).json({ message: "User hasn't created a restaurant", owner: owner.id })
+        }
+        else return res.status(201).json({ message: "owner successfully logged in", owner: owner.id });
       }
-    } catch (error) {
+    }
+    catch (error) {
       res.status(500).send(error);
       console.log(error);
     }
+
   },
-};
+  checkNotification: async (req, res) => {
+    const id = req.params.id
+
+    try {
+      const { hasNotification } = await user.findUnique({
+        where: {
+          id: +id
+        }
+      })
+      console.log(hasNotification)
+      res.status(200).send(hasNotification)
+
+    } catch (error) {
+
+      console.log(error)
+      res.status(500).json({ message: 'Failed to retrieve notification status' })
+
+    }
+
+  },
+  removeNotification: async (req, res) => {
+    const id = req.params.id
+
+    try {
+      const { hasNotification } = await user.update({
+        where: {
+          id: +id
+        },
+        data: {
+          hasNotification: false
+        }
+      })
+      console.log(hasNotification)
+      res.status(200).send(hasNotification)
+
+    } catch (error) {
+
+      console.log(error)
+      res.status(500).json({ message: 'Failed to update notification status' })
+
+    }
+
+  },
+}
