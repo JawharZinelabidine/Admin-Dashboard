@@ -70,7 +70,7 @@ module.exports = {
         },
       });
 
-      res.status(200).json({ message: "Email verified successfully. You can now log in.", owner: owner.id, });
+      res.status(200).json({ message: "Email verified successfully. You can now log in." });
 
 
 
@@ -112,10 +112,8 @@ module.exports = {
         });
       }
       else {
-        const token = jwt.sign({ ownerId: owner.id, role: owner.role }, process.env.JWT_SECRET, { expiresIn: "1d" });
-        const base64Url = token.split('.')[1];
-        const base64 = base64Url.replace('-', '+').replace('_', '/');
-        const payload = JSON.parse(atob(base64));
+        const token = jwt.sign({ id: owner.id, role: owner.role }, process.env.JWT_SECRET, { expiresIn: "1d" });
+        ;
 
         const myRestaurant = await restaurant.findFirst({
           where: {
@@ -123,9 +121,9 @@ module.exports = {
           },
         });
         if (!myRestaurant) {
-          res.status(201).json({ message: "User hasn't created a restaurant", owner: owner.id })
+          res.status(201).json({ message: "User hasn't created a restaurant", token: token })
         }
-        else return res.status(201).json({ message: "owner successfully logged in", owner: owner.id });
+        else return res.status(201).json({ message: "owner successfully logged in", token: token });
       }
     }
     catch (error) {
@@ -135,12 +133,12 @@ module.exports = {
 
   },
   checkNotification: async (req, res) => {
-    const id = req.params.id
+    const id = req.userId
 
     try {
       const { hasNotification } = await user.findUnique({
         where: {
-          id: +id
+          id: id
         }
       })
       console.log(hasNotification)
@@ -155,12 +153,12 @@ module.exports = {
 
   },
   removeNotification: async (req, res) => {
-    const id = req.params.id
+    const id = req.userId
 
     try {
       const { hasNotification } = await user.update({
         where: {
-          id: +id
+          id: id
         },
         data: {
           hasNotification: false

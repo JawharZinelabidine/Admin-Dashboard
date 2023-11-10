@@ -16,7 +16,7 @@ router.route("/").get(getOwners).post(createOwner);
 
 router.route("/home")
   .get(isAuthenticated, getOwners)
-router.route('/notification/:id')
+router.route('/notification')
   .get(isAuthenticated, checkNotification)
   .put(isAuthenticated, removeNotification)
 router.route("/signin").post(signin);

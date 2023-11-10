@@ -10,8 +10,7 @@ const {
   createRestaurant,
 } = require("../controller/restaurants");
 
-router
-  .route("/")
+router.route("/")
   .get(getRestaurants)
   .post(
     upload.fields([
@@ -22,7 +21,7 @@ router
     createRestaurant
   );
 
-router.route("/:id")
+router.route("/myRestaurant")
   .get(isAuthenticated, getOne);
 
 module.exports = router;
