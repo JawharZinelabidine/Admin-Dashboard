@@ -8,6 +8,23 @@ const { sendingMail } = require("../utils/mailing");
 require("dotenv").config();
 
 module.exports = {
+  getOneCustomers: async (req, res) => {
+    const id = req.params.customerId
+    try {
+      const customer = await user.findUnique({
+        where: {
+          id: +id,
+        },
+      });
+
+
+      res.status(201).json(customer);
+    } catch (error) {
+      console.error(error);
+      res.status(500).send(error);
+    }
+  },
+
   getOwners: async (req, res) => {
     try {
       const owners = await user.findMany();
