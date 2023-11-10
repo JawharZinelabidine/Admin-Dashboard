@@ -1,10 +1,17 @@
-const express = require('express');
+const express = require("express");
 const router = express.Router();
 
+const {
+  getPendingRestaurants,
+  getVerfiedOwners,
+  reviewRestaurantRequest,
+} = require("../controller/admin");
 
-const { } = require('../controller/admin');
+router
+  .route("/restaurants")
+  .get(getPendingRestaurants)
+  .post(reviewRestaurantRequest);
 
-router.route('/')
-    .get()
+router.route("/owners").get(getVerfiedOwners);
 
 module.exports = router;

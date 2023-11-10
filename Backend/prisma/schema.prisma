@@ -48,6 +48,7 @@ model Restaurant {
   longtitude        Float
   opening_time      DateTime      @db.Time
   closing_time      DateTime      @db.Time
+  status            Status        @default(Pending)
   isPremium         Boolean       @default(false)
   rating            Float?
   rating_count      Int?
@@ -103,11 +104,11 @@ model payment {
   restaurant_name String
 }
 
-enum Role {
-  CUSTOMER
-  OWNER
-  ADMIN
-}
+  enum Role {
+    CUSTOMER
+    OWNER
+    ADMIN
+  }
 
 enum Category {
   Italian
