@@ -1,4 +1,4 @@
-const { reservation, restaurant } = require("../model/index");
+const { reservation, restaurant, user } = require("../model/index");
 const axios = require('axios');
 
 module.exports = {
@@ -36,6 +36,27 @@ module.exports = {
                 })
 
                 res.status(201).json(request);
+
+                if (request) {
+                    try {
+
+                        await user.update({
+                            where: {
+                                id: thisRestaurant.ownerId
+                            },
+                            data: {
+                                hasNotification: true
+                            }
+                        })
+
+                        console.log(true)
+                    } catch (error) {
+                        console.log('Failed to change notification status:', error)
+
+
+                    }
+
+                }
 
             } else {
                 const remaining = thisRestaurant.reservation_quota - spotsTaken
@@ -147,6 +168,7 @@ module.exports = {
                     const { expoToken } = req.params
                     const title = 'Reservation approved!';
                     const body = `Your reservation with ${thisRestaurant.name} has been approved.`;
+                    const route = 'Reservation'
                     try {
                         const { data } = await axios.post(
                             'https://exp.host/--/api/v2/push/send',
@@ -154,6 +176,10 @@ module.exports = {
                                 to: expoToken,
                                 title,
                                 body,
+                                data: {
+                                    route
+                                }
+
                             }
                         );
 
@@ -161,6 +187,24 @@ module.exports = {
                     } catch (notificationError) {
                         console.error('Failed to send notification:', notificationError);
                     }
+                    try {
+
+                        await user.update({
+                            where: {
+                                id: thisReservation.customerId
+                            },
+                            data: {
+                                hasNotification: true
+                            }
+                        })
+
+                        console.log(true)
+                    } catch (error) {
+                        console.log('Failed to change notification status:', error)
+
+
+                    }
+
                 }
 
                 res.status(201).json(approved);
@@ -204,6 +248,7 @@ module.exports = {
                 const { expoToken } = req.params
                 const title = 'Your reservation was declined.';
                 const body = `Your reservation with ${thisRestaurant.name} has been declined.`;
+                const route = 'History'
                 try {
                     const { data } = await axios.post(
                         'https://exp.host/--/api/v2/push/send',
@@ -211,12 +256,33 @@ module.exports = {
                             to: expoToken,
                             title,
                             body,
+                            data: {
+                                route
+                            }
+
                         }
                     );
 
                     console.log('Notification sent:', data);
                 } catch (notificationError) {
                     console.error('Failed to send notification:', notificationError);
+                }
+                try {
+
+                    await user.update({
+                        where: {
+                            id: thisReservation.customerId
+                        },
+                        data: {
+                            hasNotification: true
+                        }
+                    })
+
+
+                } catch (error) {
+                    console.log('Failed to change notification status:', error)
+
+
                 }
             }
 
