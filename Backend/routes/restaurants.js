@@ -1,22 +1,42 @@
-const express = require('express');
+const express = require("express");
 const router = express.Router();
-const multer = require('multer');
+const multer = require("multer");
 const upload = multer();
 
+const {
+  getRestaurants,
+  getOne,
+  createRestaurant,
+  updloadRestaurantImages,
+  deleteImageByProperty,
+  updateImageByProperty,
+} = require("../controller/restaurants");
+router
+  .route("/")
+  .get(getRestaurants)
+  .post(
+    upload.fields([
+      { name: "mainImage", maxCount: 1 },
+      { name: "menuImages" },
+      { name: "extraImages" },
+    ]),
+    createRestaurant
+  );
 
-const {getRestaurants, getOne, createRestaurant,updloadRestaurantImages} = require('../controller/restaurants');
-
-  router.route('/')
-    .get(getRestaurants)
-    .post(createRestaurant)
-
-   router.route('/:id')
-    .get(getOne)
-   router.route('/upload/:id')
-.post(upload.single('main_image'), updloadRestaurantImages);
-
-
-
-
+router.route("/:id").get(getOne);
+router
+  .route("/upload/:id")
+  .post(
+    upload.fields([
+      { name: "mainImage", maxCount: 1 },
+      { name: "menuImages" },
+      { name: "extraImages" },
+    ]),
+    updloadRestaurantImages
+  );
+router.route("/:id/images").delete(deleteImageByProperty)
+router.route("/:id/images").post(upload.fields([
+    { name: 'newImageFile', maxCount: 1 },
+  ]),updateImageByProperty) 
 
 module.exports = router;

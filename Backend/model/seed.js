@@ -53,9 +53,6 @@ const createMany = async () => {
         longtitude: 10.6273,
         opening_time: new Date("2019-01-16 12:00:00"),
         closing_time: new Date("2019-01-16 23:00:00"),
-        ownerId: 14,
-        opening_time: new Date("2019-01-16 08:00:00"),
-        closing_time: new Date("2019-01-16 23:00:00"),
         ownerId: 2,
       },
       {
@@ -105,9 +102,6 @@ const createMany = async () => {
         reservation_quota: 20,
         latitude: 364929.748,
         longtitude: 101044.616,
-        opening_time: new Date("2019-01-16 12:00:00"),
-        closing_time: new Date("2019-01-16 01:00:00"),
-        ownerId: 16,
         opening_time: new Date("2019-01-16 08:00:00"),
         closing_time: new Date("2019-01-16 01:00:00"),
         ownerId: 4,
@@ -278,7 +272,7 @@ const createMany = async () => {
           "https://lh3.googleusercontent.com/p/AF1QipPPGeVzs4TFWVSWAe0aXnpZtCCdZIOMrsFOSvpD=s680-w680-h510",
          
           ],
-        City: "Djerba",
+        City: 'Monastir',
         phone_number: 73468126,
         reservation_quota: 20,
         latitude: 35.7602,
@@ -307,9 +301,6 @@ const createMany = async () => {
         reservation_quota: 20,
         latitude: 362721.82,
         longtitude: 104415.47,
-        opening_time: new Date("2019-01-16 13:00:00"),
-        closing_time: new Date("2019-01-16 22:00:00"),
-        ownerId: 24,
         opening_time: new Date("2019-01-16 08:00:00"),
         closing_time: new Date("2019-01-16 01:00:00"),
         ownerId: 12,
@@ -397,9 +388,7 @@ const createOwner = async () => {
 };
 
 
-  
-
-// createOwner();
+createOwner()
 createMany();
 
 
