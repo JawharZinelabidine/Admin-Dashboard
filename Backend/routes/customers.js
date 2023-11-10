@@ -10,7 +10,8 @@ router.route('/')
     .get(isAuthenticated, getCustomers)
     .post(createCustomers);
 
-router.route("/verify/:token").get(verifyEmail);
+router.route("/verify/:token")
+    .get(verifyEmail);
 
 router.route('/signin')
     .post(customerSignin);

@@ -111,6 +111,10 @@ module.exports = {
             "Account not verified. Another verification email has been sent. Please check your email for instructions.",
         });
       }
+      if (owner.role !== 'OWNER') {
+        res.status(403).json({ message: "Invalid user role" })
+
+      }
       else {
         const token = jwt.sign({ id: owner.id, role: owner.role }, process.env.JWT_SECRET, { expiresIn: "1d" });
         ;

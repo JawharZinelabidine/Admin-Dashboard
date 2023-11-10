@@ -139,6 +139,11 @@ module.exports = {
         return res.status(411).json({ error: "Invalid password" });
       }
 
+      if (customer.role !== 'CUSTOMER') {
+        res.status(403).json({ message: "Invalid user role" })
+
+      }
+
       const token = jwt.sign({ id: customer.id, role: customer.role }, process.env.JWT_SECRET, { expiresIn: "1d" });
       return res.status(201).json({ message: "Customer successfully logged in", token: token });
     } catch (error) {
