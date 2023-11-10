@@ -1,7 +1,8 @@
 const express = require("express");
 const router = express.Router();
 
-const isOwnerAuthenticated = require("../middlwares/isOwnerAuthenticated")
+const isAuthenticated = require('../middlwares/isAuthenticated')
+const isOwnerAuthorized = require('../middlwares/isOwnerAuthorized')
 
 const {
   getOwners,
@@ -15,10 +16,10 @@ const {
 router.route("/").get(getOwners).post(createOwner);
 
 router.route("/home")
-  .get(getOwners)
-router.route('/notification/:id')
-  .get(checkNotification)
-  .put(removeNotification)
+  .get(isAuthenticated, getOwners)
+router.route('/notification')
+  .get(isAuthenticated, isOwnerAuthorized, checkNotification)
+  .put(isAuthenticated, isOwnerAuthorized, removeNotification)
 router.route("/signin").post(signin);
 router.route("/verify/:token").post(verifyEmail);
 

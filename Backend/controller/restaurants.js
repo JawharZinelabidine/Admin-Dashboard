@@ -13,11 +13,11 @@ module.exports = {
     }
   },
   getOne: async (req, res) => {
-    const ownerId = parseInt(req.params.id);
+    const id = req.userId
     try {
       const restaurant = await prisma.restaurant.findFirst({
         where: {
-          ownerId: ownerId,
+          ownerId: id,
         },
       });
       if (restaurant) {
@@ -46,8 +46,9 @@ module.exports = {
         mainImage,
         menuImages,
         extraImages,
-        ownerId
       } = req.body;
+      const id = req.userId
+
       console.log(req.body);
       const mainImageUrl = await uploadToCloudinary(mainImage);
       const menuImageUrls = await Promise.all(
@@ -76,7 +77,7 @@ module.exports = {
           extra_images: extraImageUrls,
           latitude: latitude,
           longtitude: longtitude,
-          ownerId: +ownerId,
+          ownerId: id,
         },
       });
       res.status(201).json(createdRestaurant);
