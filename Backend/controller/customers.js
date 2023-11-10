@@ -25,6 +25,7 @@ module.exports = {
         },
       });
 
+
       res.status(201).json(customer);
     } catch (error) {
       console.error(error);
@@ -159,12 +160,52 @@ module.exports = {
           expoToken: token,
         },
       });
-
-      res
-        .status(201)
-        .json({ message: "Expo token successfully received!", token: token });
+      res.status(201).json({ message: "Expo token successfully received!", token: token });
     } catch (error) {
       res.status(500).json({ message: "no Expo token" });
     }
+  },
+  checkNotification: async (req, res) => {
+    const id = req.params.id
+
+    try {
+      const { hasNotification } = await user.findUnique({
+        where: {
+          id: +id
+        }
+      })
+      console.log(hasNotification)
+      res.status(200).send(hasNotification)
+
+    } catch (error) {
+
+      console.log(error)
+      res.status(500).json({ message: 'Failed to retrieve notification status' })
+
+    }
+
+  },
+  removeNotification: async (req, res) => {
+    const id = req.params.id
+
+    try {
+      const { hasNotification } = await user.update({
+        where: {
+          id: +id
+        },
+        data: {
+          hasNotification: false
+        }
+      })
+      console.log(hasNotification)
+      res.status(200).send(hasNotification)
+
+    } catch (error) {
+
+      console.log(error)
+      res.status(500).json({ message: 'Failed to update notification status' })
+
+    }
+
   },
 };
