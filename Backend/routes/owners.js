@@ -3,7 +3,9 @@ const router = express.Router();
 const multer = require("multer");
 const upload = multer();
 
-const isOwnerAuthenticated = require("../middlwares/isOwnerAuthenticated");
+
+const isAuthenticated = require('../middlwares/isAuthenticated')
+const isOwnerAuthorized = require('../middlwares/isOwnerAuthorized')
 
 const {
   getOwners,
@@ -13,6 +15,7 @@ const {
   removeNotification,
   checkNotification,
 } = require("../controller/owners");
+
 
 router
   .route("/")
@@ -25,11 +28,14 @@ router
     createOwner
   );
 
-router
-  .route("/notification/:id")
-  .get(checkNotification)
-  .put(removeNotification);
 
+
+
+router.route("/home")
+  .get(isAuthenticated, getOwners)
+router.route('/notification')
+  .get(isAuthenticated, isOwnerAuthorized, checkNotification)
+  .put(isAuthenticated, isOwnerAuthorized, removeNotification)
 router.route("/signin").post(signin);
 
 router.route("/verify/:token").post(verifyEmail);
