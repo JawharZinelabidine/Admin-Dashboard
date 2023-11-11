@@ -1,11 +1,10 @@
-const prisma = require("../model/index");
 const { restaurant } = require("../model/index");
 const uploadToCloudinary = require("./helpers/cloudinary");
 
 module.exports = {
   getRestaurants: async (req, res) => {
     try {
-      const restaurants = await prisma.restaurant.findMany();
+      const restaurants = await restaurant.findMany();
       res.status(200).json(restaurants);
     } catch (error) {
       console.error(error);
@@ -13,17 +12,19 @@ module.exports = {
     }
   },
   getOne: async (req, res) => {
-    const ownerId = parseInt(req.params.id);
+    const id = req.userId
     try {
-      const restaurant = await prisma.restaurant.findFirst({
+      const resto = await restaurant.findFirst({
         where: {
-          ownerId: 2,
+          ownerId: id,
         },
       });
-      if (restaurant) {
-        res.status(200).json(restaurant);
+      if (resto) {
+        res.status(200).json(resto);
       } else {
-        res.status(404).json({ error: "Restaurant not found for the specified ownerId" });
+        res
+          .status(404)
+          .json({ error: "Restaurant not found for the specified ownerId" });
       }
         
   } catch (error) {
@@ -97,7 +98,7 @@ updloadRestaurantImages: async (req, res) => {
           menuImages,
           extraImages,
       } = req.body;
-      console.log(menuImages);
+      const id = req.userId
 
       const mainImageUrl = await uploadToCloudinary(mainImage);
       console.log(mainImageUrl);
@@ -116,7 +117,7 @@ updloadRestaurantImages: async (req, res) => {
           );
       }
 
-      const business = await restaurant.update({
+      const restaurantItem = await restaurant.update({
           where: {
               id: parseInt(restaurantId),
           },
@@ -127,7 +128,7 @@ updloadRestaurantImages: async (req, res) => {
           },
       });
 
-      res.status(201).json(business);
+      res.status(201).json(restaurantItem);
   } catch (error) {
       console.error(error);
       res.status(500).send(error);
@@ -157,15 +158,15 @@ deleteImageByProperty: async (req, res) => {
         return res.status(400).json({ error: "Invalid property" });
     }
 
-    const restaurant = await prisma.restaurant.update({
+    const restaurantItem = await restaurant.update({
       where: {
         id: parseInt(restaurantId),
       },
       data: deleteQuery,
     });
 
-    if (restaurant) {
-      res.status(200).json(restaurant);
+    if (restaurantItem) {
+      res.status(200).json(restaurantItem);
     } else {
       res.status(404).json({ error: "Restaurant not found" });
     }
@@ -196,17 +197,16 @@ updateImageByProperty: async (req, res) => {
         break;
       case "menu_images":
       case "extra_images":
-        const restaurant = await prisma.restaurant.findUnique({
+        const restaurantItem = await restaurant.findUnique({
           where: {
             id: parseInt(restaurantId),
           },
         });
 
-        if (restaurant) {
-          const oldImageIndex = restaurant[property].indexOf(oldImageUrl);
+        if (restaurantItem) {
+          const oldImageIndex = restaurantItem[property].indexOf(oldImageUrl);
 
           if (oldImageIndex !== -1) {
-            // Replace old image URL with new URL at the same index
             restaurant[property][oldImageIndex] = newImageUrl;
             updatedProperty = restaurant[property];
           } else {
@@ -224,7 +224,7 @@ updateImageByProperty: async (req, res) => {
       [property]: updatedProperty,
     };
 
-    const updatedRestaurant = await prisma.restaurant.update({
+    const updatedRestaurant = await restaurant.update({
       where: {
         id: parseInt(restaurantId),
       },

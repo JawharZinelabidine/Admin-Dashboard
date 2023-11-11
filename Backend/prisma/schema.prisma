@@ -17,9 +17,10 @@ model User {
   fullname        String        @db.VarChar(255)
   email           String        @unique @db.VarChar(255)
   password        String        @db.VarChar(255)
+  hasNotification Boolean       @default(false)
   isVerified      Boolean       @default(false)
   verifyToken     String?
-  otp             Int?          
+  otp             Int?
   role            Role
   personalID      String?       @db.Text
   tax_declaration String?       @db.Text
@@ -47,6 +48,7 @@ model Restaurant {
   longtitude        Float
   opening_time      DateTime      @db.Time
   closing_time      DateTime      @db.Time
+  status            Status        @default(Pending)
   isPremium         Boolean       @default(false)
   rating            Float?
   rating_count      Int?
@@ -66,6 +68,7 @@ model Reservation {
   date         DateTime   @db.Date
   time         DateTime   @db.Time()
   guest_number Int
+  canReview    Boolean    @default(false)
   customer     User       @relation(fields: [customerId], references: [id], onDelete: Cascade)
   restaurant   Restaurant @relation(fields: [restaurantId], references: [id], onDelete: Cascade)
   customerId   Int
