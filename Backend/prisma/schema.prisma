@@ -21,6 +21,7 @@ model User {
   isVerified      Boolean       @default(false)
   verifyToken     String?
   otp             Int?
+  resetCode       Int? 
   role            Role
   personalID      String?       @db.Text
   tax_declaration String?       @db.Text
