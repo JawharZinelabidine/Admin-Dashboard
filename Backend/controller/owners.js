@@ -44,16 +44,16 @@ module.exports = {
         return res.status(400).json({ error: "Email already exists" });
       }
       const hashpassword = await bcrypt.hash(password, 10);
-      const personalIdUrl = await uploadToCloudinary(personalId);
-      const taxDeclarationUrl = await uploadToCloudinary(taxDeclaration);
+      // const personalIdUrl = await uploadToCloudinary(personalId);
+      // const taxDeclarationUrl = await uploadToCloudinary(taxDeclaration);
       const verifyToken = crypto.randomBytes(32).toString("hex");
       const owner = await user.create({
         data: {
           fullname,
           email,
           password: hashpassword,
-          personalID: personalIdUrl,
-          tax_declaration: taxDeclarationUrl,
+          // personalID: personalIdUrl,
+          // tax_declaration: taxDeclarationUrl,
           role: "OWNER",
           verifyToken,
         },
@@ -143,7 +143,7 @@ module.exports = {
       }
       else {
         const token = jwt.sign({ id: owner.id, role: owner.role }, process.env.JWT_SECRET, { expiresIn: "1d" });
-        
+
 
 
         const myRestaurant = await restaurant.findFirst({
@@ -201,7 +201,6 @@ module.exports = {
           hasNotification: false,
         },
       });
-      console.log(hasNotification);
       res.status(200).send(hasNotification);
     } catch (error) {
       console.log(error);
