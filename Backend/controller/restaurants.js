@@ -47,10 +47,9 @@ module.exports = {
         mainImage,
         menuImages,
         extraImages,
+
       } = req.body;
       const id = req.userId
-
-      console.log(req.body);
       const mainImageUrl = await uploadToCloudinary(mainImage);
       const menuImageUrls = await Promise.all(
         menuImages.map((menuImage) => uploadToCloudinary(menuImage))

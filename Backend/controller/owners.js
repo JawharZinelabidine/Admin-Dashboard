@@ -8,6 +8,23 @@ const { sendingMail } = require("../utils/mailing");
 require("dotenv").config();
 
 module.exports = {
+  getOneCustomers: async (req, res) => {
+    const id = req.params.customerId
+    try {
+      const customer = await user.findUnique({
+        where: {
+          id: +id,
+        },
+      });
+
+
+      res.status(201).json(customer);
+    } catch (error) {
+      console.error(error);
+      res.status(500).send(error);
+    }
+  },
+
   getOwners: async (req, res) => {
     try {
       const owners = await user.findMany();
@@ -27,16 +44,16 @@ module.exports = {
         return res.status(400).json({ error: "Email already exists" });
       }
       const hashpassword = await bcrypt.hash(password, 10);
-      const personalIdUrl = await uploadToCloudinary(personalId);
-      const taxDeclarationUrl = await uploadToCloudinary(taxDeclaration);
+      // const personalIdUrl = await uploadToCloudinary(personalId);
+      // const taxDeclarationUrl = await uploadToCloudinary(taxDeclaration);
       const verifyToken = crypto.randomBytes(32).toString("hex");
       const owner = await user.create({
         data: {
           fullname,
           email,
           password: hashpassword,
-          personalID: personalIdUrl,
-          tax_declaration: taxDeclarationUrl,
+          // personalID: personalIdUrl,
+          // tax_declaration: taxDeclarationUrl,
           role: "OWNER",
           verifyToken,
         },
@@ -165,7 +182,6 @@ module.exports = {
           hasNotification: false,
         },
       });
-      console.log(hasNotification);
       res.status(200).send(hasNotification);
     } catch (error) {
       console.log(error);

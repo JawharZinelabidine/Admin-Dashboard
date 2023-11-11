@@ -201,7 +201,6 @@ module.exports = {
           hasNotification: false
         }
       })
-      console.log(hasNotification)
       res.status(200).send(hasNotification)
 
     } catch (error) {

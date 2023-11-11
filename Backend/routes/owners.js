@@ -7,6 +7,7 @@ const isAuthenticated = require('../middlwares/isAuthenticated')
 const isOwnerAuthorized = require('../middlwares/isOwnerAuthorized')
 
 const {
+  getOneCustomers,
   getOwners,
   createOwner,
   signin,
