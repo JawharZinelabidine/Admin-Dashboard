@@ -48,6 +48,7 @@ model Restaurant {
   longtitude        Float
   opening_time      DateTime      @db.Time
   closing_time      DateTime      @db.Time
+  status            Status        @default(Pending)
   isPremium         Boolean       @default(false)
   rating            Float?
   rating_count      Int?
@@ -67,6 +68,7 @@ model Reservation {
   date         DateTime   @db.Date
   time         DateTime   @db.Time()
   guest_number Int
+  canReview    Boolean    @default(false)
   customer     User       @relation(fields: [customerId], references: [id], onDelete: Cascade)
   restaurant   Restaurant @relation(fields: [restaurantId], references: [id], onDelete: Cascade)
   customerId   Int

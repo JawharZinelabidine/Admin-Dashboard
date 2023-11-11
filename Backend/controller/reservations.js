@@ -5,7 +5,8 @@ module.exports = {
 
     sendReservationRequest: async (req, res) => {
         const { date, time, guest_number } = req.body
-        const { customerId, restaurantId } = req.params
+        const { restaurantId } = req.params
+        const id = req.userId
         try {
 
             if (!date || !time || !guest_number) {
@@ -31,7 +32,7 @@ module.exports = {
             if (spotsTaken + guest_number <= thisRestaurant.reservation_quota) {
                 const request = await reservation.create({
                     data: {
-                        date: new Date(date), time: new Date(time), guest_number: guest_number, customerId: +customerId, restaurantId: +restaurantId
+                        date: new Date(date), time: new Date(time), guest_number: guest_number, customerId: id, restaurantId: +restaurantId
                     }
                 })
 
@@ -49,7 +50,6 @@ module.exports = {
                             }
                         })
 
-                        console.log(true)
                     } catch (error) {
                         console.log('Failed to change notification status:', error)
 
@@ -183,7 +183,6 @@ module.exports = {
                             }
                         );
 
-                        console.log('Notification sent:', data);
                     } catch (notificationError) {
                         console.error('Failed to send notification:', notificationError);
                     }
@@ -198,7 +197,6 @@ module.exports = {
                             }
                         })
 
-                        console.log(true)
                     } catch (error) {
                         console.log('Failed to change notification status:', error)
 
@@ -263,7 +261,6 @@ module.exports = {
                         }
                     );
 
-                    console.log('Notification sent:', data);
                 } catch (notificationError) {
                     console.error('Failed to send notification:', notificationError);
                 }
@@ -297,12 +294,11 @@ module.exports = {
 
 
     fetchUpcomingReservations: async (req, res) => {
-        const { customerId } = req.params
-
+        const id = req.userId
         try {
             const upcoming = await reservation.findMany({
                 where: {
-                    customerId: +customerId,
+                    customerId: id,
                     date: {
                         gte: new Date().toISOString()
                     },
@@ -327,12 +323,12 @@ module.exports = {
     },
 
     fetchExpiredReservations: async (req, res) => {
-        const { customerId } = req.params
+        const id = req.userId
 
         try {
             const expired = await reservation.findMany({
                 where: {
-                    customerId: +customerId,
+                    customerId: id,
 
                     OR: [
                         {
