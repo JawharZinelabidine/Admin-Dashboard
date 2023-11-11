@@ -21,10 +21,10 @@ const {
 router.route("/")
   .get(getOwners)
   .post(
-    upload.fields([
-      { name: "personalId", maxCount: 1 },
-      { name: "taxDeclaration", maxCount: 1 },
-    ]),
+    // upload.fields([
+    //   { name: "personalId", maxCount: 1 },
+    //   { name: "taxDeclaration", maxCount: 1 },
+    // ]),
     createOwner
   );
 
