@@ -147,6 +147,41 @@ module.exports = {
     }
   },
 
+
+   forgotPassword : async (req, res) => {
+    const { email } = req.body;
+    try {
+      const customer = await user.findUnique({
+        where: { email },
+      });
+  
+      if (!customer) {
+        return res.status(404).json({ error: "Email not found" });
+      }
+  
+      const resetCode = Math.floor(1000 + Math.random() * 9000);
+
+      await user.update({
+        where: { id: customer.id },
+        data: { resetCode },
+      });
+  
+      const emailText = `Your reset code is: ${resetCode}. Use this code to reset your password.`;
+  
+      await sendingMail({
+        from: process.env.EMAIL,
+        to: customer.email,
+        subject: "Password Reset Code",
+        text: emailText,
+      });
+  
+      res.status(200).json({ message: "Reset code sent to your email" });
+    } catch (error) {
+      console.log(error);
+      res.status(500).send(error);
+    }
+  },
+
   getExpoToken: async (req, res) => {
     const id = req.params.id;
     const token = req.body.token;
