@@ -10,17 +10,15 @@ const restaurantSlice = createSlice({
   initialState,
   reducers: {
     setShowRestaurantDetails: (state, action) => {
-      state.restaurantId = action.payload;
+      state.showRestaurantDetails = action.payload;
     },
     setRestaurantId: (state, action) => {
-      state.showRestaurantDetails = action.payload;
+      state.restaurantId = action.payload;
     },
   },
 });
 
-export const {
-    setShowRestaurantDetails,
-    setRestaurantId,
-  } = restaurantSlice.actions;
-  
-  export default restaurantSlice.reducer;
+export const { setShowRestaurantDetails, setRestaurantId } =
+  restaurantSlice.actions;
+
+export default restaurantSlice.reducer;

@@ -2,9 +2,18 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import PendingRestaurant from './PendingRestaurant';
+import RestaurantDetails from './RestaurantDetails';
+import { useSelector, useDispatch } from 'react-redux';
+import { setRestaurantId, setShowRestaurantDetails } from "../features/restaurantSlice";
 
 function NewApplication() {
+  const dispatch = useDispatch();
   const [restaurants, setRestaurants] = useState([]);
+  const { showRestaurantDetails } = useSelector(state => state.restaurant);
+  const handleClick = () => {
+    dispatch(setRestaurantId(null))
+    dispatch(setShowRestaurantDetails(!showRestaurantDetails));
+  };
 
   const fetchRestaurants = async () => {
     try {
@@ -136,14 +145,26 @@ function NewApplication() {
               <div className="overflow-y-auto" style={{ maxHeight: "24rem" }}>
                 <ul className="p-6 space-y-6">
                   {restaurants.map(restaurant => (
-                    <li className="flex items-center" key={restaurant.id}> < PendingRestaurant restaurant={restaurant}/></li>
+                    <li className="flex items-center" key={restaurant.id}> < PendingRestaurant restaurant={restaurant} /></li>
                   ))}
                 </ul>
               </div>
             </div>
           </section>
         </main>
-      </div>
+        {showRestaurantDetails && (
+          <div className="fixed inset-0 flex items-center justify-center">
+            <div className="bg-gray-800 bg-opacity-75 absolute inset-0" />
+            <RestaurantDetails />
+            <button
+              className="absolute top-0 right-0 p-4 cursor-pointer"
+              onClick={handleClick}
+            >
+              Close
+            </button>
+          </div>
+        )}
+      </div >
     </>
   );
 }

@@ -1,8 +1,12 @@
 import React from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { setRestaurantId, setShowRestaurantDetails } from "../features/restaurantSlice";
 
 function PendingRestaurant({ restaurant }) {
-
+    const dispatch = useDispatch();
+    const { showRestaurantDetails } = useSelector(state => state.restaurant);
     const handleRestaurantClick = () => {
+        dispatch(setShowRestaurantDetails(!showRestaurantDetails));
     };
 
     return (
