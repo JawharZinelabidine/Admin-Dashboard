@@ -6,6 +6,7 @@ const { sendingMail } = require("../utils/mailing");
 require("dotenv").config();
 const jwt = require("jsonwebtoken");
 
+
 module.exports = {
   getCustomers: async (req, res) => {
     try {
@@ -152,6 +153,82 @@ module.exports = {
     }
   },
 
+
+  forgotPassword: async (req, res) => {
+    const { email } = req.body;
+    console.log('Email received for password reset:', email);
+    try {
+      const customer = await user.findUnique({
+        where: { email },
+      });
+  
+      if (!customer) {
+        return res.status(404).json({ error: "User with the provided email does not exist" });
+      }
+  
+      const resetCode = Math.floor(1000 + Math.random() * 9000);
+      await user.update({
+        where: { id: customer.id },
+        data:{resetCode: { set: resetCode }}
+      });
+     
+  
+      const emailText = `Your reset code is: ${resetCode}. Use this code to reset your password.`;
+      await sendingMail({
+        from: process.env.EMAIL,
+        to: customer.email,
+        subject: "Password Reset Code",
+        text: emailText,
+      });
+  
+      res.status(200).json({ message: "Reset code sent to your email" });
+    } catch (error) {
+      console.error(error);
+      res.status(500).send("Internal Server Error");
+    }
+  },
+
+
+verifyResetCode: async (req, res) => {
+  const { email, resetCode } = req.body;
+
+  try {
+    const customer = await user.findFirst({
+      where: { email, resetCode: +resetCode },
+    });
+
+    if (!customer) {
+      return res.status(404).json({ error: "Invalid reset code or email" });
+    }
+
+    res.status(200).json({ message: "Reset code verified successfully" });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Internal Server Error" });
+  }
+},
+updatePassword : async (req, res) => {
+  const { email, newPassword } = req.body;
+  try {
+    const customer = await user.findUnique({
+      where: { email },
+    });
+    if (!customer) {
+      return res.status(404).json({ error: "User with the provided email does not exist" });
+    }
+    const hashNewPassword = await bcrypt.hash(newPassword, 10);
+    await user.update({
+      where: { id: customer.id },
+      data: { password: hashNewPassword , resetCode: { set: null }},
+    });
+
+    res.status(200).json({ message: "Password updated successfully" });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Internal Server Error" });
+  }
+},
+
   getExpoToken: async (req, res) => {
     const id = req.userId;
     const token = req.body.token;
@@ -163,6 +240,8 @@ module.exports = {
         },
         data: {
           expoToken: token,
+        
+          
         },
       });
       res.status(201).json({ message: "Expo token successfully received!", token: token });
