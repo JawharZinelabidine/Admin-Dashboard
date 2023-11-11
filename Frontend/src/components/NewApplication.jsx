@@ -61,10 +61,6 @@ function NewApplication() {
             Home
           </button></Link>
         </div>
-
-
-
-
       <div className="flex flex-shrink-0 items-center ml-auto">
         <button className="inline-flex items-center p-2 hover:bg-gray-100 focus:bg-gray-100 rounded-lg">
           <div className="hidden md:flex md:flex-col md:items-end md:leading-tight">
