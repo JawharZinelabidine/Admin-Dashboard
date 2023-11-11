@@ -34,6 +34,22 @@ module.exports = {
       res.status(500).send(error);
     }
   },
+  getPendingRestaurant : async (req, res) => {
+    const restaurantId = req.params.id;
+    try {
+      const uniqueRestaurant = await restaurant.findUnique ({
+        where: {
+          id: restaurantId,
+          status: "Pending"
+        }
+      })
+      if (uniqueRestaurant) res.status(200).json(uniqueRestaurant);
+      else res.status(404).json({error: "pending restaurant not found"})
+    } catch (error) {
+      console.log(error);
+      res.status(500).send(error)
+    }
+  },
 
   getVerfiedOwner: async (req, res) => {
     const ownerId = req.params.id;

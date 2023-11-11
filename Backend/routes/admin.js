@@ -5,6 +5,7 @@ const {
   getPendingRestaurants,
   getVerfiedOwner,
   reviewRestaurantRequest,
+  getPendingRestaurant,
 } = require("../controller/admin");
 
 router
@@ -14,4 +15,5 @@ router
 
 router.route("/owners/:id").get(getVerfiedOwner);
 
+router.route("/restaurant/:id").get(getPendingRestaurant);
 module.exports = router;
