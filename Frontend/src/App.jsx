@@ -11,12 +11,14 @@ import Home from "./components/Home";
 function App() {
   return (
     <Router>
-    <Routes>
-      <Route path="/" element={<Navigate replace to="/login" />} />
-      <Route path="/login" element={<Home />} />
-    </Routes>
-  </Router>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/login" element={<Login />} />
+      </Routes>
+    </Router>
   )
 }
 
 export default App
+
+//merging
