@@ -3,8 +3,8 @@ const router = express.Router();
 const multer = require("multer");
 const upload = multer();
 
-const isAuthenticated = require('../middlwares/isAuthenticated')
-const isOwnerAuthorized = require('../middlwares/isOwnerAuthorized')
+const isAuthenticated = require("../middlwares/isAuthenticated");
+const isOwnerAuthorized = require("../middlwares/isOwnerAuthorized");
 
 const {
   getOneCustomers,
@@ -32,11 +32,11 @@ router
   .get(checkNotification)
   .put(removeNotification);
 
-router.route("/home")
-  .get(isAuthenticated, getOwners)
-router.route('/notification')
+router.route("/home").get(isAuthenticated, getOwners);
+router
+  .route("/notification")
   .get(isAuthenticated, isOwnerAuthorized, checkNotification)
-  .put(isAuthenticated, isOwnerAuthorized, removeNotification)
+  .put(isAuthenticated, isOwnerAuthorized, removeNotification);
 router.route("/signin").post(signin);
 
 router.route("/verify/:token").post(verifyEmail);

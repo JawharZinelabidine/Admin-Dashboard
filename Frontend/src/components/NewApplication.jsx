@@ -1,10 +1,26 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import axios from 'axios';
+import PendingRestaurant from './PendingRestaurant';
 
 function NewApplication() {
+  const [restaurants, setRestaurants] = useState([]);
+
+  const fetchRestaurants = async () => {
+    try {
+      const { data } = await axios.get("http://localhost:3000/api/admin/restaurants");
+      setRestaurants(data)
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  useEffect(() => {
+    fetchRestaurants();
+  }, []);
   return (
     <>
-      <div className="flex-grow  min-h-screen text-white bg-gray-900 w-full">
+      <div className="flex-grow min-h-screen text-white bg-gray-900 w-full">
         <header className="flex items-center h-20 px-6 sm:px-10 bg-gray-900 shadow-lg">
           <button className="block sm:hidden relative flex-shrink-0 p-2 mr-2 text-gray-600 hover:bg-gray-100 hover:text-gray-800 focus:bg-gray-100 focus:text-gray-800 rounded-full">
             <span className="sr-only">Menu</span>
@@ -116,14 +132,12 @@ function NewApplication() {
             <div className="row-span-3 bg-gray-800 shadow-lg rounded-lg">
               <div className="flex items-center justify-between px-6 py-5 font-semibold border-b border-gray-100">
                 <span>Restaurants applications</span>
-                {/* Refer here for full dropdown menu code: https://tailwindui.com/components/application-ui/elements/dropdowns */}
               </div>
               <div className="overflow-y-auto" style={{ maxHeight: "24rem" }}>
                 <ul className="p-6 space-y-6">
-                  <li className="flex items-center">
-                    <span className="text-gray-600">reservi</span>
-                    <span className="ml-auto font-semibold">9.3</span>
-                  </li>
+                  {restaurants.map(restaurant => (
+                    <li className="flex items-center" key={restaurant.id}> < PendingRestaurant restaurant={restaurant}/></li>
+                  ))}
                 </ul>
               </div>
             </div>

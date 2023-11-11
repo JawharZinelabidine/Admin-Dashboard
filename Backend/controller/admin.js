@@ -9,12 +9,26 @@ module.exports = {
         where: {
           status: "Pending",
         },
+        include: {
+          owner: {
+            select: {
+              fullname: true,
+            },
+          },
+        },
       });
-      if (restaurants) res.status(200).json(restaurants);
-      else
+      if (restaurants) {
+        const restaurantsWithOwnerNames = restaurants.map((restaurant) => ({
+          ...restaurant,
+          ownerName: restaurant.owner.fullname,
+        }));
+
+        res.status(200).json(restaurantsWithOwnerNames);
+      } else {
         res
           .status(404)
           .json({ error: "Restaurants not found with pending status" });
+      }
     } catch (error) {
       console.error(error);
       res.status(500).send(error);
