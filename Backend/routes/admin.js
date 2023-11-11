@@ -3,7 +3,7 @@ const router = express.Router();
 
 const {
   getPendingRestaurants,
-  getVerfiedOwners,
+  getVerfiedOwner,
   reviewRestaurantRequest,
 } = require("../controller/admin");
 
@@ -12,6 +12,6 @@ router
   .get(getPendingRestaurants)
   .post(reviewRestaurantRequest);
 
-router.route("/owners").get(getVerfiedOwners);
+router.route("/owners/:id").get(getVerfiedOwner);
 
 module.exports = router;

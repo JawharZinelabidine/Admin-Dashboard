@@ -35,15 +35,17 @@ module.exports = {
     }
   },
 
-  getVerfiedOwners: async (req, res) => {
+  getVerfiedOwner: async (req, res) => {
+    const ownerId = req.params.id;
     try {
-      const owners = await user.findMany({
+      const owner = await user.findUnique({
         where: {
+          id: ownerId,
           isVerified: true,
         },
       });
-      if (owners) res.status(200).json(owners);
-      else res.status(404).json({ error: "active owners accounts not found" });
+      if (owner) res.status(200).json(owner);
+      else res.status(404).json({ error: "active owner account not found" });
     } catch (error) {
       console.error(error);
       res.status(500).send(error);
