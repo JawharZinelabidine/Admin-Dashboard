@@ -1,11 +1,10 @@
-const prisma = require("../model/index");
 const { restaurant } = require("../model/index");
 const uploadToCloudinary = require("../helpers/CloudinaryUpload");
 
 module.exports = {
   getRestaurants: async (req, res) => {
     try {
-      const restaurants = await prisma.restaurant.findMany();
+      const restaurants = await restaurant.findMany();
       res.status(200).json(restaurants);
     } catch (error) {
       console.error(error);
@@ -13,17 +12,19 @@ module.exports = {
     }
   },
   getOne: async (req, res) => {
-    const ownerId = parseInt(req.params.id);
+    const id = req.userId
     try {
-      const restaurant = await prisma.restaurant.findFirst({
+      const resto = await restaurant.findFirst({
         where: {
-          ownerId: ownerId,
+          ownerId: id,
         },
       });
-      if (restaurant) {
-        res.status(200).json(restaurant);
+      if (resto) {
+        res.status(200).json(resto);
       } else {
-        res.status(404).json({ error: "Restaurant not found for the specified ownerId" });
+        res
+          .status(404)
+          .json({ error: "Restaurant not found for the specified ownerId" });
       }
     } catch (error) {
       console.error(error);
@@ -46,9 +47,11 @@ module.exports = {
         mainImage,
         menuImages,
         extraImages,
-        ownerId
+
       } = req.body;
-      console.log(req.body);
+      const id = req.userId
+
+
       const mainImageUrl = await uploadToCloudinary(mainImage);
       const menuImageUrls = await Promise.all(
         menuImages.map((menuImage) => uploadToCloudinary(menuImage))
@@ -76,7 +79,7 @@ module.exports = {
           extra_images: extraImageUrls,
           latitude: latitude,
           longtitude: longtitude,
-          ownerId: +ownerId,
+          ownerId: id,
         },
       });
       res.status(201).json(createdRestaurant);
