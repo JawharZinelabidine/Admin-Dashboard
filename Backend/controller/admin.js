@@ -34,29 +34,29 @@ module.exports = {
       res.status(500).send(error);
     }
   },
-  getPendingRestaurant : async (req, res) => {
+  getPendingRestaurant: async (req, res) => {
     const restaurantId = req.params.id;
     try {
-      const uniqueRestaurant = await restaurant.findUnique ({
+      const uniqueRestaurant = await restaurant.findUnique({
         where: {
-          id: restaurantId,
-          status: "Pending"
-        }
-      })
+          id: +restaurantId,
+          status: "Pending",
+        },
+      });
       if (uniqueRestaurant) res.status(200).json(uniqueRestaurant);
-      else res.status(404).json({error: "pending restaurant not found"})
+      else res.status(404).json({ error: "pending restaurant not found" });
     } catch (error) {
       console.log(error);
-      res.status(500).send(error)
+      res.status(500).send(error);
     }
   },
 
-  getVerfiedOwner: async (req, res) => {
+  getVerifiedOwner: async (req, res) => {
     const ownerId = req.params.id;
     try {
       const owner = await user.findUnique({
         where: {
-          id: ownerId,
+          id: +ownerId,
           isVerified: true,
         },
       });
@@ -68,12 +68,13 @@ module.exports = {
     }
   },
   reviewRestaurantRequest: async (req, res) => {
-    const { restaurantId, decision } = req.body;
+    const decision = req.body;
+    const restaurantId = req.params.id;
 
     try {
       const requestedRestaurant = await restaurant.findUnique({
         where: {
-          id: restaurantId,
+          id: +restaurantId,
           status: "Pending",
         },
       });
@@ -82,14 +83,14 @@ module.exports = {
         return res.status(404).json({ error: "Pending restaurant not found" });
       }
       const updatedRestaurant = await restaurant.update({
-        where: { id: restaurantId },
+        where: { id: +restaurantId },
         data: {
           status: decision === "approve" ? "Approved" : "Declined",
         },
       });
       console.log(updatedRestaurant);
       const owner = await user.findUnique({
-        where: { id: requestedRestaurant.ownerId },
+        where: { id: +requestedRestaurant.ownerId },
       });
 
       const subject =
