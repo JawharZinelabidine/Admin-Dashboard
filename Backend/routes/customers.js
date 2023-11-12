@@ -4,7 +4,7 @@ const isAuthenticated = require('../middlwares/isAuthenticated')
 const isCustomerAuthorized = require('../middlwares/isCustomerAuthorized')
 
 
-const { getCustomers, createCustomers, customerSignin, getOneCustomers, getExpoToken, verifyEmail, checkNotification, removeNotification } = require('../controller/customers');
+const { getCustomers, createCustomers, customerSignin, getOneCustomers, getExpoToken, verifyEmail, checkNotification, removeNotification , forgotPassword , verifyResetCode, updatePassword  } = require('../controller/customers');
 
 router.route('/')
     .get(isAuthenticated, getCustomers)
@@ -12,6 +12,11 @@ router.route('/')
 
 router.route("/verify/:token")
     .get(verifyEmail);
+
+router.route('/forgotpassword').post(forgotPassword);
+router.route('/verifyresetcode').post(verifyResetCode);
+router.route('/updatePassword').put(updatePassword);
+
 
 router.route('/signin')
     .post(customerSignin);
