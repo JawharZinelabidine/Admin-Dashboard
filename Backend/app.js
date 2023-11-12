@@ -9,14 +9,18 @@ const reviewsRouter = require('./routes/reviews')
 const messagesRouter = require('./routes/messages')
 const paymentsRouter = require('./routes/payments')
 const prisma = require("./model/index");
+var bodyParser = require('body-parser');
 
 
 const app = express()
+
 const port = 3000
 
 app.use(cors())
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(bodyParser.json());
+
 
 
 const connect = async () => {
@@ -30,6 +34,7 @@ const connect = async () => {
 }
 
 connect()
+
 
 app.use('/api/admin', adminRouter)
 app.use('/api/customers', customersRouter)

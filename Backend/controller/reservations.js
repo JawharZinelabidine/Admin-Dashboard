@@ -1,10 +1,12 @@
-const { reservation, restaurant } = require("../model/index");
+const { reservation, restaurant, user } = require("../model/index");
+const axios = require('axios');
 
 module.exports = {
 
     sendReservationRequest: async (req, res) => {
         const { date, time, guest_number } = req.body
-        const { customerId, restaurantId } = req.params
+        const { restaurantId } = req.params
+        const id = req.userId
         try {
 
             if (!date || !time || !guest_number) {
@@ -25,59 +27,41 @@ module.exports = {
             })
 
             const spotsTaken = reservations.reduce((total, el) => total + el.guest_number, 0)
+            console.log(spotsTaken)
 
-            if (spotsTaken + guest_number < thisRestaurant.reservation_quota) {
+            if (spotsTaken + guest_number <= thisRestaurant.reservation_quota) {
                 const request = await reservation.create({
                     data: {
-                        date: new Date(date), time: new Date(time), guest_number: guest_number, customerId: +customerId, restaurantId: +restaurantId
+                        date: new Date(date), time: new Date(time), guest_number: guest_number, customerId: id, restaurantId: +restaurantId
                     }
                 })
 
                 res.status(201).json(request);
 
+                if (request) {
+                    try {
+
+                        await user.update({
+                            where: {
+                                id: thisRestaurant.ownerId
+                            },
+                            data: {
+                                hasNotification: true
+                            }
+                        })
+
+                    } catch (error) {
+                        console.log('Failed to change notification status:', error)
+
+
+                    }
+
+                }
+
             } else {
                 const remaining = thisRestaurant.reservation_quota - spotsTaken
                 res.status(400).json(remaining)
             }
-
-
-
-            // if (!thisRestaurant.daily_quotas) {
-            //     thisRestaurant = await restaurant.update({
-            //         where: { id: +restaurantId },
-            //         data: { daily_quotas: { [date]: thisRestaurant.reservation_quota } }
-            //     })
-
-            // }
-
-            // if (thisRestaurant.daily_quotas && !thisRestaurant.daily_quotas[date]) {
-            //     thisRestaurant = await restaurant.update({
-            //         where: { id: +restaurantId },
-            //         data: { daily_quotas: { ...thisRestaurant.daily_quotas, [date]: thisRestaurant.reservation_quota } }
-            //     })
-            // }
-
-            // console.log(thisRestaurant)
-
-            // if (thisRestaurant.daily_quotas[date]) {
-            //     const dailyQuota = thisRestaurant.daily_quotas[date]
-
-
-            //     if (dailyQuota >= guest_number) {
-            //         const request = await reservation.create({
-            //             data: {
-            //                 date: new Date(date), time: new Date(time), guest_number: guest_number, customerId: +customerId, restaurantId: +restaurantId
-            //             }
-            //         })
-
-            //         res.status(201).json(request);
-
-            //     } else {
-            //         res.status(400).send('Daily quota exceeded for this date')
-            //     }
-            // } else {
-            //     res.status(404).send('Daily quota information not set for this date')
-            // }
 
         }
         catch (error) {
@@ -170,7 +154,7 @@ module.exports = {
 
             const spotsTaken = reservations.reduce((total, el) => total + el.guest_number, 0)
 
-            if (spotsTaken + guestNumber < thisRestaurant.reservation_quota) {
+            if (spotsTaken + guestNumber <= thisRestaurant.reservation_quota) {
                 const approved = await reservation.update({
                     where: {
                         id: +reservationId
@@ -180,47 +164,52 @@ module.exports = {
                     }
                 })
 
+                if (approved) {
+                    const { expoToken } = req.params
+                    const title = 'Reservation approved!';
+                    const body = `Your reservation with ${thisRestaurant.name} has been approved.`;
+                    const route = 'Reservation'
+                    try {
+                        const { data } = await axios.post(
+                            'https://exp.host/--/api/v2/push/send',
+                            {
+                                to: expoToken,
+                                title,
+                                body,
+                                data: {
+                                    route
+                                }
+
+                            }
+                        );
+
+                    } catch (notificationError) {
+                        console.error('Failed to send notification:', notificationError);
+                    }
+                    try {
+
+                        await user.update({
+                            where: {
+                                id: thisReservation.customerId
+                            },
+                            data: {
+                                hasNotification: true
+                            }
+                        })
+
+                    } catch (error) {
+                        console.log('Failed to change notification status:', error)
+
+
+                    }
+
+                }
+
                 res.status(201).json(approved);
 
             } else {
                 res.status(400).send('Daily quota exceeded for this date')
             }
-
-
-
-
-            // const date = thisReservation.date.toISOString().slice(0, 10)
-            // console.log(date)
-            // if (thisRestaurant.daily_quotas[date] >= guestNumber) {
-
-            //     const approved = await reservation.update({
-            //         where: {
-            //             id: +reservationId
-            //         },
-            //         data: {
-            //             status: "Approved"
-            //         }
-            //     })
-
-            //     thisRestaurant.daily_quotas[date] -= guestNumber
-
-            //     await restaurant.update({
-            //         where: {
-            //             id: thisRestaurant.id
-            //         },
-            //         data: {
-            //             daily_quotas: thisRestaurant.daily_quotas
-            //         }
-
-            //     })
-
-            //     res.status(200).json(approved)
-
-            // }
-
-            // else {
-            //     res.status(400).send('Daily quota exceeded for this date')
-            // }
 
         } catch (error) {
             console.log(error)
@@ -232,6 +221,16 @@ module.exports = {
     rejectReservation: async (req, res) => {
         const { reservationId } = req.params
 
+        const thisReservation = await reservation.findUnique({
+            where: {
+                id: +reservationId
+            }
+        })
+
+        const thisRestaurant = await restaurant.findUnique({
+            where: { id: thisReservation.restaurantId }
+        })
+
         try {
 
             const Declined = await reservation.update({
@@ -242,6 +241,49 @@ module.exports = {
                     status: "Declined"
                 }
             })
+
+            if (Declined) {
+                const { expoToken } = req.params
+                const title = 'Your reservation was declined.';
+                const body = `Your reservation with ${thisRestaurant.name} has been declined.`;
+                const route = 'History'
+                try {
+                    const { data } = await axios.post(
+                        'https://exp.host/--/api/v2/push/send',
+                        {
+                            to: expoToken,
+                            title,
+                            body,
+                            data: {
+                                route
+                            }
+
+                        }
+                    );
+
+                } catch (notificationError) {
+                    console.error('Failed to send notification:', notificationError);
+                }
+                try {
+
+                    await user.update({
+                        where: {
+                            id: thisReservation.customerId
+                        },
+                        data: {
+                            hasNotification: true
+                        }
+                    })
+
+
+                } catch (error) {
+                    console.log('Failed to change notification status:', error)
+
+
+                }
+            }
+
+
             res.status(200).json(Declined)
         } catch (error) {
             console.log(error)
@@ -252,12 +294,11 @@ module.exports = {
 
 
     fetchUpcomingReservations: async (req, res) => {
-        const { customerId } = req.params
-
+        const id = req.userId
         try {
             const upcoming = await reservation.findMany({
                 where: {
-                    customerId: +customerId,
+                    customerId: id,
                     date: {
                         gte: new Date().toISOString()
                     },
@@ -282,12 +323,12 @@ module.exports = {
     },
 
     fetchExpiredReservations: async (req, res) => {
-        const { customerId } = req.params
+        const id = req.userId
 
         try {
             const expired = await reservation.findMany({
                 where: {
-                    customerId: +customerId,
+                    customerId: id,
 
                     OR: [
                         {
