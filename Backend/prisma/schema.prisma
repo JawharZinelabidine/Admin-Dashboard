@@ -64,12 +64,13 @@ model Restaurant {
 model Reservation {
   id           Int        @id @default(autoincrement())
   createdAt    DateTime   @default(now())
+  notification Boolean    @default(false)
   updatedAt    DateTime   @updatedAt
   status       Status     @default(Pending)
   date         DateTime   @db.Date
   time         DateTime   @db.Time()
   guest_number Int
-  canReview    Boolean    @default(false)
+  canReview    CanReview  @default(Pending)
   customer     User       @relation(fields: [customerId], references: [id], onDelete: Cascade)
   restaurant   Restaurant @relation(fields: [restaurantId], references: [id], onDelete: Cascade)
   customerId   Int
@@ -127,6 +128,12 @@ enum Status {
   Pending
   Approved
   Declined
+}
+
+enum CanReview {
+  Pending
+  Yes
+  Done
 }
 
 enum City {

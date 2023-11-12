@@ -1,23 +1,28 @@
 const cron = require('node-cron')
 const { reservation, user, restaurant } = require("../model/index");
 const axios = require('axios');
+const moment = require('moment-timezone');
 
 
 cron.schedule('*/10 * * * * *', async () => {
 
-    console.log('Daily task is running')
+    const now = moment().utcOffset('120');
+    const zone = now.format('YYYY-MM-DDTHH:mm:ss.SSS') + 'Z'
+    console.log('Daily task is running', zone)
+
     try {
+        console.log()
         const consumedReservations = await reservation.findMany({
             where: {
                 status: 'Approved',
-                canReview: false,
+                canReview: 'Pending',
                 OR: [
                     {
                         date: {
-                            lte: new Date()
+                            lte: zone
                         },
                         time: {
-                            lte: new Date()
+                            lte: zone
                         },
                     },
 
@@ -25,13 +30,17 @@ cron.schedule('*/10 * * * * *', async () => {
             },
         });
 
-        console.log(new Date())
 
         if (consumedReservations.length > 0) {
+            console.log(zone)
+
             for (const thisReservation of consumedReservations) {
                 await reservation.update({
                     where: { id: thisReservation.id },
-                    data: { canReview: true },
+                    data: {
+                        canReview: 'Yes',
+                        notification: true
+                    },
                 });
 
 

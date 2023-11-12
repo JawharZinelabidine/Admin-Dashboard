@@ -290,4 +290,5 @@ updatePassword : async (req, res) => {
     }
 
   },
+
 };
