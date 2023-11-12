@@ -91,9 +91,8 @@ module.exports = {
           verifyToken: null,
         },
       });
-      res
-        .status(200)
-        .json({ message: "Email verified successfully. You can now log in." });
+
+      res.status(200).json({ message: "Email verified successfully. You can now log in." });
     } catch (error) {
       res.status(500).send(error);
       console.log(error);
@@ -167,11 +166,13 @@ module.exports = {
     try {
       const { hasNotification } = await user.findUnique({
         where: {
-          id: id,
-        },
-      });
-      console.log(hasNotification);
-      res.status(200).send(hasNotification);
+
+          id: id
+        }
+      })
+      res.status(200).send(hasNotification)
+
+
     } catch (error) {
       console.log(error);
       res
