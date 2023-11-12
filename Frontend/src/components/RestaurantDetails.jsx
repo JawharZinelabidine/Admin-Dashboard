@@ -7,7 +7,7 @@ import 'react-responsive-carousel/lib/styles/carousel.min.css';
 function RestaurantDetails() {
     const { restaurantId } = useSelector(state => state.restaurant);
     const [restaurant, setRestaurant] = useState({});
-    
+
     const fetchRestaurant = async () => {
         try {
             const { data } = await axios.get(`http://localhost:3000/api/admin/restaurant/${restaurantId}`);

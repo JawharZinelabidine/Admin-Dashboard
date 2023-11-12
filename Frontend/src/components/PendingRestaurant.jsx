@@ -1,4 +1,5 @@
 import React from 'react';
+import axios from "axios"
 import { useSelector, useDispatch } from 'react-redux';
 import { setRestaurantId, setShowRestaurantDetails } from "../features/restaurantSlice";
 import { setOwnerId, setShowOwnerDetails } from "../features/ownerSlice";
@@ -12,17 +13,28 @@ function PendingRestaurant({ restaurant }) {
         dispatch(setShowRestaurantDetails(!showRestaurantDetails));
     };
     const handleOwnerClick = () => {
-        console.log(restaurant.ownerId)
         dispatch(setOwnerId(restaurant.ownerId));
         dispatch(setShowOwnerDetails(!showOwnerDetails))
     };
 
-    const handleAcceptClick = () => {
+
+    const handleAcceptClick = async () => {
+        const decision = "approve"
+        try {
+            await axios.post(`http://localhost:3000/api/admin/restaurant/${restaurant.id}`, decision);
+        } catch (error) {
+            console.error(error);
+        }
     };
 
-    const handleDeclineClick = () => {
+    const handleDeclineClick = async () => {
+        const decision = "decline"
+        try {
+            await axios.post(`http://localhost:3000/api/admin/restaurant/${restaurant.id}`, decision);
+        } catch (error) {
+            console.error(error);
+        }
     };
-
     return (
         <>
             <div>
