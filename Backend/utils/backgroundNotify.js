@@ -56,7 +56,8 @@ cron.schedule('*/10 * * * * *', async () => {
                 })
                 const title = `Leave a review for ${name}`;
                 const body = `We hope you enjoyed your time at ${name}. Leave a review to let them know!`;
-                const route = 'Review'
+                const route = 'ReservationReviews'
+                const id = thisReservation.id
                 try {
                     const { data } = await axios.post(
                         'https://exp.host/--/api/v2/push/send',
@@ -65,7 +66,8 @@ cron.schedule('*/10 * * * * *', async () => {
                             title,
                             body,
                             data: {
-                                route
+                                route,
+                                id
                             }
 
                         }

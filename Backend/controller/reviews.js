@@ -16,6 +16,26 @@ module.exports = {
             res.status(500).send(error);
         }
     },
+    createReview: async (req, res) => {
+        const id = req.userId
+        const restaurantId = req.params.restaurantId
+        const { review_title, review_body, rating } = req.body
+        try {
+            const newReview = await review.create({
+                data: {
+                    review_title: review_title,
+                    review_body: review_body,
+                    rating: rating,
+                    customerId: id,
+                    restaurantId: +restaurantId
+                }
+            });
+            res.status(201).json(newReview);
+        } catch (error) {
+            console.error(error);
+            res.status(500).send(error);
+        }
+    },
 
 
 }
