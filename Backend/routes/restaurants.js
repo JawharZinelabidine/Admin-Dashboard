@@ -9,7 +9,11 @@ const {
   getRestaurants,
   getOne,
   createRestaurant,
+  updloadRestaurantImages,
+  deleteImageByProperty,
+  updateImageByProperty,
 } = require("../controller/restaurants");
+
 
 router.route("/")
   .get(getRestaurants)
@@ -22,6 +26,21 @@ router.route("/")
     isOwnerAuthorized,
     createRestaurant
   );
+
+router
+  .route("/upload")
+  .post(
+    upload.fields([
+      { name: "mainImage", maxCount: 1 },
+      { name: "menuImages" },
+      { name: "extraImages" },
+    ]),isAuthenticated, isOwnerAuthorized,
+    updloadRestaurantImages
+  );
+router.route("/images").delete(isAuthenticated, isOwnerAuthorized,deleteImageByProperty)
+router.route("/images").post(upload.fields([
+    { name: 'newImageFile', maxCount: 1 },
+  ]),isAuthenticated, isOwnerAuthorized,updateImageByProperty) 
 
 router.route("/myRestaurant")
   .get(isAuthenticated, isOwnerAuthorized, getOne);

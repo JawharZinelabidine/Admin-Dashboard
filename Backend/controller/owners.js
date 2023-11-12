@@ -93,12 +93,7 @@ module.exports = {
         },
       });
 
-
       res.status(200).json({ message: "Email verified successfully. You can now log in." });
-
-
-
-
     } catch (error) {
       res.status(500).send(error);
       console.log(error);
