@@ -12,7 +12,10 @@ module.exports = {
     }
   },
   getOne: async (req, res) => {
-    const id = req.userId;
+
+    const id = req.userId
+
+
     try {
       const resto = await restaurant.findFirst({
         where: {
