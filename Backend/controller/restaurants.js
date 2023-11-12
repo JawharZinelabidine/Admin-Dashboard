@@ -36,6 +36,7 @@ module.exports = {
   },
   createRestaurant: async (req, res) => {
     try {
+      const id = req.userId
       const latitude = 222.558;
       const longtitude = 856.258;
       const {
@@ -50,9 +51,7 @@ module.exports = {
         mainImage,
         menuImages,
         extraImages,
-        ownerId,
       } = req.body;
-      console.log(req.body);
       const mainImageUrl = await uploadToCloudinary(mainImage);
       const menuImageUrls = await Promise.all(
         menuImages.map((menuImage) => uploadToCloudinary(menuImage))
@@ -80,7 +79,7 @@ module.exports = {
           extra_images: extraImageUrls,
           latitude: latitude,
           longtitude: longtitude,
-          ownerId: +ownerId,
+          ownerId: id,
         },
       });
       res.status(201).json(createdRestaurant);
@@ -227,12 +226,12 @@ module.exports = {
       }
 
       let updatedProperty = [];
-      console.log("newImageUrl ",newImageUrl,"\n oldImageUrl ",oldImageUrl)
+      console.log("newImageUrl ", newImageUrl, "\n oldImageUrl ", oldImageUrl)
 
       switch (property) {
         case "main_image":
           resto[property] = newImageUrl;
-          updatedProperty=resto[property];
+          updatedProperty = resto[property];
           break;
         case "menu_images":
         case "extra_images":
@@ -259,7 +258,7 @@ module.exports = {
 
       const updatedRestaurant = await restaurant.update({
         where: {
-          id:resto.id,
+          id: resto.id,
         },
         data: updateQuery,
       });
