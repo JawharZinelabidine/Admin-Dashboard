@@ -6,6 +6,7 @@ function PendingRestaurant({ restaurant }) {
     const dispatch = useDispatch();
     const { showRestaurantDetails } = useSelector(state => state.restaurant);
     const handleRestaurantClick = () => {
+        dispatch(setRestaurantId(restaurant.id))
         dispatch(setShowRestaurantDetails(!showRestaurantDetails));
     };
 
