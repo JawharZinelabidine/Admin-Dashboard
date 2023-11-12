@@ -154,7 +154,7 @@ function NewApplication() {
               <div className="overflow-y-auto" style={{ maxHeight: "24rem" }}>
                 <ul className="p-6 space-y-6">
                   {restaurants.map(restaurant => (
-                    <li className="flex" key={restaurant.id}> < PendingRestaurant restaurant={restaurant} /></li>
+                    <li className="flex" key={restaurant.id}> < PendingRestaurant restaurant={restaurant} fetchRestaurants={fetchRestaurants}/></li>
                   ))}
                 </ul>
               </div>

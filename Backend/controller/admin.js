@@ -68,8 +68,9 @@ module.exports = {
     }
   },
   reviewRestaurantRequest: async (req, res) => {
-    const decision = req.body;
+    const decision = req.body.decision;
     const restaurantId = req.params.id;
+    console.log(decision);
 
     try {
       const requestedRestaurant = await restaurant.findUnique({
@@ -85,7 +86,7 @@ module.exports = {
       const updatedRestaurant = await restaurant.update({
         where: { id: +restaurantId },
         data: {
-          status: decision === "approve" ? "Approved" : "Declined",
+          status: decision === "approved" ? "Approved" : "Declined",
         },
       });
       console.log(updatedRestaurant);
@@ -94,9 +95,9 @@ module.exports = {
       });
 
       const subject =
-        decision === "approve" ? "Restaurant Approved" : "Restaurant Declined";
+        decision === "approved" ? "Restaurant Approved" : "Restaurant Declined";
       const message =
-        decision === "approve"
+        decision === "approved"
           ? "Congratulations! Your restaurant request has been approved."
           : "We regret to inform you that your restaurant request has been declined.";
 
