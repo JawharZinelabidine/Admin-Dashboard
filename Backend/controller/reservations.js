@@ -1,5 +1,6 @@
 const { reservation, restaurant, user } = require("../model/index");
 const axios = require('axios');
+const moment = require('moment-timezone');
 
 module.exports = {
 
@@ -46,7 +47,7 @@ module.exports = {
                                 id: thisRestaurant.ownerId
                             },
                             data: {
-                                hasNotification: true
+                                notification: true
                             }
                         })
 
@@ -193,7 +194,7 @@ module.exports = {
                                 id: thisReservation.customerId
                             },
                             data: {
-                                hasNotification: true
+                                notification: true
                             }
                         })
 
@@ -271,7 +272,7 @@ module.exports = {
                             id: thisReservation.customerId
                         },
                         data: {
-                            hasNotification: true
+                            notification: true
                         }
                     })
 
@@ -295,24 +296,31 @@ module.exports = {
 
     fetchUpcomingReservations: async (req, res) => {
         const id = req.userId
+        const now = moment().utcOffset('120');
+        const zone = now.format('YYYY-MM-DDTHH:mm:ss.SSS') + 'Z'
         try {
             const upcoming = await reservation.findMany({
                 where: {
                     customerId: id,
                     date: {
-                        gte: new Date().toISOString()
+                        gte: zone
                     },
+                    time: {
+                        gte: zone
+                    },
+
                     OR: [
                         { status: "Approved" },
                         { status: "Pending" }
                     ]
+
 
                 }
             })
 
 
 
-
+            console.log(zone, now.toISOString())
             res.status(200).json(upcoming)
         }
         catch (error) {
@@ -324,7 +332,8 @@ module.exports = {
 
     fetchExpiredReservations: async (req, res) => {
         const id = req.userId
-
+        const now = moment().utcOffset('120');
+        const zone = now.format('YYYY-MM-DDTHH:mm:ss.SSS') + 'Z'
         try {
             const expired = await reservation.findMany({
                 where: {
@@ -333,13 +342,18 @@ module.exports = {
                     OR: [
                         {
                             date: {
-                                lte: new Date().toISOString()
+                                lte: zone
+                            },
+                            time: {
+                                lte: zone
                             },
                         },
                         { status: "Declined" }
+
                     ]
                 }
             })
+
             res.status(200).json(expired)
         }
         catch (error) {
@@ -347,7 +361,51 @@ module.exports = {
             res.status(500).send(error)
 
         }
-    }
+    },
+    checkReviewNotification: async (req, res) => {
+        const id = req.userId
+
+        try {
+            const { notification } = await reservation.findFirst({
+
+                where: {
+                    customerId: id
+                },
+
+            })
+            console.log(notificationw)
+            res.status(200).json(notification)
+
+        } catch (error) {
+
+            console.log(error)
+            res.status(500).json({ message: 'Failed to retrieve notification status' })
+
+        }
+
+    },
+    removeReviewNotification: async (req, res) => {
+        const id = req.userId
+
+        try {
+            const thisReservation = await reservation.update({
+                where: {
+                    customerId: id
+                },
+                data: {
+                    notification: false
+                }
+            })
+            res.status(200).send(thisReservation)
+
+        } catch (error) {
+
+            console.log(error)
+            res.status(500).json({ message: 'Failed to update notification status' })
+
+        }
+
+    },
 
 
 }
