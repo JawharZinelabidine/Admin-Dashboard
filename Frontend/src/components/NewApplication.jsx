@@ -52,7 +52,7 @@ function NewApplication() {
               <div className="flex items-center justify-between px-6 py-5 font-semibold border-b border-gray-100">
                 <span>Restaurants applications</span>
               </div>
-              <div className="overflow-y-auto" style={{ maxHeight: "24rem" }}>
+              <div >
                 <ul className="p-6 space-y-6">
                   {restaurants.map(restaurant => (
                     <li className="flex" key={restaurant.id}> < PendingRestaurant restaurant={restaurant} fetchRestaurants={fetchRestaurants} /></li>

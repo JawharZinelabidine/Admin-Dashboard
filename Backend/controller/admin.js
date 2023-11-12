@@ -7,6 +7,7 @@ module.exports = {
     try {
       const restaurants = await restaurant.findMany({
         select: {
+          id: true,
           name: true,
           status: true,
         },
@@ -15,9 +16,12 @@ module.exports = {
             in: ["Approved", "Declined"],
           },
         },
+        orderBy: {
+          updatedAt: "desc",
+        },
       });
 
-      res.status(200).json({ restaurants });
+      res.status(200).json(restaurants);
     } catch (error) {
       console.error("Error fetching restaurants:", error);
       res.status(500).json({ error: "Internal server error" });
