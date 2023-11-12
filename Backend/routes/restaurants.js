@@ -4,6 +4,7 @@ const multer = require("multer");
 const upload = multer();
 const isAuthenticated = require("../middlwares/isAuthenticated");
 const isOwnerAuthorized = require("../middlwares/isOwnerAuthorized");
+const isCustomerAuthorized = require("../middlwares/isCustomerAuthorized");
 
 const {
   getRestaurants,
@@ -13,6 +14,7 @@ const {
   deleteImageByProperty,
   updateImageByProperty,
   updateRestaurantInformation,
+  updateRating
 } = require("../controller/restaurants");
 
 router
@@ -27,7 +29,7 @@ router
     isAuthenticated,
     isOwnerAuthorized,
     createRestaurant
-  );
+  )
 
 router
   .route("/upload")
@@ -57,5 +59,8 @@ router
   .route("/myRestaurant")
   .get(isAuthenticated, isOwnerAuthorized, getOne)
   .post(isAuthenticated, isOwnerAuthorized, updateRestaurantInformation);
+
+router.route('/:restaurantId/:id')
+  .put(isAuthenticated, isCustomerAuthorized, updateRating)
 
 module.exports = router;

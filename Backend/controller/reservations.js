@@ -239,7 +239,8 @@ module.exports = {
                     id: +reservationId
                 },
                 data: {
-                    status: "Declined"
+                    status: "Declined",
+                    canReview: "Done"
                 }
             })
 
@@ -363,18 +364,19 @@ module.exports = {
         }
     },
     checkReviewNotification: async (req, res) => {
-        const id = req.userId
+        const reservationId = req.params.id
+        console.log(+reservationId)
 
         try {
-            const { notification } = await reservation.findFirst({
+            const thisReservation = await reservation.findUnique({
 
                 where: {
-                    customerId: id
+                    id: +reservationId
                 },
 
             })
-            console.log(notification)
-            res.status(200).json(notification)
+            console.log(thisReservation)
+            res.status(200).json(thisReservation)
 
         } catch (error) {
 
