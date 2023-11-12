@@ -44,16 +44,16 @@ module.exports = {
         return res.status(400).json({ error: "Email already exists" });
       }
       const hashpassword = await bcrypt.hash(password, 10);
-      // const personalIdUrl = await uploadToCloudinary(personalId);
-      // const taxDeclarationUrl = await uploadToCloudinary(taxDeclaration);
+      const personalIdUrl = await uploadToCloudinary(personalId);
+      const taxDeclarationUrl = await uploadToCloudinary(taxDeclaration);
       const verifyToken = crypto.randomBytes(32).toString("hex");
       const owner = await user.create({
         data: {
           fullname,
           email,
           password: hashpassword,
-          // personalID: personalIdUrl,
-          // tax_declaration: taxDeclarationUrl,
+          personalID: personalIdUrl,
+          tax_declaration: taxDeclarationUrl,
           role: "OWNER",
           verifyToken,
         },
@@ -170,7 +170,6 @@ module.exports = {
           id: id
         }
       })
-      console.log(hasNotification)
       res.status(200).send(hasNotification)
 
 

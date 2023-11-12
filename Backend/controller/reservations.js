@@ -1,4 +1,4 @@
-const { reservation, restaurant, user } = require("../model/index");
+const { reservation, user, restaurant } = require("../model/index");
 const axios = require('axios');
 const moment = require('moment-timezone');
 
@@ -47,7 +47,7 @@ module.exports = {
                                 id: thisRestaurant.ownerId
                             },
                             data: {
-                                notification: true
+                                hasNotification: true
                             }
                         })
 
@@ -194,7 +194,7 @@ module.exports = {
                                 id: thisReservation.customerId
                             },
                             data: {
-                                notification: true
+                                hasNotification: true
                             }
                         })
 
@@ -272,7 +272,7 @@ module.exports = {
                             id: thisReservation.customerId
                         },
                         data: {
-                            notification: true
+                            hasNotification: true
                         }
                     })
 
@@ -373,7 +373,7 @@ module.exports = {
                 },
 
             })
-            console.log(notificationw)
+            console.log(notification)
             res.status(200).json(notification)
 
         } catch (error) {
@@ -388,15 +388,13 @@ module.exports = {
         const id = req.userId
 
         try {
-            const thisReservation = await reservation.update({
-                where: {
-                    customerId: id
-                },
+            const { notification } = await reservation.updateMany({
+
                 data: {
                     notification: false
                 }
             })
-            res.status(200).send(thisReservation)
+            res.status(200).send({ notification })
 
         } catch (error) {
 

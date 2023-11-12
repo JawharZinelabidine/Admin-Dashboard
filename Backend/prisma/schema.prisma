@@ -21,7 +21,7 @@ model User {
   isVerified      Boolean       @default(false)
   verifyToken     String?
   otp             Int?
-  resetCode       Int? 
+  resetCode       Int?
   role            Role
   personalID      String?       @db.Text
   tax_declaration String?       @db.Text
@@ -83,6 +83,7 @@ model Review {
   updatedAt    DateTime   @updatedAt
   review_title String     @db.VarChar(500)
   review_body  String     @db.Text
+  rating       Int
   customer     User       @relation(fields: [customerId], references: [id], onDelete: Cascade)
   restaurant   Restaurant @relation(fields: [restaurantId], references: [id], onDelete: Cascade)
   customerId   Int
