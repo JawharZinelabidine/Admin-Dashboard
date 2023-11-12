@@ -271,4 +271,49 @@ module.exports = {
       res.status(500).json({ error: "Internal Server Error" });
     }
   },
+  updateRestaurantInformation: async (req, res) => {
+    try {
+      const {
+        description,
+        phoneNumber,
+        categories,
+        openingTime,
+        closingTime,
+        reservationQuota,
+       
+      } = req.body;
+      console.log(req.body);
+      const id = req.userId;
+      const resto = await restaurant.findFirst({
+        where: {
+          ownerId: id,
+        },
+      });
+      if (!resto) {
+        res
+          .status(404)
+          .json({ error: "Restaurant not found for the specified ownerId" });
+      }
+      const updatedInfo = await restaurant.update({
+        where: {
+          id:resto.id
+        },
+        data: {
+          description,
+          phone_number: parseInt(phoneNumber),
+          category: categories,
+          opening_time: openingTime,
+          closing_time: closingTime,
+          reservation_quota: parseInt(reservationQuota),
+         
+        },
+      });
+      res.status(201).json(updatedInfo);
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ error: "Internal Server Error" });
+    }
+
+
+  }
 };
