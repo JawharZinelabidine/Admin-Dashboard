@@ -8,6 +8,22 @@ const { sendingMail } = require("../utils/mailing");
 require("dotenv").config();
 
 module.exports = {
+  getOneCustomers: async (req, res) => {
+    const id = req.params.customerId;
+    try {
+      const customer = await user.findUnique({
+        where: {
+          id: +id,
+        },
+      });
+
+      res.status(201).json(customer);
+    } catch (error) {
+      console.error(error);
+      res.status(500).send(error);
+    }
+  },
+
   getOwners: async (req, res) => {
     try {
       const owners = await user.findMany();
@@ -76,12 +92,7 @@ module.exports = {
         },
       });
 
-
       res.status(200).json({ message: "Email verified successfully. You can now log in." });
-
-
-
-
     } catch (error) {
       res.status(500).send(error);
       console.log(error);
@@ -118,28 +129,31 @@ module.exports = {
           error:
             "Account not verified. Another verification email has been sent. Please check your email for instructions.",
         });
-
       }
-      if (owner.role !== 'OWNER') {
-        res.status(403).json({ message: "Invalid user role" })
-
-      }
-      else {
-        const token = jwt.sign({ id: owner.id, role: owner.role }, process.env.JWT_SECRET, { expiresIn: "1d" });
-        
-
-
+      if (owner.role !== "OWNER") {
+        res.status(403).json({ message: "Invalid user role" });
+      } else {
+        const token = jwt.sign(
+          { id: owner.id, role: owner.role },
+          process.env.JWT_SECRET,
+          { expiresIn: "1d" }
+        );
         const myRestaurant = await restaurant.findFirst({
           where: {
             ownerId: owner.id,
           },
         });
         if (!myRestaurant) {
-
-          res.status(201).json({ message: "User hasn't created a restaurant", token: token })
-        }
-        else return res.status(201).json({ message: "owner successfully logged in", token: token });
-
+          res
+            .status(201)
+            .json({
+              message: "User hasn't created a restaurant",
+              token: token,
+            });
+        } else
+          return res
+            .status(201)
+            .json({ message: "owner successfully logged in", token: token });
       }
     } catch (error) {
       res.status(500).send(error);
@@ -147,9 +161,7 @@ module.exports = {
     }
   },
   checkNotification: async (req, res) => {
-
-    const id = req.userId
-
+    const id = req.userId;
 
     try {
       const { hasNotification } = await user.findUnique({
@@ -158,7 +170,6 @@ module.exports = {
           id: id
         }
       })
-      console.log(hasNotification)
       res.status(200).send(hasNotification)
 
 
@@ -170,21 +181,17 @@ module.exports = {
     }
   },
   removeNotification: async (req, res) => {
-
-    const id = req.userId
+    const id = req.userId;
 
     try {
       const { hasNotification } = await user.update({
         where: {
-
-          id: id
-
+          id: id,
         },
         data: {
           hasNotification: false,
         },
       });
-      console.log(hasNotification);
       res.status(200).send(hasNotification);
     } catch (error) {
       console.log(error);

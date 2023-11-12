@@ -21,6 +21,7 @@ model User {
   isVerified      Boolean       @default(false)
   verifyToken     String?
   otp             Int?
+  resetCode       Int?
   role            Role
   personalID      String?       @db.Text
   tax_declaration String?       @db.Text
@@ -63,11 +64,13 @@ model Restaurant {
 model Reservation {
   id           Int        @id @default(autoincrement())
   createdAt    DateTime   @default(now())
+  notification Boolean    @default(false)
   updatedAt    DateTime   @updatedAt
   status       Status     @default(Pending)
   date         DateTime   @db.Date
   time         DateTime   @db.Time()
   guest_number Int
+  canReview    CanReview  @default(Pending)
   customer     User       @relation(fields: [customerId], references: [id], onDelete: Cascade)
   restaurant   Restaurant @relation(fields: [restaurantId], references: [id], onDelete: Cascade)
   customerId   Int
@@ -80,6 +83,7 @@ model Review {
   updatedAt    DateTime   @updatedAt
   review_title String     @db.VarChar(500)
   review_body  String     @db.Text
+  rating       Int
   customer     User       @relation(fields: [customerId], references: [id], onDelete: Cascade)
   restaurant   Restaurant @relation(fields: [restaurantId], references: [id], onDelete: Cascade)
   customerId   Int
@@ -104,11 +108,11 @@ model payment {
   restaurant_name String
 }
 
-  enum Role {
-    CUSTOMER
-    OWNER
-    ADMIN
-  }
+enum Role {
+  CUSTOMER
+  OWNER
+  ADMIN
+}
 
 enum Category {
   Italian
@@ -125,6 +129,12 @@ enum Status {
   Pending
   Approved
   Declined
+}
+
+enum CanReview {
+  Pending
+  Yes
+  Done
 }
 
 enum City {
