@@ -9,39 +9,72 @@ module.exports = {
         where: {
           status: "Pending",
         },
+        include: {
+          owner: {
+            select: {
+              fullname: true,
+            },
+          },
+        },
       });
-      if (restaurants) res.status(200).json(restaurants);
-      else
+      if (restaurants) {
+        const restaurantsWithOwnerNames = restaurants.map((restaurant) => ({
+          ...restaurant,
+          ownerName: restaurant.owner.fullname,
+        }));
+
+        res.status(200).json(restaurantsWithOwnerNames);
+      } else {
         res
           .status(404)
           .json({ error: "Restaurants not found with pending status" });
+      }
     } catch (error) {
       console.error(error);
       res.status(500).send(error);
     }
   },
-
-  getVerfiedOwners: async (req, res) => {
+  getPendingRestaurant: async (req, res) => {
+    const restaurantId = req.params.id;
     try {
-      const owners = await user.findMany({
+      const uniqueRestaurant = await restaurant.findUnique({
         where: {
+          id: +restaurantId,
+          status: "Pending",
+        },
+      });
+      if (uniqueRestaurant) res.status(200).json(uniqueRestaurant);
+      else res.status(404).json({ error: "pending restaurant not found" });
+    } catch (error) {
+      console.log(error);
+      res.status(500).send(error);
+    }
+  },
+
+  getVerifiedOwner: async (req, res) => {
+    const ownerId = req.params.id;
+    try {
+      const owner = await user.findUnique({
+        where: {
+          id: +ownerId,
           isVerified: true,
         },
       });
-      if (owners) res.status(200).json(owners);
-      else res.status(404).json({ error: "active owners accounts not found" });
+      if (owner) res.status(200).json(owner);
+      else res.status(404).json({ error: "active owner account not found" });
     } catch (error) {
       console.error(error);
       res.status(500).send(error);
     }
   },
   reviewRestaurantRequest: async (req, res) => {
-    const { restaurantId, decision } = req.body;
+    const decision = req.body;
+    const restaurantId = req.params.id;
 
     try {
       const requestedRestaurant = await restaurant.findUnique({
         where: {
-          id: restaurantId,
+          id: +restaurantId,
           status: "Pending",
         },
       });
@@ -50,14 +83,14 @@ module.exports = {
         return res.status(404).json({ error: "Pending restaurant not found" });
       }
       const updatedRestaurant = await restaurant.update({
-        where: { id: restaurantId },
+        where: { id: +restaurantId },
         data: {
           status: decision === "approve" ? "Approved" : "Declined",
         },
       });
       console.log(updatedRestaurant);
       const owner = await user.findUnique({
-        where: { id: requestedRestaurant.ownerId },
+        where: { id: +requestedRestaurant.ownerId },
       });
 
       const subject =
