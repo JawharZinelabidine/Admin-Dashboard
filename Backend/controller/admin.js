@@ -3,6 +3,26 @@ const { sendingMail } = require("../utils/mailing");
 require("dotenv").config();
 
 module.exports = {
+  getApprovedOrDeclinedRestaurants: async (req, res) => {
+    try {
+      const restaurants = await restaurant.findMany({
+        select: {
+          name: true,
+          status: true,
+        },
+        where: {
+          status: {
+            in: ["Approved", "Declined"],
+          },
+        },
+      });
+
+      res.status(200).json({ restaurants });
+    } catch (error) {
+      console.error("Error fetching restaurants:", error);
+      res.status(500).json({ error: "Internal server error" });
+    }
+  },
   getPendingRestaurants: async (req, res) => {
     try {
       const restaurants = await restaurant.findMany({
