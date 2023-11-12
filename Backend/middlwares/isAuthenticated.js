@@ -3,6 +3,11 @@ require("dotenv").config();
 
 module.exports = isAuthenticated = (req, res, next) => {
   const authHeader = req.headers["authorization"];
+  if (!authHeader)
+  {
+    res.status(401).send("Not Authorized");
+
+  }
   const token = authHeader.split(" ")[1];
 
 
