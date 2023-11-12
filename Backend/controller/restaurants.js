@@ -1,4 +1,4 @@
-const { restaurant } = require("../model/index");
+const { restaurant, reservation } = require("../model/index");
 const uploadToCloudinary = require("./helpers/cloudinary");
 
 module.exports = {
@@ -282,7 +282,7 @@ module.exports = {
         openingTime,
         closingTime,
         reservationQuota,
-       
+
       } = req.body;
       console.log(req.body);
       const id = req.userId;
@@ -298,7 +298,7 @@ module.exports = {
       }
       const updatedInfo = await restaurant.update({
         where: {
-          id:resto.id
+          id: resto.id
         },
         data: {
           description,
@@ -307,7 +307,7 @@ module.exports = {
           opening_time: openingTime,
           closing_time: closingTime,
           reservation_quota: parseInt(reservationQuota),
-         
+
         },
       });
       res.status(201).json(updatedInfo);
@@ -316,6 +316,62 @@ module.exports = {
       res.status(500).json({ error: "Internal Server Error" });
     }
 
+
+  },
+
+  updateRating: async (req, res) => {
+
+    const { rating } = req.body
+    const restaurantId = req.params.restaurantId
+    const reservationId = req.params.id
+
+    const thisRestaurant = await restaurant.findUnique({
+      where: {
+        id: +restaurantId
+      }
+    })
+    const newRatingCount = thisRestaurant.rating_count + 1
+    const newTotalRating = thisRestaurant.rating + rating
+    let newRating
+
+    if (thisRestaurant.rating_count > 0) {
+      newRating = Math.min(5, Math.max(1, newTotalRating / newRatingCount)).toFixed(1)
+    }
+
+    else newRating = rating
+
+    try {
+
+      await restaurant.update({
+        where: {
+          id: +restaurantId
+        },
+        data: {
+
+          rating: +newRating,
+          rating_count: newRatingCount
+
+        }
+      })
+
+      await reservation.update({
+        where: {
+
+          id: +reservationId
+
+        },
+        data: {
+          canReview: 'Done'
+        }
+      })
+
+      res.status(204).send('Rating updated!')
+
+    } catch (error) {
+      console.log(error)
+      res.status(500).send("Couldn't update rating")
+
+    }
 
   }
 };
