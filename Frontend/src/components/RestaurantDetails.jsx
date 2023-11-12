@@ -6,9 +6,8 @@ import 'react-responsive-carousel/lib/styles/carousel.min.css';
 
 function RestaurantDetails() {
     const { restaurantId } = useSelector(state => state.restaurant);
-    const [restaurant, setRestaurant] = useState({})
-    console.log(restaurant)
-
+    const [restaurant, setRestaurant] = useState({});
+    
     const fetchRestaurant = async () => {
         try {
             const { data } = await axios.get(`http://localhost:3000/api/admin/restaurant/${restaurantId}`);
@@ -53,13 +52,14 @@ function RestaurantDetails() {
                     </Carousel>
                 </div>
             )}
+            {/* Name */}
+            <h5 className="block mb-2 font-sans text-xl antialiased font-semibold leading-snug tracking-normal text-blue-gray-900">Name: {restaurant.name}</h5>
 
-            <h5 className="block mb-2 font-sans text-xl antialiased font-semibold leading-snug tracking-normal text-blue-gray-900"> {restaurant.name}</h5>
-            <p className="block font-sans text-base antialiased font-light leading-relaxed text-inherit"> Lorem ipsum dolor sit amet consectetur, adipisicing elit. Doloremque vitae exercitationem, eligendi ad voluptatem sunt tempora itaque cumque quos eius molestias sit? Ut, facilis expedita dolorum explicabo porro assumenda. Tempora.
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sequi tempora in nemo illo deleniti iure reiciendis, harum, earum voluptate minus laborum tenetur maiores culpa dignissimos non? Dolorem laudantium impedit voluptatibus.
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Quas, iste! Numquam earum iure laboriosam quam? Aliquam expedita eaque ratione accusamus non illum eum pariatur officiis itaque? Corporis quo eveniet consequatur!
-                Lorem ipsum dolor, sit amet consectetur adipisicing elit. Ab harum soluta velit? Placeat sunt ut esse dolores a mollitia, cumque ipsa facere dicta ab quis quasi porro. Asperiores, incidunt atque.</p>
-            <p className="block font-sans text-base antialiased font-light leading-relaxed text-inherit"> {restaurant.phone_number}</p>
+            {/* Description */}
+            <p className="block font-sans text-base antialiased font-semibold leading-relaxed text-inherit">Description: {restaurant.description}</p>
+
+            {/* Phone Number */}
+            <p className="block font-sans text-base antialiased font-semibold leading-relaxed text-inherit">Phone Number: {restaurant.phone_number}</p>
 
         </div>
     )

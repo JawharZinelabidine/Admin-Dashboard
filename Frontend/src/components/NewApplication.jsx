@@ -3,16 +3,25 @@ import { Link } from 'react-router-dom';
 import axios from 'axios';
 import PendingRestaurant from './PendingRestaurant';
 import RestaurantDetails from './RestaurantDetails';
+import OwnerDetails from "./OwnerDetails"
 import { useSelector, useDispatch } from 'react-redux';
 import { setRestaurantId, setShowRestaurantDetails } from "../features/restaurantSlice";
+import { setOwnerId, setShowOwnerDetails } from "../features/ownerSlice"
 
 function NewApplication() {
   const dispatch = useDispatch();
   const [restaurants, setRestaurants] = useState([]);
   const { showRestaurantDetails } = useSelector(state => state.restaurant);
+  const { showOwnerDetails } = useSelector(state => state.owner);
   const handleClick = () => {
-    dispatch(setRestaurantId(null))
-    dispatch(setShowRestaurantDetails(!showRestaurantDetails));
+    if (showRestaurantDetails) {
+      dispatch(setRestaurantId(null))
+      dispatch(setShowRestaurantDetails(!showRestaurantDetails));
+    }
+    if (showOwnerDetails) {
+      dispatch(setOwnerId(null))
+      dispatch(setShowOwnerDetails(!showOwnerDetails));
+    }
   };
 
   const fetchRestaurants = async () => {
@@ -145,7 +154,7 @@ function NewApplication() {
               <div className="overflow-y-auto" style={{ maxHeight: "24rem" }}>
                 <ul className="p-6 space-y-6">
                   {restaurants.map(restaurant => (
-                    <li className="flex items-center" key={restaurant.id}> < PendingRestaurant restaurant={restaurant} /></li>
+                    <li className="flex" key={restaurant.id}> < PendingRestaurant restaurant={restaurant} /></li>
                   ))}
                 </ul>
               </div>
@@ -156,6 +165,18 @@ function NewApplication() {
           <div className="fixed inset-0 flex items-center justify-center">
             <div className="bg-gray-800 bg-opacity-75 absolute inset-0" />
             <RestaurantDetails />
+            <button
+              className="absolute top-0 right-0 p-4 cursor-pointer"
+              onClick={handleClick}
+            >
+              Close
+            </button>
+          </div>
+        )}
+        {showOwnerDetails && (
+          <div className="fixed inset-0 flex items-center justify-center">
+            <div className="bg-gray-800 bg-opacity-75 absolute inset-0" />
+            <OwnerDetails />
             <button
               className="absolute top-0 right-0 p-4 cursor-pointer"
               onClick={handleClick}

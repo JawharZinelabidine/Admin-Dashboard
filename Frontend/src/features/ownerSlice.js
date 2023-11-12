@@ -10,17 +10,14 @@ const ownerSlice = createSlice({
   initialState,
   reducers: {
     setShowOwnerDetails: (state, action) => {
-      state.ownerId = action.payload;
+      state.showOwnerDetails = action.payload;
     },
     setOwnerId: (state, action) => {
-      state.showOwnerDetails = action.payload;
+      state.ownerId = action.payload;
     },
   },
 });
 
-export const {
-    setOwnerShowDetails,
-    setOwnerId,
-  } = ownerSlice.actions;
-  
-  export default ownerSlice.reducer;
+export const { setShowOwnerDetails, setOwnerId } = ownerSlice.actions;
+
+export default ownerSlice.reducer;
