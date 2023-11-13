@@ -58,7 +58,7 @@ module.exports = {
           verifyToken,
         },
       });
-      const verificationLink = `http://localhost:5173/owners/verify/${verifyToken}`;
+      const verificationLink = `http://localhost:5174/owners/verify/${verifyToken}`;
       await sendingMail({
         from: process.env.EMAIL,
         to: owner.email,

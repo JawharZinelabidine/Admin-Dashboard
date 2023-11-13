@@ -30,7 +30,7 @@ const createRestaurants = async () => {
         opening_time: new Date("2019-01-16 12:00:00"),
         closing_time: new Date("2019-01-16 22:00:00"),
         status: "Approved",
-        ownerId: 2,
+        ownerId: 1,
       },
       {
         name: "La Villa",
@@ -56,7 +56,7 @@ const createRestaurants = async () => {
         opening_time: new Date("2019-01-16 12:00:00"),
         closing_time: new Date("2019-01-16 23:00:00"),
         status: "Approved",
-        ownerId: 3,
+        ownerId: 2,
       },
       {
         name: "Dar El Jeld",
@@ -83,7 +83,7 @@ const createRestaurants = async () => {
         opening_time: new Date("2019-01-16 12:00:00"),
         closing_time: new Date("2019-01-16 23:00:00"),
         status: "Approved",
-        ownerId: 4,
+        ownerId: 3,
       },
       {
         name: "L'Astragale",
@@ -109,7 +109,7 @@ const createRestaurants = async () => {
         opening_time: new Date("2019-01-16 08:00:00"),
         closing_time: new Date("2019-01-16 01:00:00"),
         status: "Approved",
-        ownerId: 5,
+        ownerId: 4,
       },
       {
         name: "Dar Belhadj",
@@ -135,7 +135,7 @@ const createRestaurants = async () => {
         opening_time: new Date("2019-01-16 09:00:00"),
         closing_time: new Date("2019-01-16 01:00:00"),
         status: "Approved",
-        ownerId: 6,
+        ownerId: 5,
       },
       {
         name: "La Villa Bleue",
@@ -161,7 +161,7 @@ const createRestaurants = async () => {
         opening_time: new Date("2019-01-16 12:00:00"),
         closing_time: new Date("2019-01-16 01:00:00"),
         status: "Approved",
-        ownerId: 7,
+        ownerId: 6,
       },
       {
         name: "Fondouk El Attarine",
@@ -187,7 +187,7 @@ const createRestaurants = async () => {
         opening_time: new Date("2019-01-16 12:00:00"),
         closing_time: new Date("2019-01-16 01:00:00"),
         status: "Approved",
-        ownerId: 8,
+        ownerId: 7,
       },
       {
         name: "El Fondouk",
@@ -214,7 +214,7 @@ const createRestaurants = async () => {
         opening_time: new Date("2019-01-16 12:00:00"),
         closing_time: new Date("2019-01-16 23:00:00"),
         status: "Approved",
-        ownerId: 9,
+        ownerId: 8,
       },
       {
         name: "Farmers",
@@ -239,7 +239,7 @@ const createRestaurants = async () => {
         opening_time: new Date("2019-01-16 20:00:00"),
         closing_time: new Date("2019-01-16 00:00:00"),
         status: "Approved",
-        ownerId: 10,
+        ownerId: 9,
       },
       {
         name: "L'AROMATE",
@@ -264,7 +264,7 @@ const createRestaurants = async () => {
         opening_time: new Date("2019-01-16 21:00:00"),
         closing_time: new Date("2019-01-16 00:00:00"),
         status: "Approved",
-        ownerId: 11,
+        ownerId: 10,
       },
       {
         name: "Le Pirate",
@@ -288,7 +288,7 @@ const createRestaurants = async () => {
         opening_time: new Date("2019-01-16 21:00:00"),
         closing_time: new Date("2019-01-16 00:00:00"),
         status: "Approved",
-        ownerId: 12,
+        ownerId: 11,
       },
       {
         name: "Sushi&Co",
@@ -312,7 +312,7 @@ const createRestaurants = async () => {
         opening_time: new Date("2019-01-16 08:00:00"),
         closing_time: new Date("2019-01-16 01:00:00"),
         status: "Approved",
-        ownerId: 13,
+        ownerId: 12,
       },
     ],
   });
@@ -330,6 +330,7 @@ const createOwner = async () => {
   const password10 = '1236'
   const password12 = '1233444'
   const password13 = '123884'
+  const password14 = 'adminadmin'
 
   const encryptedPassword1 = await bcrypt.hash(password1, 10)
   const encryptedPassword2 = await bcrypt.hash(password2, 10)
@@ -343,6 +344,8 @@ const createOwner = async () => {
   const encryptedPassword10 = await bcrypt.hash(password10, 10)
   const encryptedPassword11 = await bcrypt.hash(password12, 10)
   const encryptedPassword12 = await bcrypt.hash(password13, 10)
+  const encryptedPassword13 = await bcrypt.hash(password14, 10)
+
   await prisma.user.createMany({
     data: [
       {
@@ -440,26 +443,21 @@ const createOwner = async () => {
         isVerified: true
 
       },
-    ],
+
+      {
+        fullname: "admin",
+        email: "admin@admin.com",
+        password: encryptedPassword13,
+        role: "ADMIN",
+        isVerified: true
+      },
+    ]
+
+
+
   });
-};
-
-const createAdmin = async () => {
-  const password = 'adminadmin'
-  const encryptedPassword = await bcrypt.hash(password, 10)
-  await prisma.user.create({
-    data:
-    {
-      fullname: "admin",
-      email: "admin@admin.com",
-      password: encryptedPassword,
-      role: "ADMIN",
-      isVerified: true
-    },
-  })
-
 }
+
 
 // createOwner();
 createRestaurants();
-// createAdmin();
