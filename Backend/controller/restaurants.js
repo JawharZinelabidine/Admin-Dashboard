@@ -4,7 +4,11 @@ const uploadToCloudinary = require("./helpers/cloudinary");
 module.exports = {
   getRestaurants: async (req, res) => {
     try {
-      const restaurants = await restaurant.findMany();
+      const restaurants = await restaurant.findMany({
+        where: {
+          status: 'Approved'
+        }
+      });
       res.status(200).json(restaurants);
     } catch (error) {
       console.error(error);

@@ -1,8 +1,56 @@
-import React from 'react'
-import { Link } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
+import React, { useState } from "react";
 
 
 function Login() {
+
+
+  const [inputs, setInputs] = useState({});
+
+  const navigate = useNavigate();
+
+
+  const handleChange = (e) => {
+    e.preventDefault();
+    const name = e.target.name;
+    const value = e.target.value;
+    setInputs((values) => ({ ...values, [name]: value }));
+  };
+
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const { data } = await axios.post(
+        "http://localhost:3000/api/admin/signin",
+        inputs
+      );
+      toast.success("Successfully Logged In");
+      if (data.message === "owner successfully logged in") {
+        localStorage.setItem("token", data.token);
+        navigate("/dashboard");
+      }
+    } catch (error) {
+      if (
+        error.response &&
+        error.response.status === 410 &&
+        error.response.data.error === "Email doesn't exist"
+      ) {
+        toast.error("Please provide a correct email");
+      } else if (
+        error.response &&
+        error.response.status === 411 &&
+        error.response.data.error === "unvalid password"
+      ) {
+        toast.error("Please provide a correct password");
+      } else {
+        console.log(error);
+      }
+    }
+  };
+
+
+
   return (
     <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
       <div className="sm:mx-auto sm:w-full sm:max-w-sm">
@@ -58,12 +106,12 @@ function Login() {
           </div>
 
           <div>
-            <Link to="/Dashboard"> <button
+            <button
               type="submit"
               className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
             >
               Sign in
-            </button></Link>
+            </button>
           </div>
         </form>
 
