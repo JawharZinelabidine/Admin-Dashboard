@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import axios from "../services/axiosInterceptor";
 import Navbar from './Navbar';
 import PendingRestaurant from './PendingRestaurant';
 import RestaurantDetails from './RestaurantDetails';
