@@ -1,3 +1,6 @@
+
+import Navbar from './Navbar';
+
 import React, { useEffect } from 'react';
 import { useNavigate } from "react-router-dom";
 
@@ -32,7 +35,9 @@ function Dashboard() {
 
   return (
     <>
+      < Navbar />
       <div className="flex-grow min-h-screen text-white bg-gray-900 w-full">
+
         <header className="flex items-center h-20 px-6 sm:px-10 bg-gray-900 shadow-lg">
           <button className="block sm:hidden relative flex-shrink-0 p-2 mr-2 text-gray-600 hover:bg-gray-100 hover:text-gray-800 focus:bg-gray-100 focus:text-gray-800 rounded-full">
             <span className="sr-only">Menu</span>
@@ -133,6 +138,7 @@ function Dashboard() {
             </div>
           </div>
         </header>
+
         <main className="p-6  space-y-28">
           <div className="flex flex-col space-y-6 md:space-y-0 md:flex-row justify-between ">
             <div className="mr-6">

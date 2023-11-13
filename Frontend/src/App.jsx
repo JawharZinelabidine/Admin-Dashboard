@@ -9,6 +9,7 @@ import "./App.css";
 import Login from "./components/Login";
 import Dashboard from "./components/Dashboard";
 import NewApplication from "./components/NewApplication";
+import History from "./components/History"
 
 
 function App() {
@@ -30,6 +31,14 @@ function App() {
           element={
             <>
               <NewApplication />
+            </>
+          }
+        />
+        <Route
+          path="/history"
+          element={
+            <>
+              <History />
             </>
           }
         />
