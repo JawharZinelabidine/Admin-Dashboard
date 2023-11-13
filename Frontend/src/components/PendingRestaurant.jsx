@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { setRestaurantId, setShowRestaurantDetails } from "../features/restaurantSlice";
 import { setOwnerId, setShowOwnerDetails } from "../features/ownerSlice";
 
-function PendingRestaurant({ restaurant }) {
+function PendingRestaurant({ restaurant, fetchRestaurants }) {
     const dispatch = useDispatch();
     const { showRestaurantDetails } = useSelector(state => state.restaurant);
     const { showOwnerDetails } = useSelector(state => state.owner);
@@ -19,18 +19,20 @@ function PendingRestaurant({ restaurant }) {
 
 
     const handleAcceptClick = async () => {
-        const decision = "approve"
+        const decision = "approved"
         try {
-            await axios.post(`http://localhost:3000/api/admin/restaurant/${restaurant.id}`, decision);
+            await axios.post(`http://localhost:3000/api/admin/restaurant/${restaurant.id}`, { decision });
+            fetchRestaurants();
         } catch (error) {
             console.error(error);
         }
     };
 
     const handleDeclineClick = async () => {
-        const decision = "decline"
+        const decision = "declined";
         try {
-            await axios.post(`http://localhost:3000/api/admin/restaurant/${restaurant.id}`, decision);
+            await axios.post(`http://localhost:3000/api/admin/restaurant/${restaurant.id}`, { decision });
+            fetchRestaurants();
         } catch (error) {
             console.error(error);
         }

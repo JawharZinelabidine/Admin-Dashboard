@@ -3,6 +3,30 @@ const { sendingMail } = require("../utils/mailing");
 require("dotenv").config();
 
 module.exports = {
+  getApprovedOrDeclinedRestaurants: async (req, res) => {
+    try {
+      const restaurants = await restaurant.findMany({
+        select: {
+          id: true,
+          name: true,
+          status: true,
+        },
+        where: {
+          status: {
+            in: ["Approved", "Declined"],
+          },
+        },
+        orderBy: {
+          updatedAt: "desc",
+        },
+      });
+
+      res.status(200).json(restaurants);
+    } catch (error) {
+      console.error("Error fetching restaurants:", error);
+      res.status(500).json({ error: "Internal server error" });
+    }
+  },
   getPendingRestaurants: async (req, res) => {
     try {
       const restaurants = await restaurant.findMany({
@@ -68,8 +92,9 @@ module.exports = {
     }
   },
   reviewRestaurantRequest: async (req, res) => {
-    const decision = req.body;
+    const decision = req.body.decision;
     const restaurantId = req.params.id;
+    console.log(decision);
 
     try {
       const requestedRestaurant = await restaurant.findUnique({
@@ -85,7 +110,7 @@ module.exports = {
       const updatedRestaurant = await restaurant.update({
         where: { id: +restaurantId },
         data: {
-          status: decision === "approve" ? "Approved" : "Declined",
+          status: decision === "approved" ? "Approved" : "Declined",
         },
       });
       console.log(updatedRestaurant);
@@ -94,9 +119,9 @@ module.exports = {
       });
 
       const subject =
-        decision === "approve" ? "Restaurant Approved" : "Restaurant Declined";
+        decision === "approved" ? "Restaurant Approved" : "Restaurant Declined";
       const message =
-        decision === "approve"
+        decision === "approved"
           ? "Congratulations! Your restaurant request has been approved."
           : "We regret to inform you that your restaurant request has been declined.";
 
