@@ -15,6 +15,7 @@ const {
   verifyEmail,
   removeNotification,
   checkNotification,
+  getOwnerById,
 } = require("../controller/owners");
 
 
@@ -27,6 +28,7 @@ router.route("/")
     // ]),
     createOwner
   );
+  router.route("/:ownerId").get(getOwnerById)
 
 
 router.route("/customers/:customerId").get(isAuthenticated, isOwnerAuthorized, getOneCustomers)

@@ -6,6 +6,7 @@ const {
   getVerfiedOwners,
   reviewRestaurantRequest,
 } = require("../controller/admin");
+const { getRestaurants } = require("../controller/restaurants");
 
 router
   .route("/restaurants")
@@ -13,5 +14,7 @@ router
   .post(reviewRestaurantRequest);
 
 router.route("/owners").get(getVerfiedOwners);
+router
+  .route("/restaurants").get(getRestaurants)
 
 module.exports = router;

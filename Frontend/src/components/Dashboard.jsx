@@ -139,10 +139,13 @@ function Dashboard() {
 
             </svg>
           </div>
-          <div>
-            <span className="block text-2xl font-bold">62</span>
-            <span className="block text-gray-500">Restaurants</span>
-          </div>
+       
+           <div>
+           <div>
+          <Link to="/RestaurantList" className="block text-gray-500">Restaurants</Link>
+        </div>
+           </div>
+         
         </div>
         <div className="flex items-center p-8 bg-gray-800 shadow-lg rounded-lg">
           <div className="inline-flex flex-shrink-0 items-center justify-center h-16 w-16 text-green-600 bg-green-100 rounded-full mr-6">

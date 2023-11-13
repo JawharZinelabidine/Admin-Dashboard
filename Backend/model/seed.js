@@ -30,6 +30,8 @@ const createMany = async () => {
         closing_time: new Date("2019-01-16 22:00:00"),
         status: "Approved",
         ownerId: 1,
+       
+
       },
       {
         name: "La Villa",
@@ -56,6 +58,8 @@ const createMany = async () => {
         closing_time: new Date("2019-01-16 23:00:00"),
         status: "Approved",
         ownerId: 2,
+      
+    
       },
       {
         name: "Dar El Jeld",
@@ -83,6 +87,7 @@ const createMany = async () => {
         closing_time: new Date("2019-01-16 23:00:00"),
         status: "Approved",
         ownerId: 3,
+       
       },
       {
         name: "L'Astragale",
@@ -109,6 +114,7 @@ const createMany = async () => {
         closing_time: new Date("2019-01-16 01:00:00"),
         status: "Approved",
         ownerId: 4,
+      
       },
       {
         name: "Dar Belhadj",
@@ -135,6 +141,7 @@ const createMany = async () => {
         closing_time: new Date("2019-01-16 01:00:00"),
         status: "Approved",
         ownerId: 5,
+      
       },
       {
         name: "La Villa Bleue",
@@ -161,6 +168,7 @@ const createMany = async () => {
         closing_time: new Date("2019-01-16 01:00:00"),
         status: "Approved",
         ownerId: 6,
+      
       },
       {
         name: "Fondouk El Attarine",
@@ -187,6 +195,7 @@ const createMany = async () => {
         closing_time: new Date("2019-01-16 01:00:00"),
         status: "Approved",
         ownerId: 7,
+       
       },
       {
         name: "El Fondouk",
@@ -214,6 +223,7 @@ const createMany = async () => {
         closing_time: new Date("2019-01-16 23:00:00"),
         status: "Approved",
         ownerId: 8,
+      
       },
       {
         name: "Farmers",
@@ -239,6 +249,7 @@ const createMany = async () => {
         closing_time: new Date("2019-01-16 00:00:00"),
         status: "Approved",
         ownerId: 9,
+       
       },
       {
         name: "L'AROMATE",
@@ -264,6 +275,7 @@ const createMany = async () => {
         closing_time: new Date("2019-01-16 00:00:00"),
         status: "Approved",
         ownerId: 10,
+       
       },
       {
         name: "Le Pirate",
@@ -288,6 +300,7 @@ const createMany = async () => {
         closing_time: new Date("2019-01-16 00:00:00"),
         status: "Approved",
         ownerId: 11,
+      
       },
       {
         name: "Sushi&Co",
@@ -312,6 +325,7 @@ const createMany = async () => {
         closing_time: new Date("2019-01-16 01:00:00"),
         status: "Approved",
         ownerId: 12,
+     
       },
     ],
   });
@@ -395,5 +409,5 @@ const createOwner = async () => {
   });
 };
 
-createOwner();
+// createOwner();
 createMany();

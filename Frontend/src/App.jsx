@@ -9,6 +9,7 @@ import "./App.css";
 import Login from "./components/Login";
 import Dashboard from "./components/Dashboard";
 import NewApplication from "./components/NewApplication";
+import RestaurantList from "./components/RestaurantList";
 
 
 function App() {
@@ -30,6 +31,14 @@ function App() {
           element={
             <>
               <NewApplication />
+            </>
+          }
+        />
+         <Route
+          path="/RestaurantList"
+          element={
+            <>
+              <RestaurantList />
             </>
           }
         />

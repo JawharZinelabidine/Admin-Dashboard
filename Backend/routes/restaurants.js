@@ -57,5 +57,6 @@ router
   .route("/myRestaurant")
   .get(isAuthenticated, isOwnerAuthorized, getOne)
   .post(isAuthenticated, isOwnerAuthorized, updateRestaurantInformation);
+  
 
 module.exports = router;
