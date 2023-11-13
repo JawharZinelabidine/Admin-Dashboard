@@ -8,8 +8,9 @@ const {
   reviewRestaurantRequest,
   getPendingRestaurant,
   getApprovedOrDeclinedRestaurants,
-
-  signin
+  signin,
+  checkNotification,
+  removeNotification
 } = require("../controller/admin");
 
 router.route("/restaurants").get(isAuthenticated, isAdminAuthorized, getPendingRestaurants);
@@ -19,6 +20,11 @@ router.route("/owner/:id").get(isAuthenticated, isAdminAuthorized, getVerifiedOw
 router.route("/restaurants").get(isAuthenticated, isAdminAuthorized, getPendingRestaurants);
 
 router.route("/history").get(isAuthenticated, isAdminAuthorized, getApprovedOrDeclinedRestaurants);
+
+router
+  .route("/notification")
+  .get(isAuthenticated, isAdminAuthorized, checkNotification)
+  .put(isAuthenticated, isAdminAuthorized, removeNotification);
 
 
 router
