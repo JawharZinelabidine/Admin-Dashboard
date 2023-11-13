@@ -1,7 +1,35 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useNavigate } from "react-router-dom";
+
+import axios from "../services/axiosInterceptor";
+
 import { Link } from 'react-router-dom';
 
 function Dashboard() {
+  const navigate = useNavigate();
+
+  const logout = () => {
+    localStorage.clear();
+    navigate('/login')
+  };
+
+  const fetchRestaurants = async () => {
+    try {
+      const { data } = await axios.get("http://localhost:3000/api/admin/restaurants");
+      setRestaurants(data)
+    } catch (error) {
+      console.log(error);
+      if (error.response.status === 403 || error.response.status === 401) {
+        localStorage.clear();
+        navigate("/login");
+      }
+    }
+  }
+
+  useEffect(() => {
+    fetchRestaurants()
+  })
+
   return (
     <>
       <div className="flex-grow min-h-screen text-white bg-gray-900 w-full">
@@ -85,7 +113,7 @@ function Dashboard() {
                   />
                 </svg>
               </button>
-              <Link to="/Login"><button className="relative p-2 text-gray-400 hover:bg-gray-100 hover:text-gray-600 focus:bg-gray-100 focus:text-gray-600 rounded-full">
+              <button className="relative p-2 text-gray-400 hover:bg-gray-100 hover:text-gray-600 focus:bg-gray-100 focus:text-gray-600 rounded-full" onClick={() => logout()}>
                 <span className="sr-only">Log out</span>
                 <svg
                   aria-hidden="true"
@@ -101,7 +129,7 @@ function Dashboard() {
                     d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"
                   />
                 </svg>
-              </button></Link>
+              </button>
             </div>
           </div>
         </header>
