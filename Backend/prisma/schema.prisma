@@ -47,6 +47,7 @@ model Restaurant {
   reservation_quota Int
   latitude          Float
   longtitude        Float
+  isBanned          Boolean       @default(false)
   opening_time      DateTime      @db.Time
   closing_time      DateTime      @db.Time
   status            Status        @default(Pending)
