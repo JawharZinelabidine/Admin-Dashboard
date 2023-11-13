@@ -140,4 +140,31 @@ module.exports = {
       res.status(500).send(error);
     }
   },
+
+  signin: async (req, res) => {
+    const { email, password } = req.body;
+    try {
+      const admin = await user.findUnique({
+        where: { email },
+      });
+      if (!admin) return res.status(410).json({ error: "Email doesn't exist" });
+      const passwordMatch = await bcrypt.compare(password, owner.password);
+      if (!passwordMatch)
+        return res.status(411).json({ error: "unvalid password" });
+
+      if (admin.role !== "ADMIN") {
+        res.status(403).json({ message: "Invalid user role" });
+      } else {
+        const token = jwt.sign(
+          { id: admin.id, role: admin.role },
+          process.env.JWT_SECRET,
+          { expiresIn: "1d" }
+        );
+        return res.status(201).json({ message: "Admin successfully logged in", token: token });
+      }
+    } catch (error) {
+      res.status(500).send(error);
+      console.log(error);
+    }
+  },
 };
