@@ -33,6 +33,7 @@ function Login() {
       if (data.message === "Admin successfully logged in") {
         toast.success("Successfully Logged In");
         localStorage.setItem("token", data.token);
+        console.log(data.token)
         navigate("/dashboard");
       }
     } catch (error) {
@@ -42,7 +43,6 @@ function Login() {
         error.response.data.error === "Email doesn't exist"
       ) {
         toast.error("Please provide a correct email");
-        console.log(toast.error("Please provide a correct email"));
       } else if (
         error.response &&
         error.response.status === 411 &&

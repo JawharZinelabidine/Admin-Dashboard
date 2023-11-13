@@ -19,51 +19,66 @@ module.exports = {
             const thisRestaurant = await restaurant.findUnique({
                 where: { id: +restaurantId }
             })
-            const reservations = await reservation.findMany({
+
+
+            const myReservation = await reservation.findFirst({
                 where: {
-                    date: new Date(date),
-                    restaurantId: +restaurantId,
-                    status: 'Approved'
+                    restaurantId: thisRestaurant.id,
+                    customerId: id,
+                    date: new Date(date)
                 }
             })
 
-            const spotsTaken = reservations.reduce((total, el) => total + el.guest_number, 0)
-            console.log(spotsTaken)
+            if (myReservation) {
+                res.status(400).send({ message: 'user already has a reservation on this date.' })
+            }
+            else {
 
-            if (spotsTaken + guest_number <= thisRestaurant.reservation_quota) {
-                const request = await reservation.create({
-                    data: {
-                        date: new Date(date), time: new Date(time), guest_number: guest_number, customerId: id, restaurantId: +restaurantId
+                const reservations = await reservation.findMany({
+                    where: {
+                        date: new Date(date),
+                        restaurantId: +restaurantId,
+                        status: 'Approved'
                     }
                 })
 
-                res.status(201).json(request);
+                const spotsTaken = reservations.reduce((total, el) => total + el.guest_number, 0)
+                console.log(spotsTaken)
 
-                if (request) {
-                    try {
+                if (spotsTaken + guest_number <= thisRestaurant.reservation_quota) {
+                    const request = await reservation.create({
+                        data: {
+                            date: new Date(date), time: new Date(time), guest_number: guest_number, customerId: id, restaurantId: +restaurantId
+                        }
+                    })
 
-                        await user.update({
-                            where: {
-                                id: thisRestaurant.ownerId
-                            },
-                            data: {
-                                hasNotification: true
-                            }
-                        })
+                    res.status(201).json(request);
 
-                    } catch (error) {
-                        console.log('Failed to change notification status:', error)
+                    if (request) {
+                        try {
 
+                            await user.update({
+                                where: {
+                                    id: thisRestaurant.ownerId
+                                },
+                                data: {
+                                    hasNotification: true
+                                }
+                            })
+
+                        } catch (error) {
+                            console.log('Failed to change notification status:', error)
+
+
+                        }
 
                     }
 
+                } else {
+                    const remaining = thisRestaurant.reservation_quota - spotsTaken
+                    res.status(400).json(remaining)
                 }
-
-            } else {
-                const remaining = thisRestaurant.reservation_quota - spotsTaken
-                res.status(400).json(remaining)
             }
-
         }
         catch (error) {
             console.error(error);

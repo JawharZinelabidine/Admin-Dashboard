@@ -1,7 +1,17 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 
 function Navbar() {
+
+
+    const navigate = useNavigate();
+
+    const logout = () => {
+        localStorage.clear();
+        navigate('/login')
+    };
+
     return (
         <>
             <header className="flex items-center h-20 px-6 sm:px-10 bg-gray-900 shadow-lg">
@@ -59,7 +69,8 @@ function Navbar() {
                                 />
                             </svg>
                         </button>
-                        <Link to="/Login"><button className="relative p-2 text-gray-400 hover:bg-gray-100 hover:text-gray-600 focus:bg-gray-100 focus:text-gray-600 rounded-full">
+                        <button className="relative p-2 text-gray-400 hover:bg-gray-100 hover:text-gray-600 focus:bg-gray-100 focus:text-gray-600 rounded-full"
+                            onClick={() => { logout() }}>
                             <span className="sr-only">Log out</span>
                             <svg
                                 aria-hidden="true"
@@ -75,7 +86,7 @@ function Navbar() {
                                     d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"
                                 />
                             </svg>
-                        </button></Link>
+                        </button>
                     </div>
                 </div>
             </header >
