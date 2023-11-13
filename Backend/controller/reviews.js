@@ -36,6 +36,20 @@ module.exports = {
             res.status(500).send(error);
         }
     },
+    getAllReviews: async (req, res) => {
+        const restaurantId = req.params.restaurantId
+        try {
+            const pending = await review.findMany({
+                where: {
+                    restaurantId: +restaurantId,
+                }
+            });
+            res.status(200).json(pending);
+        } catch (error) {
+            console.error(error);
+            res.status(500).send(error);
+        }
+    },
 
 
 }

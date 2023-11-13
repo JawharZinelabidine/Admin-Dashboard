@@ -9,6 +9,7 @@ require("dotenv").config();
 
 module.exports = {
   getOneCustomers: async (req, res) => {
+    console.log('a')
     const id = req.params.customerId;
     try {
       const customer = await user.findUnique({
