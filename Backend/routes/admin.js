@@ -6,10 +6,11 @@ const {
   getVerifiedOwner,
   reviewRestaurantRequest,
   getPendingRestaurant,
+  getApprovedOrDeclinedRestaurants,
 } = require("../controller/admin");
 
 router.route("/restaurants").get(getPendingRestaurants);
-
+router.route("/history").get(getApprovedOrDeclinedRestaurants);
 router.route("/owner/:id").get(getVerifiedOwner);
 
 router
