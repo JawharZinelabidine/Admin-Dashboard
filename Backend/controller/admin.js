@@ -1,6 +1,8 @@
 const { user, restaurant } = require("../model/index");
 const { sendingMail } = require("../utils/mailing");
 require("dotenv").config();
+const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
 
 module.exports = {
   getApprovedOrDeclinedRestaurants: async (req, res) => {
@@ -145,10 +147,12 @@ module.exports = {
     const { email, password } = req.body;
     try {
       const admin = await user.findUnique({
-        where: { email },
+        where: {
+          email: email,
+        }
       });
       if (!admin) return res.status(410).json({ error: "Email doesn't exist" });
-      const passwordMatch = await bcrypt.compare(password, owner.password);
+      const passwordMatch = await bcrypt.compare(password, admin.password);
       if (!passwordMatch)
         return res.status(411).json({ error: "unvalid password" });
 
@@ -160,6 +164,7 @@ module.exports = {
           process.env.JWT_SECRET,
           { expiresIn: "1d" }
         );
+
         return res.status(201).json({ message: "Admin successfully logged in", token: token });
       }
     } catch (error) {
