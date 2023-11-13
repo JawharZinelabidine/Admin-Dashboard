@@ -10,6 +10,7 @@ import Login from "./components/Login";
 import Dashboard from "./components/Dashboard";
 import NewApplication from "./components/NewApplication";
 import RestaurantList from "./components/RestaurantList";
+import History from "./components/History"
 
 
 function App() {
@@ -39,6 +40,14 @@ function App() {
           element={
             <>
               <RestaurantList />
+              </>
+          }
+          />
+        <Route
+          path="/history"
+          element={
+            <>
+              <History />
             </>
           }
         />
