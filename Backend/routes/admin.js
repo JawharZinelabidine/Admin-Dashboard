@@ -10,7 +10,8 @@ const {
   getApprovedOrDeclinedRestaurants,
   signin,
   checkNotification,
-  removeNotification
+  removeNotification,
+
 } = require("../controller/admin");
 const { getRestaurants } = require("../controller/restaurants");
 
@@ -38,5 +39,6 @@ router
 
 
 router.route("/signin").post(signin);
+
 
 module.exports = router;
