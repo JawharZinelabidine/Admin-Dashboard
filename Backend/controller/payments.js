@@ -3,6 +3,7 @@ const axios = require('axios');
 require('dotenv').config();
 const stripe = require('stripe')(process.env.CLIENT_SECRET)
 
+
 module.exports = {
 
     paymentIntent: async (req, res) => {
