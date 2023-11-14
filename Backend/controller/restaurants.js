@@ -37,8 +37,6 @@ module.exports = {
   createRestaurant: async (req, res) => {
     try {
       const id = req.userId
-      const latitude = 222.558;
-      const longtitude = 856.258;
       const {
         name,
         description,
@@ -51,6 +49,8 @@ module.exports = {
         mainImage,
         menuImages,
         extraImages,
+        latitude,
+        longtitude
       } = req.body;
       const mainImageUrl = await uploadToCloudinary(mainImage);
       const menuImageUrls = await Promise.all(
