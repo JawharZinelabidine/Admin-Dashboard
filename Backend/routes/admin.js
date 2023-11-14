@@ -12,9 +12,13 @@ const {
   checkNotification,
   removeNotification
 } = require("../controller/admin");
+const { getRestaurants } = require("../controller/restaurants");
 
 router.route("/restaurants").get(isAuthenticated, isAdminAuthorized, getPendingRestaurants);
 
+router.route("/owners").get(getVerifiedOwner);
+router
+  .route("/restaurants").get(getRestaurants)
 router.route("/owner/:id").get(isAuthenticated, isAdminAuthorized, getVerifiedOwner);
 
 router.route("/restaurants").get(isAuthenticated, isAdminAuthorized, getPendingRestaurants);

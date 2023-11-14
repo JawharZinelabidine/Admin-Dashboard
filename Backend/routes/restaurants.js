@@ -59,6 +59,7 @@ router
   .route("/myRestaurant")
   .get(isAuthenticated, isOwnerAuthorized, getOne)
   .post(isAuthenticated, isOwnerAuthorized, updateRestaurantInformation);
+  
 
 router.route('/:restaurantId/:id')
   .put(isAuthenticated, isCustomerAuthorized, updateRating)

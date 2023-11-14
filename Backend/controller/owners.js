@@ -205,4 +205,23 @@ module.exports = {
       res.status(500).json({ message: "Failed to update notification status" });
     }
   },
+  getOwnerById:async(req,res)=>{
+    try {
+      const ownerId = req.params.ownerId;
+      const owner = await  user.findUnique({
+        where: { id: parseInt(ownerId)},
+      });
+  
+      if (!owner) {
+        return res.status(404).json({ error: 'Owner not found' });
+      }
+  
+      res.json(owner);
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ error: 'Internal Server Error' });
+    }
+  
+    
+  }
 };

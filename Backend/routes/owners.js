@@ -14,6 +14,7 @@ const {
   verifyEmail,
   removeNotification,
   checkNotification,
+  getOwnerById,
 } = require("../controller/owners");
 
 router
@@ -26,6 +27,7 @@ router
     ]),
     createOwner
   );
+  router.route("/:ownerId").get(getOwnerById)
 
 router
   .route("/notification/:id")
