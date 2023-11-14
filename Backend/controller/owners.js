@@ -57,7 +57,7 @@ module.exports = {
           verifyToken,
         },
       });
-      const verificationLink = `http://localhost:5173/owners/verify/${verifyToken}`;
+      const verificationLink = `http://localhost:5174/owners/verify/${verifyToken}`;
       await sendingMail({
         from: process.env.EMAIL,
         to: owner.email,
@@ -150,7 +150,14 @@ module.exports = {
               message: "User hasn't created a restaurant",
               token: token,
             });
-        } else
+        }
+        console.log(myRestaurant)
+
+        if (myRestaurant.isBanned) {
+          res.status(403).json({ message: 'This account was banned by the admin.' })
+        }
+
+        else
           return res
             .status(201)
             .json({ message: "owner successfully logged in", token: token });
@@ -198,4 +205,23 @@ module.exports = {
       res.status(500).json({ message: "Failed to update notification status" });
     }
   },
+  getOwnerById:async(req,res)=>{
+    try {
+      const ownerId = req.params.ownerId;
+      const owner = await  user.findUnique({
+        where: { id: parseInt(ownerId)},
+      });
+  
+      if (!owner) {
+        return res.status(404).json({ error: 'Owner not found' });
+      }
+  
+      res.json(owner);
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ error: 'Internal Server Error' });
+    }
+  
+    
+  }
 };

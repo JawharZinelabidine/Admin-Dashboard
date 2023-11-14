@@ -31,8 +31,9 @@ router.route('/approve/:reservationId/:expoToken')
 router.route('/reject/:reservationId/:expoToken')
     .put(isAuthenticated, isOwnerAuthorized, rejectReservation)
 router.route('/notification')
-    .get(isAuthenticated, isCustomerAuthorized, checkReviewNotification)
     .put(isAuthenticated, isCustomerAuthorized, removeReviewNotification)
+router.route('/notification/:id')
+    .get(isAuthenticated, isCustomerAuthorized, checkReviewNotification)
 
 
 

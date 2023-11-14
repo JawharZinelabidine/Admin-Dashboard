@@ -18,6 +18,9 @@
     "postgres": "^3.4.2"
   },
   "devDependencies": {
+    "@babel/core": "^7.23.3",
+    "@babel/node": "^7.22.19",
+    "@babel/preset-env": "^7.23.3",
     "prisma": "^5.5.2"
   },
   "name": "backend",
