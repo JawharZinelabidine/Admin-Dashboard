@@ -172,4 +172,43 @@ module.exports = {
       console.log(error);
     }
   },
+
+  checkNotification: async (req, res) => {
+    const id = req.userId;
+
+    try {
+      const { hasNotification } = await user.findUnique({
+        where: {
+
+          id: id
+        }
+      })
+      res.status(200).send(hasNotification)
+
+
+    } catch (error) {
+      console.log(error);
+      res
+        .status(500)
+        .json({ message: "Failed to retrieve notification status" });
+    }
+  },
+  removeNotification: async (req, res) => {
+    const id = req.userId;
+
+    try {
+      const { hasNotification } = await user.update({
+        where: {
+          id: id,
+        },
+        data: {
+          hasNotification: false,
+        },
+      });
+      res.status(200).send(hasNotification);
+    } catch (error) {
+      console.log(error);
+      res.status(500).json({ message: "Failed to update notification status" });
+    }
+  },
 };

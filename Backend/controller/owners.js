@@ -9,7 +9,6 @@ require("dotenv").config();
 
 module.exports = {
   getOneCustomers: async (req, res) => {
-    console.log('a')
     const id = req.params.customerId;
     try {
       const customer = await user.findUnique({
@@ -151,7 +150,14 @@ module.exports = {
               message: "User hasn't created a restaurant",
               token: token,
             });
-        } else
+        }
+        console.log(myRestaurant)
+
+        if (myRestaurant.isBanned) {
+          res.status(403).json({ message: 'This account was banned by the admin.' })
+        }
+
+        else
           return res
             .status(201)
             .json({ message: "owner successfully logged in", token: token });

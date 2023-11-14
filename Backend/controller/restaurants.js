@@ -1,4 +1,4 @@
-const { restaurant, reservation } = require("../model/index");
+const { restaurant, reservation, user } = require("../model/index");
 const uploadToCloudinary = require("./helpers/cloudinary");
 
 module.exports = {
@@ -6,7 +6,8 @@ module.exports = {
     try {
       const restaurants = await restaurant.findMany({
         where: {
-          status: 'Approved'
+          status: 'Approved',
+          isBanned: false
         }
       });
       res.status(200).json(restaurants);
@@ -86,6 +87,24 @@ module.exports = {
           ownerId: id,
         },
       });
+
+      try {
+
+        await user.update({
+          where: {
+            email: 'admin@admin.com'
+          },
+          data: {
+            hasNotification: true
+          }
+        })
+
+      } catch (error) {
+        console.log('Failed to change admin notification status:', error)
+        res.status(500).send('Failed to change admin notification status')
+
+      }
+
       res.status(201).json(createdRestaurant);
     } catch (error) {
       console.error(error);
