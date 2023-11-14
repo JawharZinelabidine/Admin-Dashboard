@@ -21,7 +21,7 @@ model User {
   isVerified      Boolean       @default(false)
   verifyToken     String?
   otp             Int?
-  resetCode       Int? 
+  resetCode       Int?
   role            Role
   personalID      String?       @db.Text
   tax_declaration String?       @db.Text
@@ -47,12 +47,13 @@ model Restaurant {
   reservation_quota Int
   latitude          Float
   longtitude        Float
+  isBanned          Boolean       @default(false)
   opening_time      DateTime      @db.Time
   closing_time      DateTime      @db.Time
   status            Status        @default(Pending)
   isPremium         Boolean       @default(false)
-  rating            Float?
-  rating_count      Int?
+  rating            Float         @default(0)
+  rating_count      Int           @default(0)
   owner             User          @relation(fields: [ownerId], references: [id], onDelete: Cascade)
   ownerId           Int
   Reservation       Reservation[]
@@ -83,6 +84,7 @@ model Review {
   updatedAt    DateTime   @updatedAt
   review_title String     @db.VarChar(500)
   review_body  String     @db.Text
+  rating       Int
   customer     User       @relation(fields: [customerId], references: [id], onDelete: Cascade)
   restaurant   Restaurant @relation(fields: [restaurantId], references: [id], onDelete: Cascade)
   customerId   Int
