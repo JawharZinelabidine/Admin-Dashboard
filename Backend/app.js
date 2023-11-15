@@ -10,9 +10,14 @@ const messagesRouter = require('./routes/messages')
 const paymentsRouter = require('./routes/payments')
 const prisma = require("./model/index");
 var bodyParser = require('body-parser');
-
-
 const app = express()
+
+const http = require('http').Server(app);
+const socketIO = require('socket.io')(http, {
+    cors: {
+        origin: "http://localhost:3000"
+    }
+});
 
 const port = 3000
 
@@ -34,6 +39,15 @@ const connect = async () => {
 }
 
 connect()
+
+
+
+socketIO.on('connection', (socket) => {
+    console.log(`⚡: ${socket.id} user just connected!`);
+    socket.on('disconnect', () => {
+        console.log('🔥: A user disconnected');
+    });
+});
 
 
 app.use('/api/admin', adminRouter)
