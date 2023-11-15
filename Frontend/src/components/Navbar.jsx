@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect,useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useNavigate } from "react-router-dom";
 import { setNotificationBadge } from "../features/notificationSlice.js";
@@ -11,6 +11,8 @@ function Navbar() {
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const { notificationBadge } = useSelector((state) => state.notification);
+    const [selectedOption, setSelectedOption] = useState('');
+    const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
 
     const checkNotification = async () => {
@@ -55,10 +57,28 @@ function Navbar() {
         checkNotification()
     }, [])
 
+
+    const handleOptionChange = (option) => {
+        setIsDropdownOpen(false); // Close the dropdown after selecting an option
+    
+        if (option === 'banned') {
+       
+          navigate('/ban');
+        }
+    
+      };
+      const toggleDropdown = () => {
+        setIsDropdownOpen(!isDropdownOpen);
+      };
+    
+  
+
+
+
     return (
         <>
             <header className="flex items-center h-20 px-6 sm:px-10 bg-white shadow-lg border border-red-600">
-                {/* ... (your existing code) */}
+            
                 <div className="relative w-full sm:-ml-2 flex">
                     <Link to="/dashboard">
                         <button className="mx-8 inline-flex px-5 py-3 text-black hover:text-black focus:text-black hover:bg-gray-200 focus:bg-red-100 rounded-md mb-3 ">
@@ -84,13 +104,28 @@ function Navbar() {
                             History
                         </button>
                     </Link>
-                </div>
-                <div className="flex flex-shrink-0 items-center ml-auto">
-                    <button className=" text-black inline-flex items-center p-2 hover:bg-gray-100 focus:bg-gray-100 rounded-lg">
-                        <div className="hidden md:flex md:flex-col md:items-end md:leading-tight">
-                            <span className="font-semibold">Admin-Dashboard</span>
-                        </div>
-                    </button>
+                    <div className="flex flex-shrink-0 items-center ml-auto">
+                <div className="relative inline-block text-black">
+        <button
+        className="inline-flex items-center p-2 hover:bg-gray-100 focus:bg-gray-100 rounded-lg"
+          onClick={toggleDropdown}
+        >
+          <span className="font-semibold">Admin-Dashboard</span>
+        </button>
+        <div
+          className={`absolute mt-2 bg-white border rounded-md shadow-lg ${
+            isDropdownOpen ? '' : 'hidden'
+          }`}
+        >
+          <div
+            className="p-2 cursor-pointer hover:bg-gray-100"
+            onClick={() => handleOptionChange('banned') }
+          >
+            Ban List
+          </div>
+        </div>
+      </div>
+      </div>
                     <div className="border-l pl-3 ml-3 space-x-1">
 
                         <button className="relative p-2 text-black hover:bg-gray-100 hover:text-gray-600 focus:bg-gray-100 focus:text-gray-600 rounded-full"
