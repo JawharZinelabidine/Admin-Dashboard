@@ -51,11 +51,11 @@ model Restaurant {
   opening_time      DateTime      @db.Time
   closing_time      DateTime      @db.Time
   status            Status        @default(Pending)
-  isPremium         Boolean       @default(false)
+  accountType       TYPE          @default(NONE)
   rating            Float         @default(0)
   rating_count      Int           @default(0)
   owner             User          @relation(fields: [ownerId], references: [id], onDelete: Cascade)
-  ownerId           Int
+  ownerId           Int           @unique
   Reservation       Reservation[]
   Review            Review[]
   Message           Message[]
@@ -151,4 +151,10 @@ enum City {
   Nabel
   Kelibia
   Gabes
+}
+
+enum TYPE {
+  PREMIUM
+  BASIC
+  NONE
 }

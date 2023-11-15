@@ -151,16 +151,23 @@ module.exports = {
               token: token,
             });
         }
-        console.log(myRestaurant)
 
         if (myRestaurant.isBanned) {
           res.status(403).json({ message: 'This account was banned by the admin.' })
         }
+        if (myRestaurant.status === 'Declined') {
+          res.status(403).json({ message: 'This account was declined by the admin.' })
+        }
 
-        else
+        if (myRestaurant.accountType === 'NONE') {
+          res.status(201).json({ message: "User hasn't chosen account type", token: token })
+        }
+
+        else {
           return res
             .status(201)
             .json({ message: "owner successfully logged in", token: token });
+        }
       }
     } catch (error) {
       res.status(500).send(error);
@@ -205,23 +212,23 @@ module.exports = {
       res.status(500).json({ message: "Failed to update notification status" });
     }
   },
-  getOwnerById:async(req,res)=>{
+  getOwnerById: async (req, res) => {
     try {
       const ownerId = req.params.ownerId;
-      const owner = await  user.findUnique({
-        where: { id: parseInt(ownerId)},
+      const owner = await user.findUnique({
+        where: { id: parseInt(ownerId) },
       });
-  
+
       if (!owner) {
         return res.status(404).json({ error: 'Owner not found' });
       }
-  
+
       res.json(owner);
     } catch (error) {
       console.error(error);
       res.status(500).json({ error: 'Internal Server Error' });
     }
-  
-    
+
+
   }
 };
