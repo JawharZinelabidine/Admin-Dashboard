@@ -92,7 +92,9 @@ module.exports = {
         },
       });
 
-      res.status(200).json({ message: "Email verified successfully. You can now log in." });
+      res
+        .status(200)
+        .json({ message: "Email verified successfully. You can now log in." });
     } catch (error) {
       res.status(500).send(error);
       console.log(error);
@@ -144,20 +146,15 @@ module.exports = {
           },
         });
         if (!myRestaurant) {
+          res.status(201).json({
+            message: "User hasn't created a restaurant",
+            token: token,
+          });
+        } else if (myRestaurant.isBanned) {
           res
-            .status(201)
-            .json({
-              message: "User hasn't created a restaurant",
-              token: token,
-            });
-        }
-        console.log(myRestaurant)
-
-        if (myRestaurant.isBanned) {
-          res.status(403).json({ message: 'This account was banned by the admin.' })
-        }
-
-        else
+            .status(403)
+            .json({ message: "This account was banned by the admin." });
+        } else
           return res
             .status(201)
             .json({ message: "owner successfully logged in", token: token });
@@ -173,13 +170,10 @@ module.exports = {
     try {
       const { hasNotification } = await user.findUnique({
         where: {
-
-          id: id
-        }
-      })
-      res.status(200).send(hasNotification)
-
-
+          id: id,
+        },
+      });
+      res.status(200).send(hasNotification);
     } catch (error) {
       console.log(error);
       res
@@ -205,23 +199,4 @@ module.exports = {
       res.status(500).json({ message: "Failed to update notification status" });
     }
   },
-  getOwnerById:async(req,res)=>{
-    try {
-      const ownerId = req.params.ownerId;
-      const owner = await  user.findUnique({
-        where: { id: parseInt(ownerId)},
-      });
-  
-      if (!owner) {
-        return res.status(404).json({ error: 'Owner not found' });
-      }
-  
-      res.json(owner);
-    } catch (error) {
-      console.error(error);
-      res.status(500).json({ error: 'Internal Server Error' });
-    }
-  
-    
-  }
 };
