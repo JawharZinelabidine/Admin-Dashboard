@@ -479,14 +479,21 @@ module.exports = {
   },
   getReviewByRestaurantID :async (req, res) => {
    
-    const restaurantId = req.params.restaurantId
+    const restaurantId = req.params.id
+    
     try {
-        const reviews= await restaurant.findMany({
-            where: {
-                restaurantId: +restaurantId,
-            }
-        });
-  
+      const restaurantData = await restaurant.findUnique({
+        where: {
+            id: +restaurantId,
+        },
+        include: {
+            Review: true,
+        },
+    });
+    const reviews= restaurantData.Review;
+    if (reviews.length === 0) {
+      return res.status(200).json({ message: 'No reviews found for this restaurant' });
+    }
       res.status(200).json({ reviews });
     } catch (error) {
       console.error('Error fetching reviews:', error);
