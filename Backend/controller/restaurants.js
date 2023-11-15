@@ -80,8 +80,8 @@ module.exports = {
           main_image: mainImageUrl,
           menu_images: menuImageUrls,
           extra_images: extraImageUrls,
-          latitude: lat,
-          longtitude: lng,
+          latitude: +lat,
+          longtitude: +lng,
           ownerId: id,
         },
       });
@@ -378,60 +378,60 @@ module.exports = {
       console.log(error);
       res.status(500).send("Couldn't update rating");
     }
-
   },
   banRestaurantById: async (req, res) => {
     const restaurantId = req.params.id;
-  
+
     try {
       const foundRestaurant = await restaurant.findUnique({
         where: {
-          id: parseInt(restaurantId)
-        }
+          id: parseInt(restaurantId),
+        },
       });
-  
+
       if (!foundRestaurant) {
-        return res.status(404).json({ message: 'Restaurant not found' });
+        return res.status(404).json({ message: "Restaurant not found" });
       }
-  
+
       if (foundRestaurant.isBanned) {
-        return res.status(400).json({ message: 'Restaurant is already banned' });
+        return res
+          .status(400)
+          .json({ message: "Restaurant is already banned" });
       }
-  
-  
+
       await restaurant.update({
         where: {
-          id: parseInt(restaurantId)
+          id: parseInt(restaurantId),
         },
         data: {
-          isBanned: true
-        }
+          isBanned: true,
+        },
       });
-  
-      return res.status(200).json({ message: 'Restaurant banned successfully' });
+
+      return res
+        .status(200)
+        .json({ message: "Restaurant banned successfully" });
     } catch (error) {
       console.error(error);
-      return res.status(500).json({ message: 'Internal server error' });
+      return res.status(500).json({ message: "Internal server error" });
     }
   },
-  getBannedRestaurants : async (req, res) => {
+  getBannedRestaurants: async (req, res) => {
     try {
-      
       const bannedRestaurants = await restaurant.findMany({
         where: {
           isBanned: true,
         },
       });
-  
-  
+
       return res.status(200).json(bannedRestaurants);
     } catch (error) {
-      console.error('Error fetching banned restaurants:', error);
-      
-      return res.status(500).json({ message: 'Internal server error' });
+      console.error("Error fetching banned restaurants:", error);
+
+      return res.status(500).json({ message: "Internal server error" });
     }
   },
-   unbanRestaurant :async (req, res) => {
+  unbanRestaurant: async (req, res) => {
     const restaurantId = req.params.id;
     try {
       const existingRestaurant = await restaurant.findUnique({
@@ -440,10 +440,10 @@ module.exports = {
         },
       });
       if (!existingRestaurant) {
-        return res.status(404).json({ message: 'Restaurant not found' });
+        return res.status(404).json({ message: "Restaurant not found" });
       }
       if (!existingRestaurant.isBanned) {
-        return res.status(400).json({ message: 'Restaurant is not banned' });
+        return res.status(400).json({ message: "Restaurant is not banned" });
       }
       await restaurant.update({
         where: {
@@ -453,11 +453,13 @@ module.exports = {
           isBanned: false,
         },
       });
-  
-      return res.status(200).json({ message: 'Restaurant unbanned successfully' });
+
+      return res
+        .status(200)
+        .json({ message: "Restaurant unbanned successfully" });
     } catch (error) {
-      console.error('Error unblocking restaurant:', error);
-      return res.status(500).json({ message: 'Internal server error' });
+      console.error("Error unblocking restaurant:", error);
+      return res.status(500).json({ message: "Internal server error" });
     }
-  } 
+  },
 };
