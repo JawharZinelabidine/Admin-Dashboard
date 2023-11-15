@@ -1,4 +1,4 @@
-const { user } = require("../model/index");
+const { user, restaurant } = require("../model/index");
 
 
 module.exports = isOwnerAuthorized = async (req, res, next) => {
@@ -11,6 +11,16 @@ module.exports = isOwnerAuthorized = async (req, res, next) => {
                 id: id
             }
         })
+
+        const ownerRestaurant = await restaurant.findFirst({
+            where: {
+                ownerId: id
+            }
+        })
+
+        if (ownerRestaurant.status === 'Declined') {
+            res.status(403).json({ message: 'Owner account declined' })
+        }
 
         if (owner.isVerified === false) {
             res.status(403).json({ message: 'Owner is not verified' })
