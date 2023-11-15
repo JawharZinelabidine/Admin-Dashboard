@@ -3,9 +3,11 @@ import "./RestaurantList.css";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import Navbar from "./Navbar";
+import customAxios from "../services/axiosInterceptor";
 
 const RestaurantList = () => {
   const [restaurants, setRestaurants] = useState([]);
+
 
   const getRestaurants = async () => {
     try {
@@ -34,6 +36,21 @@ const RestaurantList = () => {
       }
     }
   };
+  const handleBanRestaurant = async (id) => {
+    try {
+
+      const response = await customAxios.post(`http://localhost:3000/api/restaurants/ban/${id}`);
+      console.log(response.data);
+    if(response.status===200)
+    {
+      getRestaurants();
+    }
+    } catch (error) {
+
+      console.error(error);
+    }
+  };
+
   
   useEffect(() => {
     getRestaurants();
@@ -75,9 +92,12 @@ const RestaurantList = () => {
               <td>{restaurant.owner ? restaurant.owner.fullname : "N/A"}</td>
               <td>{restaurant.owner ? restaurant.owner.email : "N/A"}</td>
               <td className="text-center">
-                <button className="bg-red-500 text-white px-4 py-2 rounded-full border-none cursor-pointer">
-                  Ban
-                </button>
+              <button
+                className="bg-red-500 text-white px-4 py-2 rounded-full border-none cursor-pointer"
+                onClick={() => handleBanRestaurant(restaurant.id)}
+              >
+                Ban
+              </button>
               </td>
             </tr>
           ))}
