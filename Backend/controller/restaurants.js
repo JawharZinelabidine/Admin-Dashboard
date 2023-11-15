@@ -476,7 +476,25 @@ module.exports = {
       console.error('Error unblocking restaurant:', error);
       return res.status(500).json({ message: 'Internal server error' });
     }
+  },
+  getReviewByRestaurantID :async (req, res) => {
+   
+    const restaurantId = req.params.restaurantId
+    try {
+        const reviews= await restaurant.findMany({
+            where: {
+                restaurantId: +restaurantId,
+            }
+        });
+  
+      res.status(200).json({ reviews });
+    } catch (error) {
+      console.error('Error fetching reviews:', error);
+      res.status(500).json({ error: 'Internal Server Error', details: error.message });
+    }
   }
+  
+
 
   
   

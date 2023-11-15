@@ -7,6 +7,7 @@ import customAxios from "../services/axiosInterceptor";
 
 const RestaurantList = () => {
   const [restaurants, setRestaurants] = useState([]);
+  const[reviews,setReviews]=useState([]);
 
 
   const getRestaurants = async () => {
@@ -51,10 +52,44 @@ const RestaurantList = () => {
     }
   };
 
+
+  const handleSeeReviews = async (id) => {
+    try {
+  
+      const response = await axios.get(`http://localhost:3000/api/reviews/${id}`);
+    
+      
+      if (response.status === 200) { 
+        const fetchedReviews = response.data.reviews;
+        console.log('Response:', response);
+  
+        if (fetchedReviews.length === 0) {
+         
+          console.log('No reviews found.');
+          
+        } else {
+        
+          setReviews(fetchedReviews);
+          console.log(fetchedReviews)
+        }
+      } else {
+       
+        console.error(`HTTP error! Status: ${response.status}`);
+      }
+    } catch (error) {
+      console.error('Error fetching reviews:', error);
+    
+    }
+  };
+  
+  
+
   
   useEffect(() => {
     getRestaurants();
+
   }, []);
+
 
   return (
     <>
@@ -87,7 +122,7 @@ const RestaurantList = () => {
             <tr key={restaurant.id}>
               <td className="restaurant-cell">
                 <span className="restaurant-name">{restaurant.name}</span>
-                <Link className="custom-link">See Reviews</Link>
+                <Link className="custom-link"  onClick={handleSeeReviews} >See Reviews</Link>
               </td>
               <td>{restaurant.owner ? restaurant.owner.fullname : "N/A"}</td>
               <td>{restaurant.owner ? restaurant.owner.email : "N/A"}</td>

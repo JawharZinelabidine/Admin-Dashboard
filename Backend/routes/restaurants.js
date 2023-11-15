@@ -19,7 +19,8 @@ const {
   updateRating,
   banRestaurantById,
   getBannedRestaurants,
-  unbanRestaurant
+  unbanRestaurant,
+  getReviewByRestaurantID,
 } = require("../controller/restaurants");
 
 router
@@ -74,4 +75,6 @@ router.route("/ban")
   .get(getBannedRestaurants,isAuthenticated, isAdminAuthorized)
 router.route('/:id')
   .post(unbanRestaurant,isAuthenticated, isAdminAuthorized)
+  router.route('/reviews/:id')
+    .get( getReviewByRestaurantID);
 module.exports = router;
