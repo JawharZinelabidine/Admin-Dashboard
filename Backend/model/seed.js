@@ -265,6 +265,7 @@ const createRestaurants = async () => {
         closing_time: new Date("2019-01-16 00:00:00"),
         status: "Approved",
         ownerId: 10,
+
       },
       {
         name: "Le Pirate",
@@ -289,6 +290,7 @@ const createRestaurants = async () => {
         closing_time: new Date("2019-01-16 00:00:00"),
         status: "Approved",
         ownerId: 11,
+
       },
       {
         name: "Sushi&Co",
@@ -313,6 +315,7 @@ const createRestaurants = async () => {
         closing_time: new Date("2019-01-16 01:00:00"),
         status: "Approved",
         ownerId: 12,
+
       },
     ],
   });
