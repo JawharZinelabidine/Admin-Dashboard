@@ -37,7 +37,9 @@ router
 router.route("/signin").post(signin);
 
 router.route("/verify/:token").post(verifyEmail);
+
 router.route("/customers/:customerId").get(isAuthenticated, isOwnerAuthorized, getOneCustomers);
 router.route("/:ownerId").get(getOwnerById)
+
 
 module.exports = router;
