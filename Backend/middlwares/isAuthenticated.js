@@ -8,9 +8,10 @@ module.exports = isAuthenticated = (req, res, next) => {
     res.status(401).send("Not Authorized");
 
   }
+ 
+    
   const token = authHeader.split(" ")[1];
-
-
+ 
 
   if (token === 'null') {
     res.status(401).send("No access token");

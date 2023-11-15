@@ -443,9 +443,63 @@ const createOwner = async () => {
         role: "ADMIN",
         isVerified: true,
       },
+    ]
+
+
+
+  });
+};
+const newReview = async () => {
+  await prisma.review.createMany({
+    data: [
+      {
+        review_title: "love it",
+        review_body: "the food was amazing ",
+        rating: 3,
+        customerId: 14,
+        restaurantId: 1,
+      },
+      {
+        review_title: "BEST PLACE",
+        review_body: "The attention to detail in both presentation and taste makes every visit to this restaurant a memorable experience.",
+        rating: 4,
+        customerId: 15,
+        restaurantId: 2,
+      },
+      {
+        review_title: "Happy",
+        review_body: "The diverse menu caters to various dietary preferences, making this restaurant a go-to destination for all food enthusiasts.",
+        rating: 4,
+        customerId: 15,
+        restaurantId: 3,
+      },
+      {
+        review_title: "COZY",
+        review_body: "The cozy setting and delectable menu make this spot ideal for both intimate dinners and celebratory gatherings.",
+        rating: 3,
+        customerId: 16,
+        restaurantId: 4,
+      },
+      {
+        review_title: "Elegance on a Plate",
+        review_body: "From the first-class service to the inspired menu choices, every aspect of this restaurant reflects a commitment to excellence.",
+        rating: 5,
+        customerId: 17,
+        restaurantId: 5,
+      },
+      {
+        review_title: "Beyond Expectations",
+        review_body: "The cozy setting and delectable menu make this spot ideal for both intimate dinners and celebratory gatherings.",
+        rating: 5,
+        customerId: 15,
+        restaurantId: +6,
+      },
     ],
   });
 };
 
+
+
 // createOwner();
-createRestaurants();
+// createRestaurants();
+newReview();
