@@ -9,7 +9,9 @@ import "./App.css";
 import Login from "./components/Login";
 import Dashboard from "./components/Dashboard";
 import NewApplication from "./components/NewApplication";
+import RestaurantList from "./components/RestaurantList";
 import History from "./components/History"
+import BannedRestaurant from "./components/BannedRestaurant";
 
 
 function App() {
@@ -34,11 +36,27 @@ function App() {
             </>
           }
         />
+         <Route
+          path="/RestaurantList"
+          element={
+            <>
+              <RestaurantList />
+              </>
+          }
+          />
         <Route
           path="/history"
           element={
             <>
               <History />
+            </>
+          }
+        />
+        <Route
+          path="/ban"
+          element={
+            <>
+              <BannedRestaurant />
             </>
           }
         />

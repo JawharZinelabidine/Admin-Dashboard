@@ -1,10 +1,15 @@
-const { restaurant } = require("../model/index");
+const { restaurant, reservation, user } = require("../model/index");
 const uploadToCloudinary = require("./helpers/cloudinary");
 
 module.exports = {
   getRestaurants: async (req, res) => {
     try {
-      const restaurants = await restaurant.findMany();
+      const restaurants = await restaurant.findMany({
+        where: {
+          status: "Approved",
+          isBanned: false,
+        },
+      });
       res.status(200).json(restaurants);
     } catch (error) {
       console.error(error);
@@ -12,9 +17,7 @@ module.exports = {
     }
   },
   getOne: async (req, res) => {
-
-    const id = req.userId
-
+    const id = req.userId;
 
     try {
       const resto = await restaurant.findFirst({
@@ -36,9 +39,7 @@ module.exports = {
   },
   createRestaurant: async (req, res) => {
     try {
-      const id = req.userId
-      const latitude = 222.558;
-      const longtitude = 856.258;
+      const id = req.userId;
       const {
         name,
         description,
@@ -51,6 +52,8 @@ module.exports = {
         mainImage,
         menuImages,
         extraImages,
+        lat,
+        lng,
       } = req.body;
       const mainImageUrl = await uploadToCloudinary(mainImage);
       const menuImageUrls = await Promise.all(
@@ -77,11 +80,26 @@ module.exports = {
           main_image: mainImageUrl,
           menu_images: menuImageUrls,
           extra_images: extraImageUrls,
-          latitude: latitude,
-          longtitude: longtitude,
+          latitude: +lat,
+          longtitude: +lng,
           ownerId: id,
         },
       });
+
+      try {
+        await user.update({
+          where: {
+            email: "admin@admin.com",
+          },
+          data: {
+            hasNotification: true,
+          },
+        });
+      } catch (error) {
+        console.log("Failed to change admin notification status:", error);
+        res.status(500).send("Failed to change admin notification status");
+      }
+
       res.status(201).json(createdRestaurant);
     } catch (error) {
       console.error(error);
@@ -166,7 +184,6 @@ module.exports = {
           break;
         case "menu_images":
         case "extra_images":
-
           if (resto) {
             updatedProperty = resto[property].filter(
               (elem) => elem !== imageUrl
@@ -226,7 +243,7 @@ module.exports = {
       }
 
       let updatedProperty = [];
-      console.log("newImageUrl ", newImageUrl, "\n oldImageUrl ", oldImageUrl)
+      console.log("newImageUrl ", newImageUrl, "\n oldImageUrl ", oldImageUrl);
 
       switch (property) {
         case "main_image":
@@ -282,7 +299,6 @@ module.exports = {
         openingTime,
         closingTime,
         reservationQuota,
-       
       } = req.body;
       console.log(req.body);
       const id = req.userId;
@@ -298,7 +314,7 @@ module.exports = {
       }
       const updatedInfo = await restaurant.update({
         where: {
-          id:resto.id
+          id: resto.id,
         },
         data: {
           description,
@@ -307,7 +323,6 @@ module.exports = {
           opening_time: openingTime,
           closing_time: closingTime,
           reservation_quota: parseInt(reservationQuota),
-         
         },
       });
       res.status(201).json(updatedInfo);
@@ -315,7 +330,136 @@ module.exports = {
       console.error(error);
       res.status(500).json({ error: "Internal Server Error" });
     }
+  },
 
+  updateRating: async (req, res) => {
+    const { rating } = req.body;
+    const restaurantId = req.params.restaurantId;
+    const reservationId = req.params.id;
 
-  }
+    const thisRestaurant = await restaurant.findUnique({
+      where: {
+        id: +restaurantId,
+      },
+    });
+    const newRatingCount = thisRestaurant.rating_count + 1;
+    const newTotalRating = thisRestaurant.rating + rating;
+    let newRating;
+
+    if (thisRestaurant.rating_count > 0) {
+      newRating = Math.min(
+        5,
+        Math.max(1, newTotalRating / newRatingCount)
+      ).toFixed(1);
+    } else newRating = rating;
+
+    try {
+      await restaurant.update({
+        where: {
+          id: +restaurantId,
+        },
+        data: {
+          rating: +newRating,
+          rating_count: newRatingCount,
+        },
+      });
+
+      await reservation.update({
+        where: {
+          id: +reservationId,
+        },
+        data: {
+          canReview: "Done",
+        },
+      });
+
+      res.status(204).send("Rating updated!");
+    } catch (error) {
+      console.log(error);
+      res.status(500).send("Couldn't update rating");
+    }
+  },
+  banRestaurantById: async (req, res) => {
+    const restaurantId = req.params.id;
+
+    try {
+      const foundRestaurant = await restaurant.findUnique({
+        where: {
+          id: parseInt(restaurantId),
+        },
+      });
+
+      if (!foundRestaurant) {
+        return res.status(404).json({ message: "Restaurant not found" });
+      }
+
+      if (foundRestaurant.isBanned) {
+        return res
+          .status(400)
+          .json({ message: "Restaurant is already banned" });
+      }
+
+      await restaurant.update({
+        where: {
+          id: parseInt(restaurantId),
+        },
+        data: {
+          isBanned: true,
+        },
+      });
+
+      return res
+        .status(200)
+        .json({ message: "Restaurant banned successfully" });
+    } catch (error) {
+      console.error(error);
+      return res.status(500).json({ message: "Internal server error" });
+    }
+  },
+  getBannedRestaurants: async (req, res) => {
+    try {
+      const bannedRestaurants = await restaurant.findMany({
+        where: {
+          isBanned: true,
+        },
+      });
+
+      return res.status(200).json(bannedRestaurants);
+    } catch (error) {
+      console.error("Error fetching banned restaurants:", error);
+
+      return res.status(500).json({ message: "Internal server error" });
+    }
+  },
+  unbanRestaurant: async (req, res) => {
+    const restaurantId = req.params.id;
+    try {
+      const existingRestaurant = await restaurant.findUnique({
+        where: {
+          id: parseInt(restaurantId),
+        },
+      });
+      if (!existingRestaurant) {
+        return res.status(404).json({ message: "Restaurant not found" });
+      }
+      if (!existingRestaurant.isBanned) {
+        return res.status(400).json({ message: "Restaurant is not banned" });
+      }
+      await restaurant.update({
+        where: {
+          id: parseInt(restaurantId),
+        },
+        data: {
+          isBanned: false,
+        },
+      });
+
+      return res
+        .status(200)
+        .json({ message: "Restaurant unbanned successfully" });
+    } catch (error) {
+      console.error("Error unblocking restaurant:", error);
+      return res.status(500).json({ message: "Internal server error" });
+    }
+  },
 };

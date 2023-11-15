@@ -47,12 +47,13 @@ model Restaurant {
   reservation_quota Int
   latitude          Float
   longtitude        Float
+  isBanned          Boolean       @default(false)
   opening_time      DateTime      @db.Time
   closing_time      DateTime      @db.Time
   status            Status        @default(Pending)
   isPremium         Boolean       @default(false)
-  rating            Float?
-  rating_count      Int?
+  rating            Float         @default(0)
+  rating_count      Int           @default(0)
   owner             User          @relation(fields: [ownerId], references: [id], onDelete: Cascade)
   ownerId           Int
   Reservation       Reservation[]

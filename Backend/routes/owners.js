@@ -14,6 +14,7 @@ const {
   verifyEmail,
   removeNotification,
   checkNotification,
+  getOwnerById,
 } = require("../controller/owners");
 
 router
@@ -27,11 +28,6 @@ router
     createOwner
   );
 
-router
-  .route("/notification/:id")
-  .get(checkNotification)
-  .put(removeNotification);
-
 router.route("/home").get(isAuthenticated, getOwners);
 router
   .route("/notification")
@@ -40,5 +36,8 @@ router
 router.route("/signin").post(signin);
 
 router.route("/verify/:token").post(verifyEmail);
+router
+  .route("/customers/:customerId")
+  .get(isAuthenticated, isOwnerAuthorized, getOneCustomers);
 
 module.exports = router;

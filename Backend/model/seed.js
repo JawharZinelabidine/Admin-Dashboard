@@ -1,6 +1,7 @@
 const prisma = require("./index");
+const bcrypt = require("bcrypt");
 
-const createMany = async () => {
+const createRestaurants = async () => {
   await prisma.restaurant.createMany({
     data: [
       {
@@ -317,83 +318,131 @@ const createMany = async () => {
   });
 };
 const createOwner = async () => {
+  const password1 = "1234";
+  const password2 = "1234789";
+  const password3 = "123489";
+  const password4 = "12388";
+  const password5 = "12389";
+  const password6 = "1234";
+  const password7 = "123336";
+  const password8 = "12336";
+  const password9 = "3336";
+  const password10 = "1236";
+  const password12 = "1233444";
+  const password13 = "123884";
+  const password14 = "adminadmin";
+
+  const encryptedPassword1 = await bcrypt.hash(password1, 10);
+  const encryptedPassword2 = await bcrypt.hash(password2, 10);
+  const encryptedPassword3 = await bcrypt.hash(password3, 10);
+  const encryptedPassword4 = await bcrypt.hash(password4, 10);
+  const encryptedPassword5 = await bcrypt.hash(password5, 10);
+  const encryptedPassword6 = await bcrypt.hash(password6, 10);
+  const encryptedPassword7 = await bcrypt.hash(password7, 10);
+  const encryptedPassword8 = await bcrypt.hash(password8, 10);
+  const encryptedPassword9 = await bcrypt.hash(password9, 10);
+  const encryptedPassword10 = await bcrypt.hash(password10, 10);
+  const encryptedPassword11 = await bcrypt.hash(password12, 10);
+  const encryptedPassword12 = await bcrypt.hash(password13, 10);
+  const encryptedPassword13 = await bcrypt.hash(password14, 10);
+
   await prisma.user.createMany({
     data: [
       {
         fullname: "Hamadi Labyedh",
         email: "Labyedh@gmail.com",
-        password: "1234",
+        password: encryptedPassword1,
         role: "OWNER",
+        isVerified: true,
       },
       {
         fullname: "Mayssa allani",
         email: "Alani@gmail.com",
-        password: "1234789",
+        password: encryptedPassword2,
         role: "OWNER",
+        isVerified: true,
       },
       {
         fullname: "Hazem Lahmer",
         email: "hazem@gmail.com",
-        password: "123489",
+        password: encryptedPassword3,
         role: "OWNER",
+        isVerified: true,
       },
       {
         fullname: "salim Brahem ",
         email: "Brahem@gmail.com",
-        password: "12388",
+        password: encryptedPassword4,
         role: "OWNER",
+        isVerified: true,
       },
       {
         fullname: "Mohamed Chiha",
         email: "chiha@gmail.com",
-        password: "12389",
+        password: encryptedPassword5,
         role: "OWNER",
+        isVerified: true,
       },
       {
         fullname: "Ahmed Fersi",
         email: "fersi@gmail.com",
-        password: "1234",
+        password: encryptedPassword6,
         role: "OWNER",
+        isVerified: true,
       },
       {
         fullname: "Adam Didoo",
         email: "didoo@gmail.com",
-        password: "123336",
+        password: encryptedPassword7,
         role: "OWNER",
+        isVerified: true,
       },
       {
         fullname: "Michelle Choi",
         email: "choi@gmail.com",
-        password: "12336",
+        password: encryptedPassword8,
         role: "OWNER",
+        isVerified: true,
       },
       {
         fullname: "Kelly Wakasa",
         email: "kelly@gmail.com",
-        password: "3336",
+        password: encryptedPassword9,
         role: "OWNER",
+        isVerified: true,
       },
       {
         fullname: "hela jlassi",
         email: "mayssa@gmail.com",
-        password: "1236",
+        password: encryptedPassword10,
         role: "OWNER",
+        isVerified: true,
       },
       {
         fullname: "yossra selmi",
         email: "selmi@gmail.com",
-        password: "1233444",
+        password: encryptedPassword11,
         role: "OWNER",
+        isVerified: true,
       },
       {
         fullname: "Nejya Farhat",
         email: "nejya@gmail.com",
-        password: "123884",
+        password: encryptedPassword12,
         role: "OWNER",
+        isVerified: true,
+      },
+
+      {
+        fullname: "admin",
+        email: "admin@admin.com",
+        password: encryptedPassword13,
+        role: "ADMIN",
+        isVerified: true,
       },
     ],
   });
 };
 
-createOwner();
-createMany();
+// createOwner();
+createRestaurants();

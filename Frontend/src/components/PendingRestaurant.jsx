@@ -1,5 +1,5 @@
 import React from 'react';
-import axios from "axios"
+import axios from "../services/axiosInterceptor";
 import { useSelector, useDispatch } from 'react-redux';
 import { setRestaurantId, setShowRestaurantDetails } from "../features/restaurantSlice";
 import { setOwnerId, setShowOwnerDetails } from "../features/ownerSlice";
