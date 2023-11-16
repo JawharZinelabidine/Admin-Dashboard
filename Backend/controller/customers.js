@@ -145,6 +145,7 @@ module.exports = {
       }
 
       const token = jwt.sign({ id: customer.id, role: customer.role }, process.env.JWT_SECRET, { expiresIn: "1d" });
+      console.log(token)
       return res.status(201).json({ message: "Customer successfully logged in", token: token });
     } catch (error) {
       res.status(500).send(error);

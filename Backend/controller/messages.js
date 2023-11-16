@@ -34,24 +34,25 @@ module.exports = {
 
     customerSend: async (req, res) => {
         const id = req.userId
-        const { restaurantId } = req.params
-        const { message } = req.body
+        const restaurantId = req.params.restaurantId
+        const msg = req.body.message
         try {
 
             const messageSent = await message.create({
                 data: {
-                    message: message,
+                    message: msg,
                     customerId: id,
                     restaurantId: +restaurantId,
                     sender: 'customer'
 
                 }
             })
-
             res.status(201).json(messageSent)
 
         }
         catch (error) {
+            console.log(error)
+
             res.status(500).json({ error: error })
 
         }
