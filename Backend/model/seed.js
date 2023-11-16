@@ -350,7 +350,7 @@ const createOwner = async () => {
     data: [
       {
         fullname: "Hamadi Labyedh",
-        email: "Labyedh@gmail.com",
+        email: "Labyath@gmail.com",
         password: encryptedPassword1,
         role: "OWNER",
         isVerified: true

@@ -17,6 +17,7 @@ model User {
   fullname        String        @db.VarChar(255)
   email           String        @unique @db.VarChar(255)
   password        String        @db.VarChar(255)
+  profilePic      String?
   hasNotification Boolean       @default(false)
   isVerified      Boolean       @default(false)
   verifyToken     String?
