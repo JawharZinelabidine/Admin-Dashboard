@@ -65,9 +65,12 @@ module.exports = {
         try {
 
             const conversations = await message.groupBy({
-                by: ['customerId'],
+                by: ['customerId', 'createdAt'],
                 where: {
                     restaurantId: id
+                },
+                orderBy: {
+                    createdAt: 'desc'
                 }
             })
 
@@ -86,15 +89,19 @@ module.exports = {
         try {
 
             const conversations = await message.groupBy({
-                by: ['customerId']
+                by: ['restaurantId', 'createdAt'],
+                where: {
+                    customerId: id
+                },
+                orderBy: {
+                    createdAt: 'desc'
+                }
             })
 
 
-            const myConversations = conversations.filter((convo) => {
-                convo[0].restaurantId === id
-            })
 
-            res.status(200).json(myConversations)
+
+            res.status(200).json(conversations)
 
 
 
