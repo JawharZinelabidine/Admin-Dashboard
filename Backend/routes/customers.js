@@ -4,11 +4,14 @@ const isAuthenticated = require('../middlwares/isAuthenticated')
 const isCustomerAuthorized = require('../middlwares/isCustomerAuthorized')
 
 
-const { getCustomers, createCustomers, customerSignin, getOneCustomers, getExpoToken, verifyEmail, checkNotification, removeNotification , forgotPassword , verifyResetCode, updatePassword  } = require('../controller/customers');
+const { getCustomers, createCustomers, customerSignin, getOneCustomers, getExpoToken, verifyEmail, checkNotification, removeNotification, forgotPassword, verifyResetCode, updatePassword, getLoggedInUser } = require('../controller/customers');
 
 router.route('/')
-    .get(isAuthenticated, getCustomers)
+    .get(getCustomers)
     .post(createCustomers);
+
+
+
 
 router.route("/verify/:token")
     .get(verifyEmail);
@@ -28,5 +31,7 @@ router.route('/:id')
 router.route('/expo')
     .put(isAuthenticated, isCustomerAuthorized, getExpoToken)
 
+router.route('/profile/')
+    .get(isAuthenticated,isCustomerAuthorized, getLoggedInUser);
 
 module.exports = router;

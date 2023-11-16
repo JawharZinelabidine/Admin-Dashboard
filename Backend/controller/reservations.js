@@ -1,5 +1,6 @@
-const { reservation, restaurant, user } = require("../model/index");
+const { reservation, user, restaurant } = require("../model/index");
 const axios = require('axios');
+const moment = require('moment-timezone');
 
 module.exports = {
 
@@ -18,51 +19,66 @@ module.exports = {
             const thisRestaurant = await restaurant.findUnique({
                 where: { id: +restaurantId }
             })
-            const reservations = await reservation.findMany({
+
+
+            const myReservation = await reservation.findFirst({
                 where: {
-                    date: new Date(date),
-                    restaurantId: +restaurantId,
-                    status: 'Approved'
+                    restaurantId: thisRestaurant.id,
+                    customerId: id,
+                    date: new Date(date)
                 }
             })
 
-            const spotsTaken = reservations.reduce((total, el) => total + el.guest_number, 0)
-            console.log(spotsTaken)
+            if (myReservation) {
+                res.status(400).send({ message: 'user already has a reservation on this date.' })
+            }
+            else {
 
-            if (spotsTaken + guest_number <= thisRestaurant.reservation_quota) {
-                const request = await reservation.create({
-                    data: {
-                        date: new Date(date), time: new Date(time), guest_number: guest_number, customerId: id, restaurantId: +restaurantId
+                const reservations = await reservation.findMany({
+                    where: {
+                        date: new Date(date),
+                        restaurantId: +restaurantId,
+                        status: 'Approved'
                     }
                 })
 
-                res.status(201).json(request);
+                const spotsTaken = reservations.reduce((total, el) => total + el.guest_number, 0)
+                console.log(spotsTaken)
 
-                if (request) {
-                    try {
+                if (spotsTaken + guest_number <= thisRestaurant.reservation_quota) {
+                    const request = await reservation.create({
+                        data: {
+                            date: new Date(date), time: new Date(time), guest_number: guest_number, customerId: id, restaurantId: +restaurantId
+                        }
+                    })
 
-                        await user.update({
-                            where: {
-                                id: thisRestaurant.ownerId
-                            },
-                            data: {
-                                hasNotification: true
-                            }
-                        })
+                    res.status(201).json(request);
 
-                    } catch (error) {
-                        console.log('Failed to change notification status:', error)
+                    if (request) {
+                        try {
 
+                            await user.update({
+                                where: {
+                                    id: thisRestaurant.ownerId
+                                },
+                                data: {
+                                    hasNotification: true
+                                }
+                            })
+
+                        } catch (error) {
+                            console.log('Failed to change notification status:', error)
+
+
+                        }
 
                     }
 
+                } else {
+                    const remaining = thisRestaurant.reservation_quota - spotsTaken
+                    res.status(400).json(remaining)
                 }
-
-            } else {
-                const remaining = thisRestaurant.reservation_quota - spotsTaken
-                res.status(400).json(remaining)
             }
-
         }
         catch (error) {
             console.error(error);
@@ -238,7 +254,8 @@ module.exports = {
                     id: +reservationId
                 },
                 data: {
-                    status: "Declined"
+                    status: "Declined",
+                    canReview: "Done"
                 }
             })
 
@@ -295,24 +312,31 @@ module.exports = {
 
     fetchUpcomingReservations: async (req, res) => {
         const id = req.userId
+        const now = moment().utcOffset('120');
+        const zone = now.format('YYYY-MM-DDTHH:mm:ss.SSS') + 'Z'
         try {
             const upcoming = await reservation.findMany({
                 where: {
                     customerId: id,
                     date: {
-                        gte: new Date().toISOString()
+                        gte: zone
                     },
+                    time: {
+                        gte: zone
+                    },
+
                     OR: [
                         { status: "Approved" },
                         { status: "Pending" }
                     ]
+
 
                 }
             })
 
 
 
-
+            console.log(zone, now.toISOString())
             res.status(200).json(upcoming)
         }
         catch (error) {
@@ -324,7 +348,8 @@ module.exports = {
 
     fetchExpiredReservations: async (req, res) => {
         const id = req.userId
-
+        const now = moment().utcOffset('120');
+        const zone = now.format('YYYY-MM-DDTHH:mm:ss.SSS') + 'Z'
         try {
             const expired = await reservation.findMany({
                 where: {
@@ -333,13 +358,18 @@ module.exports = {
                     OR: [
                         {
                             date: {
-                                lte: new Date().toISOString()
+                                lte: zone
+                            },
+                            time: {
+                                lte: zone
                             },
                         },
                         { status: "Declined" }
+
                     ]
                 }
             })
+
             res.status(200).json(expired)
         }
         catch (error) {
@@ -347,7 +377,50 @@ module.exports = {
             res.status(500).send(error)
 
         }
-    }
+    },
+    checkReviewNotification: async (req, res) => {
+        const reservationId = req.params.id
+        console.log(+reservationId)
+
+        try {
+            const thisReservation = await reservation.findUnique({
+
+                where: {
+                    id: +reservationId
+                },
+
+            })
+            console.log(thisReservation)
+            res.status(200).json(thisReservation)
+
+        } catch (error) {
+
+            console.log(error)
+            res.status(500).json({ message: 'Failed to retrieve notification status' })
+
+        }
+
+    },
+    removeReviewNotification: async (req, res) => {
+        const id = req.userId
+
+        try {
+            const { notification } = await reservation.updateMany({
+
+                data: {
+                    notification: false
+                }
+            })
+            res.status(200).send({ notification })
+
+        } catch (error) {
+
+            console.log(error)
+            res.status(500).json({ message: 'Failed to update notification status' })
+
+        }
+
+    },
 
 
 }

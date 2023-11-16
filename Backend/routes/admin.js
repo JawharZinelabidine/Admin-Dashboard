@@ -1,17 +1,32 @@
 const express = require("express");
 const router = express.Router();
-
+const isAuthenticated = require('../middlwares/isAuthenticated')
+const isAdminAuthorized = require('../middlwares/isAdminAuthorized')
 const {
   getPendingRestaurants,
-  getVerfiedOwners,
+  getVerifiedOwner,
   reviewRestaurantRequest,
+  getPendingRestaurant,
+  getApprovedOrDeclinedRestaurants,
+
+  signin
 } = require("../controller/admin");
 
-router
-  .route("/restaurants")
-  .get(getPendingRestaurants)
-  .post(reviewRestaurantRequest);
+router.route("/restaurants").get(isAuthenticated, isAdminAuthorized, getPendingRestaurants);
 
-router.route("/owners").get(getVerfiedOwners);
+router.route("/owner/:id").get(isAuthenticated, isAdminAuthorized, getVerifiedOwner);
+
+router.route("/restaurants").get(isAuthenticated, isAdminAuthorized, getPendingRestaurants);
+
+router.route("/history").get(isAuthenticated, isAdminAuthorized, getApprovedOrDeclinedRestaurants);
+
+
+router
+  .route("/restaurant/:id")
+  .get(isAuthenticated, isAdminAuthorized, getPendingRestaurant)
+  .post(isAuthenticated, isAdminAuthorized, reviewRestaurantRequest);
+
+
+router.route("/signin").post(signin);
 
 module.exports = router;
