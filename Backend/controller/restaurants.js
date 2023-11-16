@@ -4,25 +4,27 @@ const uploadToCloudinary = require("./helpers/cloudinary");
 
 
 module.exports = {
-  getRestaurants :async (req, res) => {
+  getRestaurants : async (req, res) => {
     try {
       const { sortBy } = req.query;
       let sortOption;
-
       switch (sortBy) {
         case "date_asc":
           sortOption = { createdAt: 'asc' };
           break;
         case "date_desc":
-          sortOption = { createdAt: 'desc' };
+          sortOption = { createdAt: 'desc' }; 
           break;
-        case "rating":
-          sortOption = { rating: 'desc' };
+        case "rating_asc":
+          sortOption = { rating: 'asc' }; 
           break;
+          case "rating_desc":
+            sortOption = { rating: 'desc' }; 
+            break;
         default:
           sortOption = { createdAt: 'asc' };
       }
-
+  
       const restaurants = await restaurant.findMany({
         where: {
           status: "Approved",
@@ -30,14 +32,15 @@ module.exports = {
         },
         orderBy: sortOption,
       });
-
-        res.status(200).json(restaurants);
-
+  
+      res.status(200).json(restaurants);
+  
     } catch (error) {
       console.error(error);
       res.status(500).send(error);
     }
   },
+  
   getOne: async (req, res) => {
     const id = req.userId;
 
