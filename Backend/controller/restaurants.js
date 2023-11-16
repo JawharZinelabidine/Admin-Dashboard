@@ -453,13 +453,44 @@ module.exports = {
           isBanned: false,
         },
       });
-
-      return res
-        .status(200)
-        .json({ message: "Restaurant unbanned successfully" });
+  
+      return res.status(200).json({ message: 'Restaurant unbanned successfully' });
     } catch (error) {
-      console.error("Error unblocking restaurant:", error);
-      return res.status(500).json({ message: "Internal server error" });
+      console.error('Error unblocking restaurant:', error);
+      return res.status(500).json({ message: 'Internal server error' });
     }
   },
+  getReviewByRestaurantID :async (req, res) => {
+   
+    const restaurantId = req.params.id
+    
+    try {
+      const restaurantData = await restaurant.findUnique({
+        where: {
+            id: +restaurantId,
+        },
+        include: {
+            Review: true,
+        },
+    });
+    const reviews= restaurantData.Review;
+    if (reviews.length === 0) {
+      return res.status(200).json({ message: 'No reviews found for this restaurant' });
+    }
+      res.status(200).json({ reviews });
+    } catch (error) {
+      console.error('Error fetching reviews:', error);
+      res.status(500).json({ error: 'Internal Server Error', details: error.message });
+    }
+  }
+  
+
+
+  
+  
+  
+  
+  
+  
+  
 };
