@@ -11,10 +11,14 @@ const RestaurantList = () => {
   const [modal, setModal] = useState(false);
   const [selectedRestaurant, setSelectedRestaurant] = useState(null);
 
+
+
   const getRestaurants = async () => {
     try {
       const { data } = await axios.get("http://localhost:3000/api/restaurants");
       setRestaurants(data);
+  
+      
 
       const restaurantsWithOwners = await Promise.all(
         Array.isArray(data)
@@ -79,23 +83,33 @@ const RestaurantList = () => {
     getRestaurants();
   }, []);
 
+
+ 
   return (
     <>
       <Navbar />
-      <div className="mb-4">
-        <label className="block text-gray-700 font-bold">
-          Filter by Rating:
-        </label>
-        <input
-          type="range"
-          id="ratingFilter"
-          name="ratingFilter"
-          min="1"
-          max="5"
-          step="1"
-          className="w-80 mt-2 appearance-none bg-gradient-to-r from-green-400 via-blue-500 to-purple-600 h-1 outline-none"
-        />
+      <div>
+      <label>Filter by Rating:</label>
+      <select onChange={(e) => filterRestaurantsByRating(e.target.value)}>
+        <option value="">All Ratings</option>
+        <option value="1">1 star</option>
+        <option value="2">2 stars</option>
+        <option value="3">3 stars</option>
+        <option value="4">4 stars</option>
+        <option value="5">5 stars</option>
+      </select>
+      <div className="filter-container">
+        <label>Filter by Date of Creation:</label>
+        <select>
+          <option value="">All Dates</option>
+          <option value="oldest">Oldest</option>
+          <option value="latest">Latest</option>
+        </select>
       </div>
+
+      
+    </div>
+   
       <table>
         <thead>
           <tr>
