@@ -10,16 +10,24 @@ const RestaurantList = () => {
   const [reviews, setReviews] = useState([]);
   const [modal, setModal] = useState(false);
   const [selectedRestaurant, setSelectedRestaurant] = useState(null);
+  const [sortValue, setSortValue] = useState("");
 
   const getRestaurants = async () => {
     try {
-      const { data } = await axios.get("http://localhost:3000/api/restaurants");
+      const params = new URLSearchParams([["sortBy", sortValue]]);
+      const { data } = await axios.get(
+        "http://localhost:3000/api/restaurants",
+        { params }
+      );
+
       setRestaurants(data);
 
       const restaurantsWithOwners = await Promise.all(
         Array.isArray(data)
           ? data.map(async (restaurant) => {
-              const ownerResponse = await axios.get(`http://localhost:3000/api/owners/${restaurant.ownerId}`);
+              const ownerResponse = await axios.get(
+                `http://localhost:3000/api/owners/${restaurant.ownerId}`
+              );
               const owner = ownerResponse.data;
               return { ...restaurant, owner };
             })
@@ -38,7 +46,9 @@ const RestaurantList = () => {
 
   const handleBanRestaurant = async (id) => {
     try {
-      const response = await customAxios.post(`http://localhost:3000/api/restaurants/ban/${id}`);
+      const response = await customAxios.post(
+        `http://localhost:3000/api/restaurants/ban/${id}`
+      );
       console.log(response.data);
       if (response.status === 200) {
         getRestaurants();
@@ -50,18 +60,20 @@ const RestaurantList = () => {
 
   const handleSeeReviews = async (id) => {
     try {
-      const response = await axios.get(`http://localhost:3000/api/restaurants/reviews/${id}`);
+      const response = await axios.get(
+        `http://localhost:3000/api/restaurants/reviews/${id}`
+      );
 
       if (response.status === 200) {
         const fetchedReviews = response.data.reviews;
         setReviews(fetchedReviews);
-        setSelectedRestaurant(id); 
+        setSelectedRestaurant(id);
         toggleModal();
       } else {
         console.error(`HTTP error! Status: ${response.status}`);
       }
     } catch (error) {
-      console.error('Error fetching reviews:', error);
+      console.error("Error fetching reviews:", error);
     }
   };
 
@@ -70,32 +82,32 @@ const RestaurantList = () => {
   };
 
   if (modal) {
-    document.body.classList.add('active-modal');
+    document.body.classList.add("active-modal");
   } else {
-    document.body.classList.remove('active-modal');
+    document.body.classList.remove("active-modal");
   }
 
   useEffect(() => {
     getRestaurants();
-  }, []);
+  }, [sortValue]);
+  const handleSelect = (value) => {
+    console.log("Selected sort:", value);
+    setSortValue(value);
+  };
 
   return (
     <>
       <Navbar />
-      <div className="mb-4">
-        <label className="block text-gray-700 font-bold">
-          Filter by Rating:
-        </label>
-        <input
-          type="range"
-          id="ratingFilter"
-          name="ratingFilter"
-          min="1"
-          max="5"
-          step="1"
-          className="w-80 mt-2 appearance-none bg-gradient-to-r from-green-400 via-blue-500 to-purple-600 h-1 outline-none"
-        />
+      <div>
+        <label>Sort by:</label>
+        <select onChange={(e) => handleSelect(e.target.value)}>
+          <option value="date_desc">Most Recent</option>
+          <option value="date_asc">Oldest</option>
+          <option value="rating_desc">Highest Rated</option>
+          <option value="rating_asc">Lowest Rated</option>
+        </select>
       </div>
+
       <table>
         <thead>
           <tr>
@@ -110,7 +122,10 @@ const RestaurantList = () => {
             <tr key={restaurant.id}>
               <td className="restaurant-cell">
                 <span className="restaurant-name">{restaurant.name}</span>
-                <Link className="custom-link" onClick={() => handleSeeReviews(restaurant.id)}>
+                <Link
+                  className="custom-link"
+                  onClick={() => handleSeeReviews(restaurant.id)}
+                >
                   See Reviews
                 </Link>
               </td>
@@ -130,35 +145,36 @@ const RestaurantList = () => {
       </table>
 
       {modal && selectedRestaurant && (
-  <div className="modal-custom">
-    <div onClick={toggleModal} className="overlay"></div>
-    <div className="modal-content-custom">
-      {(reviews ?? []).length > 0 ? (
-        reviews.map((review) => (
-          <div key={review.id}>
-          
-            <h3>
-              <strong style={{ fontSize: '1.5em' }}>{review.review_title}</strong>
-            </h3>
-            <p>{review.review_body}</p>
-            <p>
-              Rating: {review.rating} <span style={{ color: 'gold' }}>★</span>
-            </p>
+        <div className="modal-custom">
+          <div onClick={toggleModal} className="overlay"></div>
+          <div className="modal-content-custom">
+            {(reviews ?? []).length > 0 ? (
+              reviews.map((review) => (
+                <div key={review.id}>
+                  <h3>
+                    <strong style={{ fontSize: "1.5em" }}>
+                      {review.review_title}
+                    </strong>
+                  </h3>
+                  <p>{review.review_body}</p>
+                  <p>
+                    Rating: {review.rating}{" "}
+                    <span style={{ color: "gold" }}>★</span>
+                  </p>
+                </div>
+              ))
+            ) : (
+              <p>No reviews available.</p>
+            )}
+            <button
+              className="close-modal-custom btn btn-lg btn-primary px-3 d-none d-lg-block"
+              onClick={toggleModal}
+            >
+              CLOSE
+            </button>
           </div>
-        ))
-      ) : (
-        <p>No reviews available.</p>
+        </div>
       )}
-      <button
-        className="close-modal-custom btn btn-lg btn-primary px-3 d-none d-lg-block"
-        onClick={toggleModal}
-      >
-        CLOSE
-      </button>
-    </div>
-  </div>
-)}
-
     </>
   );
 };
