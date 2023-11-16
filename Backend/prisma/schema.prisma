@@ -97,7 +97,7 @@ model Message {
   message      String     @db.Text
   customer     User       @relation(fields: [customerId], references: [id], onDelete: Cascade)
   restaurant   Restaurant @relation(fields: [restaurantId], references: [id], onDelete: Cascade)
-  senderId     Int
+  sender       SENDER
   customerId   Int
   restaurantId Int
 }
@@ -157,4 +157,9 @@ enum TYPE {
   PREMIUM
   BASIC
   NONE
+}
+
+enum SENDER {
+  restaurant
+  customer
 }
