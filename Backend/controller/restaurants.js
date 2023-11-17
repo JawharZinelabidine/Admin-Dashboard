@@ -508,5 +508,56 @@ module.exports = {
       res.status(500).json({ error: 'Internal Server Error', details: error.message });
     }
   },
+  calculateReservationRate: async (req, res) => {
+    try {
+
+      const restaurantReservations = await reservation.findMany({
+        include: {
+          restaurant: true,
+        },
+      });
+
+      const restaurants = await restaurant.findMany({
+        where: {
+          status: "Approved",
+          isBanned: false,
+        },
+      });
+
+      const premiumReservations = restaurantReservations.filter(
+        (reservation) => reservation.restaurant && reservation.restaurant.accountType === 'PREMIUM'
+      );
+      const basicReservations = restaurantReservations.filter(
+        (reservation) => reservation.restaurant && reservation.restaurant.accountType === 'BASIC'
+      );
+
+      const approvedPremiumReservations = premiumReservations.filter(
+        (reservation) => reservation.status === 'Approved'
+      );
+      const approvedBasicReservations = basicReservations.filter(
+        (reservation) => reservation.status === 'Approved'
+      );
+      const premiumReservationRate =
+        approvedPremiumReservations.length === 0
+          ? 0
+          : (approvedPremiumReservations.length / premiumReservations.length) * 100;
+
+      const basicReservationRate =
+        approvedBasicReservations.length === 0
+          ? 0
+          : (approvedBasicReservations.length / basicReservations.length) * 100;
+
+
+      res.status(200).json({
+        premiumReservationRate: premiumReservationRate.toFixed(2),
+        basicReservationRate: basicReservationRate.toFixed(2),
+        totalRestaurantNumber: restaurants.length ?? 0,
+      });
+    } catch (error) {
+      console.error('Error calculating reservation rate:', error);
+      res.status(500).json({ error: 'Internal server error' });
+    }
+  }
+
 
 };
