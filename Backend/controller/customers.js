@@ -34,6 +34,29 @@ module.exports = {
     }
   },
 
+  getLoggedInUser: async (req, res) => {
+    try {
+      const userId = req.userId; 
+
+      if (!userId) {
+        return res.status(401).json({ error: "Unauthorized: User not logged in" });
+      }
+
+      const loggedInUser = await user.findUnique({
+        where: { id: userId },
+      });
+
+      if (!loggedInUser) {
+        return res.status(404).json({ error: "User not found" });
+      }
+
+      res.status(200).json(loggedInUser);
+    } catch (error) {
+      console.error(error);
+      res.status(500).send(error);
+    }
+  },
+
   createCustomers: async (req, res) => {
     const { fullname, email, password } = req.body;
     try {
@@ -145,6 +168,7 @@ module.exports = {
       }
 
       const token = jwt.sign({ id: customer.id, role: customer.role }, process.env.JWT_SECRET, { expiresIn: "1d" });
+      console.log(token)
       return res.status(201).json({ message: "Customer successfully logged in", token: token });
     } catch (error) {
       res.status(500).send(error);
