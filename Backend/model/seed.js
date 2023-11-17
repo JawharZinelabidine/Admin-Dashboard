@@ -33,6 +33,7 @@ const createRestaurants = async () => {
         closing_time: new Date("2019-01-16 22:00:00"),
         status: "Approved",
         ownerId: 1,
+        accountType:"BASIC",
       },
       {
         name: "La Villa",
@@ -61,6 +62,7 @@ const createRestaurants = async () => {
         closing_time: new Date("2019-01-16 23:00:00"),
         status: "Approved",
         ownerId: 2,
+        accountType:"PREMIUM",
       },
       {
         name: "Dar El Jeld",
@@ -90,6 +92,7 @@ const createRestaurants = async () => {
         closing_time: new Date("2019-01-16 23:00:00"),
         status: "Approved",
         ownerId: 3,
+        accountType:"PREMIUM",
       },
       {
         name: "L'Astragale",
@@ -118,6 +121,7 @@ const createRestaurants = async () => {
         closing_time: new Date("2019-01-16 01:00:00"),
         status: "Approved",
         ownerId: 4,
+        accountType:"BASIC",
       },
       {
         name: "Dar Belhadj",
@@ -146,6 +150,7 @@ const createRestaurants = async () => {
         closing_time: new Date("2019-01-16 01:00:00"),
         status: "Approved",
         ownerId: 5,
+        accountType:"PREMIUM",
       },
       {
         name: "La Villa Bleue",
@@ -174,6 +179,7 @@ const createRestaurants = async () => {
         closing_time: new Date("2019-01-16 01:00:00"),
         status: "Approved",
         ownerId: 6,
+        accountType:"PREMIUM",
       },
       {
         name: "Fondouk El Attarine",
@@ -200,6 +206,7 @@ const createRestaurants = async () => {
         closing_time: new Date("2019-01-16 01:00:00"),
         status: "Approved",
         ownerId: 7,
+        accountType:"BASIC",
       },
       {
         name: "El Fondouk",
@@ -227,6 +234,7 @@ const createRestaurants = async () => {
         closing_time: new Date("2019-01-16 23:00:00"),
         status: "Approved",
         ownerId: 8,
+        accountType:"BASIC",
       },
       {
         name: "Farmers",
@@ -252,6 +260,7 @@ const createRestaurants = async () => {
         closing_time: new Date("2019-01-16 00:00:00"),
         status: "Approved",
         ownerId: 9,
+        accountType:"BASIC",
       },
       {
         name: "L'AROMATE",
@@ -277,6 +286,7 @@ const createRestaurants = async () => {
         closing_time: new Date("2019-01-16 00:00:00"),
         status: "Approved",
         ownerId: 10,
+        accountType:"PREMIUM",
 
       },
       {
@@ -302,6 +312,7 @@ const createRestaurants = async () => {
         closing_time: new Date("2019-01-16 00:00:00"),
         status: "Approved",
         ownerId: 11,
+        accountType:"PREMIUM",
 
       },
       {
@@ -328,6 +339,7 @@ const createRestaurants = async () => {
         closing_time: new Date("2019-01-16 01:00:00"),
         status: "Approved",
         ownerId: 12,
+        accountType:"BASIC",
 
       },
     ],
@@ -547,6 +559,129 @@ const newReview = async () => {
     ],
   });
 };
+const Reservation=async()=>{
+  await prisma.reservation.createMany({
+    data: [
+      {
+
+    createdAt: new Date("2023-12-05").toISOString(),
+    notification: false,
+    updatedAt: new Date("2023-12-05").toISOString(),
+    status: "Approved",
+    date: new Date("2023-12-05").toISOString(),
+    time: new Date("2023-12-05T18:30:00").toISOString(), 
+    canReview: "Yes",
+    customerId: 3, 
+    restaurantId: 14, 
+    guest_number:2,
+      },
+      {
+      
+    createdAt: new Date("2023-12-05").toISOString(),
+    notification: false,
+    updatedAt: new Date("2023-12-05").toISOString(),
+    status: "Approved",
+    date: new Date("2023-12-05").toISOString(),
+    time: new Date("2023-12-05T18:30:00").toISOString(), 
+    canReview: "Yes",
+    customerId: 2, 
+    restaurantId:13, 
+    guest_number:4,
+      },
+      {
+      
+        createdAt: new Date("2023-12-05").toISOString(),
+        notification: false,
+        updatedAt: new Date("2023-12-05").toISOString(),
+        status: "Approved",
+        date: new Date("2023-12-05").toISOString(),
+        time: new Date("2023-12-05T18:30:00").toISOString(), 
+        canReview: "Yes",
+        customerId: 1, 
+        restaurantId: 19, 
+        guest_number:1,
+          },
+          {
+      
+            createdAt: new Date("2023-12-05").toISOString(),
+            notification: false,
+            updatedAt: new Date("2023-12-05").toISOString(),
+            status: "Approved",
+            date: new Date("2023-12-05").toISOString(),
+            time: new Date("2023-12-05T18:30:00").toISOString(), 
+            canReview: "Yes",
+            customerId: 2, 
+            restaurantId: 18,
+            guest_number:3, 
+              },
+              {
+      
+                createdAt: new Date("2023-12-05").toISOString(),
+                notification: false,
+                updatedAt: new Date("2023-12-05").toISOString(),
+                status: "Approved",
+                date: new Date("2023-12-05").toISOString(),
+                time: new Date("2023-12-05T18:30:00").toISOString(), 
+                canReview: "Yes",
+                customerId: 2, 
+                restaurantId: 16, 
+                guest_number:2,
+                  },
+                  {
+      
+                    createdAt: new Date("2023-12-05").toISOString(),
+                    notification: false,
+                    updatedAt: new Date("2023-12-05").toISOString(),
+                    status: "Approved",
+                    date: new Date("2023-12-05").toISOString(),
+                    time: new Date("2023-12-05T18:30:00").toISOString(), 
+                    canReview: "Yes",
+                    customerId: 2, 
+                    restaurantId: 17, 
+                    guest_number:5,
+                      },
+                      {
+      
+                        createdAt: new Date("2023-12-05").toISOString(),
+                        notification: false,
+                        updatedAt: new Date("2023-12-05").toISOString(),
+                        status: "Declined",
+                        date: new Date("2023-12-05").toISOString(),
+                        time: new Date("2023-12-05T18:30:00").toISOString(), 
+                        canReview: "Yes",
+                        customerId: 1, 
+                        restaurantId:14, 
+                        guest_number:4,
+                          },
+                          {
+      
+                            createdAt: new Date("2023-12-05").toISOString(),
+                            notification: false,
+                            updatedAt: new Date("2023-12-05").toISOString(),
+                            status: "Declined",
+                            date: new Date("2023-12-05").toISOString(),
+                            time: new Date("2023-12-05T18:30:00").toISOString(), 
+                            canReview: "Yes",
+                            customerId: 2, 
+                            restaurantId: 13, 
+                            guest_number:4,
+                              },
+                              {      
+                                createdAt: new Date("2023-12-05").toISOString(),
+                                notification: false,
+                                updatedAt: new Date("2023-12-05").toISOString(),
+                                status: "Declined",
+                                date: new Date("2023-12-05").toISOString(),
+                                time: new Date("2023-12-05T18:30:00").toISOString(), 
+                                canReview: "Yes",
+                                customerId: 3, 
+                                restaurantId: 13, 
+                                guest_number:3
+                                  },
+    ]
+    })
+
+}
 
 
 
@@ -554,3 +689,4 @@ const newReview = async () => {
 // createRestaurants();
 // createCustomers();
 // newReview();
+// Reservation()

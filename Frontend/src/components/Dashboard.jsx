@@ -84,7 +84,9 @@ function Dashboard() {
             </div>
 
             <div>
-              <span className="block text-gray-500">Ban Restaurants</span>
+              <Link to="/ban" className="block text-gray-500">
+                Ban List
+              </Link>
             </div>
           </div>
         </section>

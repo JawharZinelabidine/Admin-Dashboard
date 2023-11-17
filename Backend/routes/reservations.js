@@ -7,7 +7,8 @@ const isOwnerAuthorized = require('../middlwares/isOwnerAuthorized')
 
 const { sendReservationRequest, fetchPendingReservationRequests, fetchResolvedReservationRequests,
     approveReservation, rejectReservation, fetchUpcomingReservations, fetchExpiredReservations, checkReviewNotification,
-    removeReviewNotification } = require('../controller/reservations');
+    removeReviewNotification, 
+ } = require('../controller/reservations');
 
 router.route('/:restaurantId')
     .get()
@@ -34,6 +35,7 @@ router.route('/notification')
     .put(isAuthenticated, isCustomerAuthorized, removeReviewNotification)
 router.route('/notification/:id')
     .get(isAuthenticated, isCustomerAuthorized, checkReviewNotification)
+
 
 
 
