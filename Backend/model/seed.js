@@ -178,7 +178,7 @@ const createRestaurants = async () => {
         opening_time: new Date("2019-01-16 12:00:00"),
         closing_time: new Date("2019-01-16 01:00:00"),
         status: "Approved",
-        ownerId: 6,
+        ownerId:6,
         accountType:"PREMIUM",
       },
       {
@@ -419,8 +419,8 @@ const createOwner = async () => {
         isVerified: true,
       },
       {
-        fullname: "Adam Didoo",
-        email: "didoo@gmail.com",
+        fullname: "Ashley  Alexander",
+        email: "Ash@gmail.com",
         password: encryptedPassword7,
         role: "OWNER",
         isVerified: true,
@@ -572,7 +572,7 @@ const Reservation=async()=>{
     time: new Date("2023-12-05T18:30:00").toISOString(), 
     canReview: "Yes",
     customerId: 3, 
-    restaurantId: 14, 
+    restaurantId: 1, 
     guest_number:2,
       },
       {
@@ -584,8 +584,8 @@ const Reservation=async()=>{
     date: new Date("2023-12-05").toISOString(),
     time: new Date("2023-12-05T18:30:00").toISOString(), 
     canReview: "Yes",
-    customerId: 2, 
-    restaurantId:13, 
+    customerId: 15, 
+    restaurantId:1, 
     guest_number:4,
       },
       {
@@ -597,8 +597,8 @@ const Reservation=async()=>{
         date: new Date("2023-12-05").toISOString(),
         time: new Date("2023-12-05T18:30:00").toISOString(), 
         canReview: "Yes",
-        customerId: 1, 
-        restaurantId: 19, 
+        customerId:14, 
+        restaurantId: 2, 
         guest_number:1,
           },
           {
@@ -610,8 +610,8 @@ const Reservation=async()=>{
             date: new Date("2023-12-05").toISOString(),
             time: new Date("2023-12-05T18:30:00").toISOString(), 
             canReview: "Yes",
-            customerId: 2, 
-            restaurantId: 18,
+            customerId: 16, 
+            restaurantId:3,
             guest_number:3, 
               },
               {
@@ -623,8 +623,8 @@ const Reservation=async()=>{
                 date: new Date("2023-12-05").toISOString(),
                 time: new Date("2023-12-05T18:30:00").toISOString(), 
                 canReview: "Yes",
-                customerId: 2, 
-                restaurantId: 16, 
+                customerId: 14, 
+                restaurantId: 1, 
                 guest_number:2,
                   },
                   {
@@ -636,8 +636,8 @@ const Reservation=async()=>{
                     date: new Date("2023-12-05").toISOString(),
                     time: new Date("2023-12-05T18:30:00").toISOString(), 
                     canReview: "Yes",
-                    customerId: 2, 
-                    restaurantId: 17, 
+                    customerId: 15, 
+                    restaurantId: 1, 
                     guest_number:5,
                       },
                       {
@@ -649,8 +649,8 @@ const Reservation=async()=>{
                         date: new Date("2023-12-05").toISOString(),
                         time: new Date("2023-12-05T18:30:00").toISOString(), 
                         canReview: "Yes",
-                        customerId: 1, 
-                        restaurantId:14, 
+                        customerId: 14, 
+                        restaurantId:1, 
                         guest_number:4,
                           },
                           {
@@ -662,8 +662,8 @@ const Reservation=async()=>{
                             date: new Date("2023-12-05").toISOString(),
                             time: new Date("2023-12-05T18:30:00").toISOString(), 
                             canReview: "Yes",
-                            customerId: 2, 
-                            restaurantId: 13, 
+                            customerId: 16, 
+                            restaurantId: 2, 
                             guest_number:4,
                               },
                               {      
@@ -674,8 +674,8 @@ const Reservation=async()=>{
                                 date: new Date("2023-12-05").toISOString(),
                                 time: new Date("2023-12-05T18:30:00").toISOString(), 
                                 canReview: "Yes",
-                                customerId: 3, 
-                                restaurantId: 13, 
+                                customerId:15, 
+                                restaurantId: 3, 
                                 guest_number:3
                                   },
     ]
@@ -685,8 +685,9 @@ const Reservation=async()=>{
 
 
 
-createOwner();
+// createOwner();
 // createRestaurants();
 // createCustomers();
 // newReview();
 // Reservation()
+
