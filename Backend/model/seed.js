@@ -550,7 +550,7 @@ const newReview = async () => {
 
 
 
-createOwner();
+// createOwner();
 // createRestaurants();
 // createCustomers();
-// newReview();
+newReview();

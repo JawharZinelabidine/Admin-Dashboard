@@ -18,7 +18,7 @@ module.exports = isOwnerAuthorized = async (req, res, next) => {
             }
         })
 
-        if (ownerRestaurant.status === 'Declined') {
+        if (ownerRestaurant && ownerRestaurant.status === 'Declined') {
             res.status(403).json({ message: 'Owner account declined' })
         }
 

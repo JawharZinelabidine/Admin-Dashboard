@@ -157,6 +157,10 @@ module.exports = {
         if (myRestaurant.status === 'Declined') {
           res.status(403).json({ message: 'This account was declined by the admin.' })
         }
+        if (myRestaurant.status === 'Pending') {
+          res.status(403).json({ message: "This account is pending the admin's decision." })
+        }
+
 
         if (myRestaurant.accountType === 'NONE') {
           res.status(201).json({ message: "User hasn't chosen account type", token: token })
