@@ -57,7 +57,7 @@ module.exports = {
           verifyToken,
         },
       });
-      const verificationLink = `http://localhost:5174/owners/verify/${verifyToken}`;
+      const verificationLink = `http://localhost:5173/owners/verify/${verifyToken}`;
       await sendingMail({
         from: process.env.EMAIL,
         to: owner.email,
@@ -150,7 +150,7 @@ module.exports = {
             message: "User hasn't created a restaurant",
             token: token,
           });
-        } 
+        }
         if (myRestaurant.isBanned) {
           res.status(403).json({ message: 'This account was banned by the admin.' })
         }
