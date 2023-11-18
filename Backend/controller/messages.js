@@ -1,7 +1,63 @@
 const { message } = require("../model/index");
-const axios = require('axios');
 require('dotenv').config();
+const authenticateSocket = require('../middlwares/authenticateSocket.js')
+const io = require("socket.io")(8900, {
+    cors: {
+        origin: ["http://localhost:5173", "http://192.168.137.69:8081"],
+    },
+});
 
+
+io.use((socket, next) => {
+    authenticateSocket(socket, next);
+});
+
+let users = [];
+
+const addUser = (userId, socketId) => {
+
+    users.push({ userId, socketId });
+};
+
+const removeUser = (socketId) => {
+    users = users.filter((user) => user.socketId !== socketId);
+};
+
+const getUser = (receiverId) => {
+    return users.find((user) => user.userId === receiverId);
+};
+
+
+io.on('connection', (socket) => {
+    //when ceonnect
+    console.log('a user connected', socket.id);
+
+    //take userId and socketId from user
+    socket.on("addUser", () => {
+        addUser(socket.userId, socket.id);
+        io.emit("getUsers", users)
+    });
+
+
+    //send message
+    socket.on('sendMessage', ({ receiverId, text }) => {
+        console.log(receiverId)
+        const user = getUser(receiverId)
+        io.to(user.socketId).emit("getMessage", {
+            senderId: socket.userId,
+            text
+        });
+    })
+
+    //when disconnect
+    socket.on("disconnect", () => {
+        console.log("a user disconnected!");
+        removeUser(socket.id);
+    });
+
+
+
+});
 
 module.exports = {
 
@@ -154,6 +210,21 @@ module.exports = {
             res.status(500).send('Couldnt get messages')
 
         }
+    },
+
+    getOwnerId: (req, res) => {
+
+        const id = req.userId
+
+        try {
+
+            res.status(200).json({ user: id })
+        }
+        catch (error) {
+            res.status(500).send('error')
+        }
+
+
     }
 
 }
