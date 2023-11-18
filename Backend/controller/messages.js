@@ -43,10 +43,13 @@ io.on('connection', (socket) => {
     socket.on('sendMessage', ({ receiverId, text }) => {
         console.log(receiverId)
         const user = getUser(receiverId)
-        io.to(user.socketId).emit("getMessage", {
-            senderId: socket.userId,
-            text
-        });
+        if (user) {
+            io.to(user.socketId).emit("getMessage", {
+                senderId: socket.userId,
+                text
+            });
+        }
+
     })
 
     //when disconnect
@@ -199,7 +202,7 @@ module.exports = {
             const messages = await message.findMany({
                 where: {
                     customerId: id,
-                    restaurantId: restaurantId
+                    restaurantId: +restaurantId
                 }
             })
 
