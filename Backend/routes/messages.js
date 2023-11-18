@@ -6,10 +6,9 @@ const isCustomerAuthorized = require('../middlwares/isCustomerAuthorized')
 const isOwnerAuthorized = require('../middlwares/isOwnerAuthorized')
 
 const { ownerSend, customerSend, getRestaurantConversations, getCustomerConversations, getRestaurantMessages,
-    getCustomerMessages, getOwnerId } = require('../controller/messages');
+    getCustomerMessages } = require('../controller/messages');
 
-router.route('/owner')
-    .get(isAuthenticated, isOwnerAuthorized, getOwnerId)
+
 router.route('/owner/:customerId')
     .post(isAuthenticated, isOwnerAuthorized, ownerSend)
 router.route('/customer/:restaurantId')

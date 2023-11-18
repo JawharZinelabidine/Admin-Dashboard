@@ -41,18 +41,19 @@ io.on('connection', (socket) => {
 
     //send message
     socket.on('sendMessage', ({ receiverId, text }) => {
-        console.log(receiverId)
         const user = getUser(receiverId)
-        if (user) {
-            io.to(user.socketId).emit("getMessage", {
-                senderId: socket.userId,
-                text
-            });
-        }
+        console.log(user.socketId, users)
+        io.to(user.socketId).emit("getMessage", {
+            senderId: socket.userId,
+            text
+        });
+
+
+
 
     })
 
-    //when disconnect
+    // //when disconnect
     socket.on("disconnect", () => {
         console.log("a user disconnected!");
         removeUser(socket.id);
@@ -85,7 +86,7 @@ module.exports = {
         }
         catch (error) {
             console.log(error)
-            res.status(500).json({ error: error })
+            res.status(500).json({ error: "couldn't send message" })
 
         }
 
@@ -112,7 +113,7 @@ module.exports = {
         catch (error) {
             console.log(error)
 
-            res.status(500).json({ error: error })
+            res.status(500).json({ error: "couldn't send message" })
 
         }
 
@@ -215,19 +216,6 @@ module.exports = {
         }
     },
 
-    getOwnerId: (req, res) => {
 
-        const id = req.userId
-
-        try {
-
-            res.status(200).json({ user: id })
-        }
-        catch (error) {
-            res.status(500).send('error')
-        }
-
-
-    }
 
 }
