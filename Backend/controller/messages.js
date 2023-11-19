@@ -42,12 +42,14 @@ io.on('connection', (socket) => {
     //send message
     socket.on('sendMessage', ({ receiverId, text }) => {
         const user = getUser(receiverId)
-        console.log(user.socketId, users)
-        io.to(user.socketId).emit("getMessage", {
-            senderId: socket.userId,
-            text
-        });
-
+        console.log(users)
+        if (user) {
+            console.log(user.socketId)
+            io.to(user.socketId).emit("getMessage", {
+                senderId: socket.userId,
+                text
+            });
+        }
 
 
 
