@@ -1,5 +1,7 @@
-const { message } = require("../model/index");
+const { message, user, restaurant } = require("../model/index");
 require('dotenv').config();
+const axios = require('axios');
+
 const authenticateSocket = require('../middlwares/authenticateSocket.js')
 const io = require("socket.io")(8900, {
     cors: {
@@ -82,6 +84,58 @@ module.exports = {
 
                 }
             })
+            const customer = users.find((user) => user.userId === +customerId)
+
+            if (!customer) {
+
+                const { expoToken } = await user.findUnique({
+                    where: {
+                        id: +customerId
+                    }
+                })
+                const { name } = await restaurant.findUnique({
+                    where: {
+                        id: id
+                    }
+                })
+                const title = `${name} has send you a message`;
+                const body = `${msg.substring(0, 20)}`;
+                const route = 'Conversations'
+                const messageId = messageSent.id
+                try {
+                    const { data } = await axios.post(
+                        'https://exp.host/--/api/v2/push/send',
+                        {
+                            to: expoToken,
+                            title,
+                            body,
+                            data: {
+                                route,
+                                messageId
+                            }
+
+                        }
+                    );
+                    console.log('notification sent!')
+
+                } catch (notificationError) {
+                    console.error('Failed to send notification:', notificationError);
+                }
+
+                try {
+                    await user.update({
+                        where: {
+                            id: +customerId,
+                        },
+                        data: {
+                            hasNotification: true,
+                        },
+                    });
+                } catch (error) {
+                    console.log("Failed to change notification status:", error);
+                }
+
+            }
 
             res.status(201).json(messageSent)
 
@@ -159,8 +213,6 @@ module.exports = {
                     createdAt: 'desc'
                 }
             })
-
-
 
 
             res.status(200).json(conversations)
