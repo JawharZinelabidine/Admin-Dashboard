@@ -279,18 +279,32 @@ module.exports = {
       const upcoming = await reservation.findMany({
         where: {
           customerId: id,
-          date: {
-            gte: zone,
+          OR: [
+            {
+              date: {
+                gt: zone,
+              },
+            },
+            {
+              AND: [
+                {
+                  date: zone,
+                },
+                {
+                  time: {
+                    gte: zone,
+                  },
+                },
+              ],
+            },
+          ],
+          status: {
+            in: ["Approved", "Pending"],
           },
-          time: {
-            gte: zone,
-          },
-
-          OR: [{ status: "Approved" }, { status: "Pending" }],
         },
       });
 
-      console.log(zone, now.toISOString());
+      console.log(zone);
       res.status(200).json(upcoming);
     } catch (error) {
       console.log(error);
@@ -306,15 +320,13 @@ module.exports = {
       const expired = await reservation.findMany({
         where: {
           customerId: id,
-
           OR: [
             {
-              date: {
-                lte: zone,
-              },
-              time: {
-                lte: zone,
-              },
+              date: zone,
+              time: { lt: zone },
+            },
+            {
+              date: { lt: zone },
             },
             { status: "Declined" },
           ],
@@ -362,5 +374,5 @@ module.exports = {
     }
   },
 
-  
+
 };

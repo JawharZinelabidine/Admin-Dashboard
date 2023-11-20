@@ -1,7 +1,7 @@
 const { user, restaurant } = require("../model/index");
 
 
-module.exports = isOwnerAuthorized = async (req, res, next) => {
+module.exports = isPremiumAuthorized = async (req, res, next) => {
 
     const id = req.userId
 
@@ -17,17 +17,15 @@ module.exports = isOwnerAuthorized = async (req, res, next) => {
                 ownerId: id
             }
         })
+        console.log(ownerRestaurant.accountType)
 
-        if (ownerRestaurant && ownerRestaurant.status === 'Declined') {
-            res.status(403).json({ message: 'Owner account declined' })
+        if (ownerRestaurant.accountType === 'NONE' || ownerRestaurant.accountType === 'BASIC') {
+            console.log('here')
+            res.status(403).json({ message: 'Owner account unauthorized' })
         }
 
-        if (owner.isVerified === false) {
-            res.status(403).json({ message: 'Owner is not verified' })
-        }
-
-        if (owner.role === 'OWNER') {
-            next()
+        else if (ownerRestaurant.accountType === 'PREMIUM') {
+            return next()
         }
 
         else {
@@ -37,7 +35,7 @@ module.exports = isOwnerAuthorized = async (req, res, next) => {
 
     } catch (error) {
 
-        console.log(error, 'Couldnt get user role')
+        console.log(error, 'Couldnt get user account type')
         res.status(500).send(error)
 
     }
