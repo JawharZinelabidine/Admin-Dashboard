@@ -7,7 +7,7 @@ import {
 } from "react-router-dom";
 import "./App.css";
 import Login from "./components/Login";
-import Dashboard from "./components/Dashboard";
+import Dashboard from "./components/DashboardV2";
 import NewApplication from "./components/NewApplication";
 import RestaurantList from "./components/RestaurantList";
 import History from "./components/History"

@@ -507,57 +507,48 @@ module.exports = {
       console.error('Error fetching reviews:', error);
       res.status(500).json({ error: 'Internal Server Error', details: error.message });
     }
-  }, 
-  calculateReservationRate: async (req, res) => {
+  },
+  getPremiumRestaurantsWithOwners: async (req, res) => {
     try {
-
-    const restaurantReservations = await reservation.findMany({
-      include: {
-        restaurant: true,
-      },
-    });
- 
-    const restaurants = await restaurant.findMany({
-      where: {
-        status: "Approved",
-        isBanned: false,
-      },
-        }); 
-    
-    const premiumReservations = restaurantReservations.filter(
-      (reservation) => reservation.restaurant && reservation.restaurant.accountType === 'PREMIUM'
-    );
-    const basicReservations = restaurantReservations.filter(
-      (reservation) => reservation.restaurant && reservation.restaurant.accountType === 'BASIC'
-    );
-
-    const approvedPremiumReservations = premiumReservations.filter(
-      (reservation) => reservation.status === 'Approved'
-    );
-    const approvedBasicReservations = basicReservations.filter(
-      (reservation) => reservation.status === 'Approved'
-    );
-      const premiumReservationRate =
-        approvedPremiumReservations.length === 0
-          ? 0
-          : (approvedPremiumReservations.length / premiumReservations.length) * 100;
-  
-      const basicReservationRate =
-        approvedBasicReservations.length === 0
-          ? 0
-          : (approvedBasicReservations.length / basicReservations.length) * 100;
-
-  
-      res.status(200).json({
-        premiumReservationRate: premiumReservationRate.toFixed(2),
-        basicReservationRate: basicReservationRate.toFixed(2),
-        totalRestaurantNumber:restaurants.length ?? 0,
+      const premiumRestaurants = await restaurant.findMany({
+        where: {
+          accountType: 'PREMIUM',
+        },
+        include: {
+          owner: {
+            select: {
+              fullname: true,
+              email: true, // Include other owner details if needed
+            },
+          },
+          payment: {
+            select: {
+              createdAt: true, // Include createdAt field from the payment model
+            },
+          },
+        },
       });
+  
+      const formattedData = premiumRestaurants.map(({ name, owner, payment }) => ({
+        restaurantName: name,
+        ownerName: owner ? owner.fullname : null,
+        ownerEmail: owner ? owner.email : null,
+        paymentCreatedAt: payment ? payment.createdAt : null, // Include payment createdAt
+      }));
+  
+      res.status(200).json(formattedData);
     } catch (error) {
-      console.error('Error calculating reservation rate:', error);
+      console.error('Error fetching premium restaurants with owners:', error);
       res.status(500).json({ error: 'Internal server error' });
     }
   }
+  
+  
+  
+  
+
+  
+  
   
   
 };
