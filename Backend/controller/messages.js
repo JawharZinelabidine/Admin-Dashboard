@@ -1,5 +1,7 @@
-const { message } = require("../model/index");
+const { message, user, restaurant } = require("../model/index");
 require('dotenv').config();
+const axios = require('axios');
+
 const authenticateSocket = require('../middlwares/authenticateSocket.js')
 const io = require("socket.io")(8900, {
     cors: {
@@ -41,15 +43,21 @@ io.on('connection', (socket) => {
 
     //send message
     socket.on('sendMessage', ({ receiverId, text }) => {
-        console.log(receiverId)
         const user = getUser(receiverId)
-        io.to(user.socketId).emit("getMessage", {
-            senderId: socket.userId,
-            text
-        });
+        console.log(users)
+        if (user) {
+            console.log(user.socketId)
+            io.to(user.socketId).emit("getMessage", {
+                senderId: socket.userId,
+                text
+            });
+        }
+
+
+
     })
 
-    //when disconnect
+    // //when disconnect
     socket.on("disconnect", () => {
         console.log("a user disconnected!");
         removeUser(socket.id);
@@ -76,13 +84,65 @@ module.exports = {
 
                 }
             })
+            const customer = users.find((user) => user.userId === +customerId)
+
+            if (!customer) {
+
+                const { expoToken } = await user.findUnique({
+                    where: {
+                        id: +customerId
+                    }
+                })
+                const { name } = await restaurant.findUnique({
+                    where: {
+                        id: id
+                    }
+                })
+                const title = `${name} has send you a message`;
+                const body = `${msg.substring(0, 20)}`;
+                const route = 'Conversations'
+                const messageId = messageSent.id
+                try {
+                    const { data } = await axios.post(
+                        'https://exp.host/--/api/v2/push/send',
+                        {
+                            to: expoToken,
+                            title,
+                            body,
+                            data: {
+                                route,
+                                messageId
+                            }
+
+                        }
+                    );
+                    console.log('notification sent!')
+
+                } catch (notificationError) {
+                    console.error('Failed to send notification:', notificationError);
+                }
+
+                try {
+                    await user.update({
+                        where: {
+                            id: +customerId,
+                        },
+                        data: {
+                            hasNotification: true,
+                        },
+                    });
+                } catch (error) {
+                    console.log("Failed to change notification status:", error);
+                }
+
+            }
 
             res.status(201).json(messageSent)
 
         }
         catch (error) {
             console.log(error)
-            res.status(500).json({ error: error })
+            res.status(500).json({ error: "couldn't send message" })
 
         }
 
@@ -109,7 +169,7 @@ module.exports = {
         catch (error) {
             console.log(error)
 
-            res.status(500).json({ error: error })
+            res.status(500).json({ error: "couldn't send message" })
 
         }
 
@@ -155,8 +215,6 @@ module.exports = {
             })
 
 
-
-
             res.status(200).json(conversations)
 
 
@@ -199,7 +257,7 @@ module.exports = {
             const messages = await message.findMany({
                 where: {
                     customerId: id,
-                    restaurantId: restaurantId
+                    restaurantId: +restaurantId
                 }
             })
 
@@ -212,19 +270,6 @@ module.exports = {
         }
     },
 
-    getOwnerId: (req, res) => {
 
-        const id = req.userId
-
-        try {
-
-            res.status(200).json({ user: id })
-        }
-        catch (error) {
-            res.status(500).send('error')
-        }
-
-
-    }
 
 }
