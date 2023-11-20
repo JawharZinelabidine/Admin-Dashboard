@@ -17,7 +17,6 @@ module.exports = isPremiumAuthorized = async (req, res, next) => {
                 ownerId: id
             }
         })
-        console.log(ownerRestaurant.accountType)
 
         if (ownerRestaurant.accountType === 'NONE' || ownerRestaurant.accountType === 'BASIC') {
             console.log('here')
