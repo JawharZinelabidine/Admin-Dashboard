@@ -103,7 +103,7 @@ module.exports = {
                 const route = 'Conversations'
                 const messageId = messageSent.id
                 try {
-                    const { data } = await axios.post(
+                    await axios.post(
                         'https://exp.host/--/api/v2/push/send',
                         {
                             to: expoToken,
