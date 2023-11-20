@@ -84,6 +84,7 @@ module.exports = {
 
                 }
             })
+            console.log(msg.slice(-2) == '\n')
             const customer = users.find((user) => user.userId === +customerId)
 
             if (!customer) {
