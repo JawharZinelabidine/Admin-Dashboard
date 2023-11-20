@@ -84,7 +84,7 @@ module.exports = {
 
                 }
             })
-            console.log(msg.slice(-2) == '\n')
+
             const customer = users.find((user) => user.userId === +customerId)
 
             if (!customer) {
@@ -164,7 +164,35 @@ module.exports = {
 
                 }
             })
-            res.status(201).json(messageSent)
+            const thisRestaurant = await restaurant.findUnique({
+                where: { id: +restaurantId },
+            });
+
+            const owner = users.find((user) => user.userId === +thisRestaurant.ownerId)
+            if (!owner) {
+
+                try {
+
+                    await user.update({
+                        where: {
+                            id: +thisRestaurant.ownerId,
+                        },
+                        data: {
+                            hasNewMessage: true,
+                        },
+                    });
+
+                    res.status(201).json(messageSent)
+
+
+                } catch (error) {
+                    console.log("Failed to change notification status:", error);
+                    res.status(500).send('failed')
+                }
+            }
+            else {
+                res.status(201).json(messageSent)
+            }
 
         }
         catch (error) {
@@ -268,6 +296,42 @@ module.exports = {
             console.log(error)
             res.status(500).send('Couldnt get messages')
 
+        }
+    },
+
+    checkNotification: async (req, res) => {
+        const id = req.userId;
+
+        try {
+            const { hasNewMessage } = await user.findUnique({
+                where: {
+                    id: id,
+                },
+            });
+            res.status(200).send(hasNewMessage);
+        } catch (error) {
+            console.log(error);
+            res
+                .status(500)
+                .json({ message: "Failed to retrieve notification status" });
+        }
+    },
+    removeNotification: async (req, res) => {
+        const id = req.userId;
+
+        try {
+            const { hasNewMessage } = await user.update({
+                where: {
+                    id: id,
+                },
+                data: {
+                    hasNewMessage: false,
+                },
+            });
+            res.status(200).send(hasNewMessage);
+        } catch (error) {
+            console.log(error);
+            res.status(500).json({ message: "Failed to update notification status" });
         }
     },
 

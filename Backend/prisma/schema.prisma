@@ -19,6 +19,8 @@ model User {
   password        String        @db.VarChar(255)
   profilePic      String?
   hasNotification Boolean       @default(false)
+  hasNewMessage   Boolean       @default(false)
+  hasNewReview    Boolean       @default(false)
   isVerified      Boolean       @default(false)
   verifyToken     String?
   otp             Int?
