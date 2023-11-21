@@ -71,7 +71,7 @@ const Dashboard = () => {
             />
 
             <MonthlyGrowth monthlyGrowth={dashboardData.monthlyGrowth} />
-            <PaymentHistory monthlyGrowth={dashboardData.PaymentHistory} />
+            <PaymentHistory  />
           </div>
         )}
       </div>

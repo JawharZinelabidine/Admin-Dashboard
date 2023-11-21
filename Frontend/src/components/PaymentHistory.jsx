@@ -1,8 +1,7 @@
 import React ,{useState,useEffect} from 'react';
-import { ResponsiveLine } from '@nivo/line';
 import axios from 'axios';
 
-const PaymentHistory = ({PaymentHistory}) => {
+const PaymentHistory = () => {
     const [restaurants, setRestaurants] = useState([]);
 
     useEffect(() => {
