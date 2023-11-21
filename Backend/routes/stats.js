@@ -4,10 +4,12 @@ const router = express.Router();
 // const isAuthenticated = require("../middlwares/isAuthenticated");
 
 
-const {calculateStats}=require('../controller/stats')
+const {calculateStats,calculateRestaurantHistoryStats}=require('../controller/stats')
 
 
 router.route('/')
     .get(calculateStats)
+router.route('/historyStats')
+    .get(calculateRestaurantHistoryStats)
 
 module.exports = router;

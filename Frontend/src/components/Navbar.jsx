@@ -60,6 +60,11 @@ function Navbar() {
               Home
             </button>
           </Link>
+          <Link to="/RestaurantList">
+            <button className="mx-8 inline-flex px-5 py-3 text-black hover:text-black focus:text-black hover:bg-gray-200 focus:bg-red-100 rounded-md mb-3 ">
+              Restaurants
+            </button>
+          </Link>
           <div className="relative inline-flex mx-8">
             <Link to="/NewApplication">
               <button
@@ -81,12 +86,10 @@ function Navbar() {
               History
             </button>
           </Link>
+
           <div className="flex flex-shrink-0 items-center ml-auto">
             <div className="relative inline-block text-black">
-              <button
-                className="inline-flex items-center p-2 hover:bg-gray-100 focus:bg-gray-100 rounded-lg"
-               
-              >
+              <button className="inline-flex items-center p-2 hover:bg-gray-100 focus:bg-gray-100 rounded-lg">
                 <span className="font-semibold">Admin-Dashboard</span>
               </button>
             </div>

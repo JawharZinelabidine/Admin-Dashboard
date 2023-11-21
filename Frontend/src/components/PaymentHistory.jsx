@@ -25,9 +25,10 @@ const PaymentHistory = ({PaymentHistory}) => {
     
 
   return (
+    
   
-    <div className="mt-6">
-    <h2 className="text-lg font-semibold mb-2">Payment History</h2>
+    <div className="bg-gray-800 p-4 shadow-md rounded-md transition duration-300 ease-in-out transform ">
+    <h2 className="text-lg font-semibold mb-2 text-white">Payment History</h2>
     <table className="min-w-full divide-y divide-gray-200">
       <thead className="bg-gray-50">
         <tr>

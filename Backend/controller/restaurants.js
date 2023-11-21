@@ -28,7 +28,6 @@ module.exports = {
       const restaurants = await restaurant.findMany({
         where: {
           status: "Approved",
-          isBanned: false,
         },
         orderBy: sortOption,
       });
@@ -518,12 +517,12 @@ module.exports = {
           owner: {
             select: {
               fullname: true,
-              email: true, // Include other owner details if needed
+              email: true,
             },
           },
           payment: {
             select: {
-              createdAt: true, // Include createdAt field from the payment model
+              createdAt: true, 
             },
           },
         },
@@ -533,7 +532,7 @@ module.exports = {
         restaurantName: name,
         ownerName: owner ? owner.fullname : null,
         ownerEmail: owner ? owner.email : null,
-        paymentCreatedAt: payment ? payment.createdAt : null, // Include payment createdAt
+        paymentCreatedAt: payment ? payment.createdAt : null, 
       }));
   
       res.status(200).json(formattedData);

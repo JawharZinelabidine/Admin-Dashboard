@@ -1,18 +1,18 @@
-import React from 'react';
-import { ResponsivePie } from '@nivo/pie';
+import React from "react";
+import { ResponsivePie } from "@nivo/pie";
 
 const CustomerStats = ({ userCount, activeCustomers }) => {
   const inactiveCustomers = userCount - activeCustomers;
 
   const data = [
     {
-      id: 'Active Customers',
-      label: 'Active Customers',
+      id: "Active Customers",
+      label: "Active Customers",
       value: activeCustomers,
     },
     {
-      id: 'Inactive Customers',
-      label: 'Inactive Customers',
+      id: "Inactive Customers",
+      label: "Inactive Customers",
       value: inactiveCustomers,
     },
   ];
@@ -20,23 +20,19 @@ const CustomerStats = ({ userCount, activeCustomers }) => {
   return (
     <div className="bg-gray-800 p-4 shadow-md rounded-md transition duration-300 ease-in-out transform">
       <h2 className="text-lg font-semibold mb-2 text-white">Customer Stats</h2>
-      <div style={{ height: '300px' }}>
+      <div style={{ height: "300px" }}>
         <ResponsivePie
           data={data}
           margin={{ top: 40, right: 80, bottom: 80, left: 80 }}
-        
           padAngle={0.7}
           cornerRadius={3}
           borderWidth={1}
-          colors={['#FFA8E2', '#97E3D5']}
-          borderColor={{ from: 'color', modifiers: [['darker', 0.2]] }}
+          colors={["#FFA8E2", "#97E3D5"]}
+          borderColor={{ from: "color", modifiers: [["darker", 0.2]] }}
           enableRadialLabels={false}
           enableSliceLabels={true}
           sliceLabel={(slice) => `${slice.id}: ${slice.value}`}
           arcLinkLabelsTextColor={"#FFFFFF"}
-          tooltip={({ id, value }) => (
-            <strong>{id}: {value}</strong>
-          )}
         />
       </div>
     </div>

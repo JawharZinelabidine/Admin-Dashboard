@@ -73,11 +73,11 @@ router
   .put(isAuthenticated, isCustomerAuthorized, updateRating);
 router
   .route("/ban/:id")
-  .post(banRestaurantById, isAuthenticated, isAdminAuthorized);
+  .post(isAuthenticated, isAdminAuthorized,banRestaurantById, );
 router
   .route("/ban")
-  .get(getBannedRestaurants, isAuthenticated, isAdminAuthorized);
-router.route("/:id").post(unbanRestaurant, isAuthenticated, isAdminAuthorized);
+  .get( isAuthenticated, isAdminAuthorized ,getBannedRestaurants);
+router.route("/unban/:id").post( isAuthenticated, isAdminAuthorized,unbanRestaurant);
 router.route("/reviews/:id").get(getReviewByRestaurantID);
 router.route('/premium').get(getPremiumRestaurantsWithOwners)
 

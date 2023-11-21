@@ -20,40 +20,38 @@ const calculateStats = async (req, res) => {
 
     const calculateMonthlyGrowth = async () => {
       const currentDate = new Date();
-      const currentYear = currentDate.getFullYear();
-      const currentMonth = currentDate.getMonth() + 1;
     
       const monthlyGrowthData = [];
     
-      // Loop through each month of four 6-month periods
+    
       for (let i = 0; i <  6; i++) {
-        const targetDate = new Date(currentYear, currentMonth - i, 1);
+        const targetDate = new Date(currentDate.getFullYear(), currentDate.getMonth() - i, 1);
         const targetYear = targetDate.getFullYear();
         const targetMonth = targetDate.getMonth() + 1;
     
-        // Fetch restaurants created in the specific month using Prisma
+        
         const restaurantsThisMonth = await prisma.restaurant.findMany({
           where: {
             createdAt: {
-              gte: new Date(targetYear, targetMonth - 1, 1), // Start of the month
-              lt: new Date(targetYear, targetMonth, 1), // Start of the next month
+              gte: new Date(targetYear, targetMonth - 1, 1), 
+              lt: new Date(targetYear, targetMonth, 1),
             },
           },
         });
         console.log(restaurantsThisMonth)
-        // Format data for this month
+        
         const formattedData = {
           month: targetDate.toLocaleString('en-US', { month: 'short' }),
           restaurantsAdded: restaurantsThisMonth.length,
         };
     console.log(restaurantsThisMonth.length)
-        // Add data for this month to the array
+        
         monthlyGrowthData.unshift(formattedData);
       }
     
       return monthlyGrowthData;
     };
-    // Function to calculate active restaurants
+   
     const calculateActiveAndBannedCounts = () => {
       const counts = restaurant.reduce(
         (acc, restaurant) => {
@@ -72,7 +70,7 @@ const calculateStats = async (req, res) => {
       return counts;
     };
 
-    // Function to calculate total customers From Reservations
+   
     const calculateTotalCustomersFromReservations = () => {
       const uniqueCustomers = new Set();
 
@@ -143,13 +141,13 @@ const calculateStats = async (req, res) => {
         try {
           const currentDate = new Date();
           const lastMonth = new Date();
-          lastMonth.setMonth(currentDate.getMonth() - 1); // Assuming last month means the month before the current one
+          lastMonth.setMonth(currentDate.getMonth() - 1); 
       
           const paymentHistory = await prisma.payment.findMany({
             where: {
               createdAt: {
-                gte: lastMonth.toISOString(), // Filter payments created after lastMonth
-                lt: currentDate.toISOString(), // Filter payments created before currentDate
+                gte: lastMonth.toISOString(), 
+                lt: currentDate.toISOString(), 
               },
             },
           });
@@ -185,9 +183,48 @@ const calculateStats = async (req, res) => {
 };
 
 
-// ... existing code for other calculations
+const calculateRestaurantHistoryStats = async (req, res) => {
+  try {
+    const currentDate = new Date();
+    const restaurantHistoryStats = [];
 
-// Calculate premium payments
+    for (let i = 0; i < 6; i++) {
+      const targetDate = new Date(currentDate.getFullYear(), currentDate.getMonth() - i, 1);
+      const targetYear = targetDate.getFullYear();
+      const targetMonth = targetDate.getMonth() + 1;
+
+      const restaurantsThisMonth = await prisma.restaurant.findMany({
+        where: {
+          createdAt: {
+            gte: new Date(targetYear, targetMonth - 1, 1),
+            lt: new Date(targetYear, targetMonth, 1), 
+          },
+        },
+      });
+
+      const approvedCount = restaurantsThisMonth.filter(
+        (restaurant) => restaurant.status === 'Approved'
+      ).length;
+
+      const declinedCount = restaurantsThisMonth.filter(
+        (restaurant) => restaurant.status === 'Declined'
+      ).length;
+
+      const formattedData = {
+        month: targetDate.toLocaleString('en-US', { month: 'long' }),
+        Approved: approvedCount,
+        Declined: declinedCount,
+      };
+
+      restaurantHistoryStats.unshift(formattedData);
+    }
+    res.status(200).json(restaurantHistoryStats)
+  } catch (error) {
+    console.error('Error calculating restaurant history stats:', error);
+    throw error;
+  }
+};
 
 
-module.exports = { calculateStats };
+
+module.exports = { calculateStats,calculateRestaurantHistoryStats };

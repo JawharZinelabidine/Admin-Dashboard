@@ -7,11 +7,11 @@ import {
 } from "react-router-dom";
 import "./App.css";
 import Login from "./components/Login";
-import Dashboard from "./components/DashboardV2";
+import Dashboard from "./components/Dashboard";
 import NewApplication from "./components/NewApplication";
 import RestaurantList from "./components/RestaurantList";
 import History from "./components/History"
-import BannedRestaurant from "./components/BannedRestaurant";
+
 
 
 function App() {
@@ -52,14 +52,7 @@ function App() {
             </>
           }
         />
-        <Route
-          path="/ban"
-          element={
-            <>
-              <BannedRestaurant />
-            </>
-          }
-        />
+       
       </Routes>
     </Router>
   );

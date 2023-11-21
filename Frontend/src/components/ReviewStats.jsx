@@ -32,9 +32,7 @@ const ReviewStats = ({ totalReviews, averageReviewRating }) => {
           enableSliceLabels={true}
           sliceLabel={(slice) => `${slice.id}: ${slice.value}`}
           arcLinkLabelsTextColor={"#FFFFFF"}
-          tooltip={({ label, value }) => (
-            <strong className="text-white">{label}: {value}</strong>
-          )}
+
         />
       </div>
     </div>
