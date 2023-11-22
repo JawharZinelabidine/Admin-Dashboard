@@ -287,7 +287,6 @@ const createRestaurants = async () => {
         status: "Approved",
         ownerId: 10,
         accountType: "PREMIUM",
-
       },
       {
         name: "Le Pirate",
@@ -313,7 +312,6 @@ const createRestaurants = async () => {
         status: "Approved",
         ownerId: 11,
         accountType: "PREMIUM",
-
       },
       {
         name: "Sushi&Co",
@@ -340,7 +338,6 @@ const createRestaurants = async () => {
         status: "Approved",
         ownerId: 12,
         accountType: "BASIC",
-
       },
     ],
   });
@@ -468,10 +465,7 @@ const createOwner = async () => {
         role: "ADMIN",
         isVerified: true,
       },
-    ]
-
-
-
+    ],
   });
 };
 
@@ -507,9 +501,9 @@ const createCustomers = async () => {
         role: "CUSTOMER",
         isVerified: true,
       },
-    ]
-  })
-}
+    ],
+  });
+};
 
 const newReview = async () => {
   await prisma.review.createMany({
@@ -523,35 +517,40 @@ const newReview = async () => {
       },
       {
         review_title: "BEST PLACE",
-        review_body: "The attention to detail in both presentation and taste makes every visit to this restaurant a memorable experience.",
+        review_body:
+          "The attention to detail in both presentation and taste makes every visit to this restaurant a memorable experience.",
         rating: 4,
         customerId: 15,
         restaurantId: 2,
       },
       {
         review_title: "Happy",
-        review_body: "The diverse menu caters to various dietary preferences, making this restaurant a go-to destination for all food enthusiasts.",
+        review_body:
+          "The diverse menu caters to various dietary preferences, making this restaurant a go-to destination for all food enthusiasts.",
         rating: 4,
         customerId: 15,
         restaurantId: 3,
       },
       {
         review_title: "COZY",
-        review_body: "The cozy setting and delectable menu make this spot ideal for both intimate dinners and celebratory gatherings.",
+        review_body:
+          "The cozy setting and delectable menu make this spot ideal for both intimate dinners and celebratory gatherings.",
         rating: 3,
         customerId: 16,
         restaurantId: 4,
       },
       {
         review_title: "Elegance on a Plate",
-        review_body: "From the first-class service to the inspired menu choices, every aspect of this restaurant reflects a commitment to excellence.",
+        review_body:
+          "From the first-class service to the inspired menu choices, every aspect of this restaurant reflects a commitment to excellence.",
         rating: 5,
         customerId: 16,
         restaurantId: 5,
       },
       {
         review_title: "Beyond Expectations",
-        review_body: "The cozy setting and delectable menu make this spot ideal for both intimate dinners and celebratory gatherings.",
+        review_body:
+          "The cozy setting and delectable menu make this spot ideal for both intimate dinners and celebratory gatherings.",
         rating: 5,
         customerId: 14,
         restaurantId: 6,
@@ -563,7 +562,6 @@ const Reservation = async () => {
   await prisma.reservation.createMany({
     data: [
       {
-
         createdAt: new Date("2023-12-05").toISOString(),
         notification: false,
         updatedAt: new Date("2023-12-05").toISOString(),
@@ -576,7 +574,6 @@ const Reservation = async () => {
         guest_number: 2,
       },
       {
-
         createdAt: new Date("2023-12-05").toISOString(),
         notification: false,
         updatedAt: new Date("2023-12-05").toISOString(),
@@ -589,7 +586,6 @@ const Reservation = async () => {
         guest_number: 4,
       },
       {
-
         createdAt: new Date("2023-12-05").toISOString(),
         notification: false,
         updatedAt: new Date("2023-12-05").toISOString(),
@@ -602,7 +598,6 @@ const Reservation = async () => {
         guest_number: 1,
       },
       {
-
         createdAt: new Date("2023-12-05").toISOString(),
         notification: false,
         updatedAt: new Date("2023-12-05").toISOString(),
@@ -615,7 +610,6 @@ const Reservation = async () => {
         guest_number: 3,
       },
       {
-
         createdAt: new Date("2023-12-05").toISOString(),
         notification: false,
         updatedAt: new Date("2023-12-05").toISOString(),
@@ -628,7 +622,6 @@ const Reservation = async () => {
         guest_number: 2,
       },
       {
-
         createdAt: new Date("2023-12-05").toISOString(),
         notification: false,
         updatedAt: new Date("2023-12-05").toISOString(),
@@ -641,7 +634,6 @@ const Reservation = async () => {
         guest_number: 5,
       },
       {
-
         createdAt: new Date("2023-12-05").toISOString(),
         notification: false,
         updatedAt: new Date("2023-12-05").toISOString(),
@@ -654,7 +646,6 @@ const Reservation = async () => {
         guest_number: 4,
       },
       {
-
         createdAt: new Date("2023-12-05").toISOString(),
         notification: false,
         updatedAt: new Date("2023-12-05").toISOString(),
@@ -676,18 +667,14 @@ const Reservation = async () => {
         canReview: "Yes",
         customerId: 15,
         restaurantId: 3,
-        guest_number: 3
+        guest_number: 3,
       },
-    ]
-  })
+    ],
+  });
+};
 
-}
-
-
-
-createOwner();
+// createOwner();
 // createRestaurants();
 // createCustomers();
 // newReview();
 // Reservation()
-
