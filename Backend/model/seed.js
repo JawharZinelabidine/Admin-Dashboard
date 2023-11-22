@@ -685,9 +685,9 @@ const Reservation = async () => {
 
 
 
-// createOwner();
+createOwner();
 // createRestaurants();
 // createCustomers();
 // newReview();
-Reservation()
+// Reservation()
 

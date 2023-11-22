@@ -99,7 +99,7 @@ module.exports = {
                         id: id
                     }
                 })
-                const title = `${name} has send you a message`;
+                const title = `${name} has sent you a message`;
                 const body = `${msg.substring(0, 20)}`;
                 const route = 'Conversations'
                 const messageId = messageSent.id
