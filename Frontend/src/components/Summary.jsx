@@ -4,7 +4,8 @@ const Summary = ({
   numberOfRestaurants,
   numberOfReviews,
   totalReservations,
-  numberOfBannedRestaurants
+  numberOfBannedRestaurants,
+  premiumCount
 }) => {
   return (
     <div className="grid grid-cols-1 md:grid-cols-5 gap-4 bg-gray-800 rounded-md p-4 shadow-md">
@@ -29,7 +30,7 @@ const Summary = ({
     
       <div className="bg-gray-700 hover:bg-gray-600 rounded-md p-4 text-center">
         <h3 className="text-lg font-semibold mb-2 text-white">Premium Restaurants</h3>
-        <p className="text-xl text-white">{5}</p>
+        <p className="text-xl text-white">{premiumCount}</p>
       </div>
 
       <div className="bg-gray-700 hover:bg-gray-600 rounded-md p-4 text-center">

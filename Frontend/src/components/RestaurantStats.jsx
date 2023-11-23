@@ -39,7 +39,7 @@ const RestaurantStats = ({
         <div className="h-64">
           <ResponsivePie
             data={pieData}
-            colors={["#FF6B6B", "#81E6D9"]}
+            colors={["#F48FB1", "#90CDF4"]}
             margin={{ top: 40, right: 80, bottom: 80, left: 80 }}
             innerRadius={0.5}
             padAngle={0.7}
@@ -77,38 +77,45 @@ const RestaurantStats = ({
         <h2 className="text-lg font-semibold mb-4 text-white">
           Reservation Status
         </h2>
-        <div className="h-64">
-          <ResponsiveBar
-            data={barData}
-            keys={["Approved", "Declined"]}
-            colors={["#F48FB1", "#90CDF4"]}
-            margin={{ top: 50, right: 130, bottom: 50, left: 60 }}
-            axisBottom={{
-              tickSize: 5,
-              tickPadding: 5,
-              tickRotation: 0,
-              legend: "Reservations",
-              legendPosition: "middle",
-              legendOffset: 36,
-            }}
-            axisLeft={{
-              tickSize: 5,
-              tickPadding: 5,
-              tickRotation: 0,
-              legend: "Counts",
-              legendPosition: "middle",
-              legendOffset: -40,
-              tickTextColor: "#FFFFFF",
-            }}
-            enableGridY={false}
-            labelTextColor={{ from: "color", modifiers: [["darker", 1.6]] }}
-            tooltip={({ id, value }) => (
-              <strong className="text-white">
-                {id}: {value}
-              </strong>
-            )}
-          />
-        </div>
+        <div className="h-96 rounded-md bg-white p-4">
+  <ResponsiveBar
+    data={barData}
+    keys={["Approved", "Declined"]}
+    colors={["#F48FB1", "#90CDF4"]}
+    margin={{ top: 30, right: 30, bottom: 50, left: 60 }}
+    padding={0.3}
+    layout="vertical"
+    enableLabel={false}
+    axisLeft={{
+      tickSize: 5,
+      tickPadding: 5,
+      tickRotation: 0,
+      legend: "Reservations",
+      legendPosition: "middle",
+      legendOffset: -50,
+      tickTextColor: "#333",
+    }}
+    axisBottom={{
+      tickSize: 5,
+      tickPadding: 5,
+      tickRotation: 0,
+      legend: "Counts",
+      legendPosition: "middle",
+      legendOffset: 36,
+      tickTextColor: "#333",
+    }}
+    enableGridX={false}
+    enableGridY={false}
+    labelTextColor={{ from: "color", modifiers: [["darker", 1.6]] }}
+    tooltip={({ id, value }) => (
+      <strong className="text-black">
+        {id}: {value}
+      </strong>
+    )}
+  />
+</div>
+
+
         <p className="text-lg mt-4 text-white">
           Approved: {totalApprovedReservations} | Declined:{" "}
           {totalDeclinedReservations}

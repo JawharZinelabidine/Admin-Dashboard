@@ -44,15 +44,14 @@ const Dashboard = () => {
                   dashboardData.totalApprovedReservations +
                   dashboardData.totalDeclinedReservations
                 }
+                premiumCount={dashboardData.premiumCount}
               />
             </div>
 
             <div className="md:col-span-2">
               <RestaurantStats
-                totalPremiumReservations={
-                  dashboardData.totalPremiumReservations
-                }
-                totalBasicReservations={dashboardData.totalBasicReservations}
+                totalPremiumReservations={dashboardData.premiumCount}
+                totalBasicReservations={dashboardData.basicCount}
                 totalApprovedReservations={
                   dashboardData.totalApprovedReservations
                 }
@@ -71,7 +70,7 @@ const Dashboard = () => {
             />
 
             <MonthlyGrowth monthlyGrowth={dashboardData.monthlyGrowth} />
-            <PaymentHistory  />
+            <PaymentHistory />
           </div>
         )}
       </div>

@@ -38,13 +38,11 @@ const calculateStats = async (req, res) => {
             },
           },
         });
-        console.log(restaurantsThisMonth)
         
         const formattedData = {
           month: targetDate.toLocaleString('en-US', { month: 'short' }),
           restaurantsAdded: restaurantsThisMonth.length,
         };
-    console.log(restaurantsThisMonth.length)
         
         monthlyGrowthData.unshift(formattedData);
       }
@@ -86,8 +84,6 @@ const calculateStats = async (req, res) => {
     const calculateReviewStats = () => {
         let totalReviews = 0;
         let totalRating = 0;
-        let premiumCount = 0;
-        let basicCount = 0;
         let approvedReservations = 0;
         let declinedReservations = 0;
       
@@ -97,14 +93,7 @@ const calculateStats = async (req, res) => {
             totalReviews++;
           }
         });
-      
         restaurantReservations.forEach((reservation) => {
-          if (reservation.restaurant && reservation.restaurant.accountType === 'PREMIUM') {
-            premiumCount++;
-          } else if (reservation.restaurant && reservation.restaurant.accountType === 'BASIC') {
-            basicCount++;
-          }
-      
           if (reservation.status === 'Approved') {
             approvedReservations++;
           } else if (reservation.status === 'Declined') {
@@ -113,14 +102,9 @@ const calculateStats = async (req, res) => {
         });
       
         const averageReviewRating = totalReviews > 0 ? totalRating / totalReviews : 0;
-        const totalPremiumReservations = premiumCount;
-        const totalBasicReservations = basicCount;
         const totalApprovedReservations = approvedReservations;
         const totalDeclinedReservations = declinedReservations;
-      
-        const premiumPercentage = totalPremiumReservations + totalBasicReservations > 0 ?
-          (totalPremiumReservations / (totalPremiumReservations + totalBasicReservations)) * 100 :
-          0;
+  
       
         const approvedToDeclinedRatio = totalDeclinedReservations > 0 ?
           totalApprovedReservations / totalDeclinedReservations :
@@ -129,10 +113,7 @@ const calculateStats = async (req, res) => {
         return {
           totalReviews,
           averageReviewRating: averageReviewRating.toFixed(2),
-          premiumPercentage: premiumPercentage.toFixed(2),
           approvedToDeclinedRatio: approvedToDeclinedRatio.toFixed(2),
-          totalPremiumReservations,
-          totalBasicReservations,
           totalApprovedReservations,
           totalDeclinedReservations,
         };
@@ -159,12 +140,35 @@ const calculateStats = async (req, res) => {
         }
       };
       
-
+      const calculateRestaurantStats = async () => {
+        try {
+          const basicCount = await prisma.restaurant.count({
+            where: {
+              accountType: 'BASIC',
+            },
+          });
+      
+          const premiumCount = await prisma.restaurant.count({
+            where: {
+              accountType: 'PREMIUM',
+            },
+          });
+      
+          return {
+            basicCount,
+            premiumCount,
+          };
+        } catch (error) {
+          console.error('Error calculating restaurant stats:', error);
+          throw error;
+        }
+      };
     const monthlyGrowth = await calculateMonthlyGrowth();
     const activeRestaurants = calculateActiveAndBannedCounts();
     const totalCustomersWithReservations = calculateTotalCustomersFromReservations();
     const reviewStats = calculateReviewStats();
     const premiumPayments = await calculatePaymentHistory();
+    const { basicCount, premiumCount } = await calculateRestaurantStats();
 
     res.status(200).json({
       monthlyGrowth,
@@ -173,6 +177,8 @@ const calculateStats = async (req, res) => {
       ...reviewStats,
       userCount,
       restaurantCount,
+      basicCount,
+      premiumCount,
       premiumPayments
     });
   } catch (error) {

@@ -48,7 +48,7 @@ function History() {
             <div className="font-semibold border-b border-gray-100 pb-4">
               <span>Restaurants History</span>
             </div>
-            <div className="overflow-x-auto">
+            <div className="overflow-y-auto max-h-96 scrollbar-thin scrollbar-thumb-gray-700 scrollbar-track-gray-900">
               <table className="w-full table-auto">
                 <thead>
                   <tr className="border-b border-gray-400">
@@ -105,7 +105,7 @@ function History() {
                     tickSize: 5,
                     tickPadding: 5,
                     tickRotation: 0,
-                    legend: "country",
+                    legend: "Month",
                     legendPosition: "middle",
                     legendOffset: 32,
                     truncateTickAt: 0,
@@ -115,6 +115,7 @@ function History() {
                     tickPadding: 5,
                     tickRotation: 0,
                     legendPosition: "middle",
+                    legend: "Status",
                     legendOffset: -40,
                     truncateTickAt: 0,
                   }}

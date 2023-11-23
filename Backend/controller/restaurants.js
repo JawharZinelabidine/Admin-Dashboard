@@ -1,7 +1,7 @@
 
 const { restaurant, reservation, user } = require("../model/index");
 const uploadToCloudinary = require("./helpers/cloudinary");
-
+const moment = require('moment-timezone');
 
 module.exports = {
   getRestaurants: async (req, res) => {
@@ -520,19 +520,14 @@ module.exports = {
               email: true,
             },
           },
-          payment: {
-            select: {
-              createdAt: true, 
-            },
-          },
         },
       });
   
-      const formattedData = premiumRestaurants.map(({ name, owner, payment }) => ({
+      const formattedData = premiumRestaurants.map(({ name, owner,createdAt }) => ({
         restaurantName: name,
         ownerName: owner ? owner.fullname : null,
         ownerEmail: owner ? owner.email : null,
-        paymentCreatedAt: payment ? payment.createdAt : null, 
+        paymentCreatedAt: moment(createdAt).format('DD/MM/YYYY'), 
       }));
   
       res.status(200).json(formattedData);

@@ -27,7 +27,7 @@ const CustomerStats = ({ userCount, activeCustomers }) => {
           padAngle={0.7}
           cornerRadius={3}
           borderWidth={1}
-          colors={["#FFA8E2", "#97E3D5"]}
+          colors={["#F48FB1", "#90CDF4"]}
           borderColor={{ from: "color", modifiers: [["darker", 0.2]] }}
           enableRadialLabels={false}
           enableSliceLabels={true}
