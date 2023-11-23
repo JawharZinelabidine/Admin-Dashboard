@@ -25,12 +25,15 @@ const createRestaurants = async () => {
         City: "Tunis",
         phone_number: 70938537,
         reservation_quota: 20,
-        latitude: 36.8677,
-        longtitude: 10.2887,
+        latitude: 36.86770892375976,
+        longtitude: 10.288846834903527,
+        rating: 3,
+        rating_count: 1,
         opening_time: new Date("2019-01-16 12:00:00"),
         closing_time: new Date("2019-01-16 22:00:00"),
         status: "Approved",
         ownerId: 1,
+        accountType: "BASIC",
       },
       {
         name: "La Villa",
@@ -51,12 +54,15 @@ const createRestaurants = async () => {
         City: "Sousse",
         phone_number: 73202000,
         reservation_quota: 20,
-        latitude: 35.8425,
-        longtitude: 10.6273,
+        latitude: 35.84254852283554,
+        longtitude: 10.627275753373489,
+        rating: 4,
+        rating_count: 1,
         opening_time: new Date("2019-01-16 12:00:00"),
         closing_time: new Date("2019-01-16 23:00:00"),
         status: "Approved",
         ownerId: 2,
+        accountType: "PREMIUM",
       },
       {
         name: "Dar El Jeld",
@@ -78,12 +84,15 @@ const createRestaurants = async () => {
         City: "Tunis",
         phone_number: 71560916,
         reservation_quota: 20,
-        latitude: 36.799,
-        longtitude: 10.1688,
+        latitude: 36.7989928024835,
+        longtitude: 10.168823327927209,
+        rating: 4,
+        rating_count: 1,
         opening_time: new Date("2019-01-16 12:00:00"),
         closing_time: new Date("2019-01-16 23:00:00"),
         status: "Approved",
         ownerId: 3,
+        accountType: "PREMIUM",
       },
       {
         name: "L'Astragale",
@@ -104,12 +113,15 @@ const createRestaurants = async () => {
         City: "Tunis",
         phone_number: 71785080,
         reservation_quota: 20,
-        latitude: 364929.748,
-        longtitude: 101044.616,
+        latitude: 36.82515581736141,
+        longtitude: 10.179034885238318,
+        rating: 3,
+        rating_count: 1,
         opening_time: new Date("2019-01-16 08:00:00"),
         closing_time: new Date("2019-01-16 01:00:00"),
         status: "Approved",
         ownerId: 4,
+        accountType: "BASIC",
       },
       {
         name: "Dar Belhadj",
@@ -130,12 +142,15 @@ const createRestaurants = async () => {
         City: "Tunis",
         phone_number: 71200890,
         reservation_quota: 20,
-        latitude: 36.8677,
-        longtitude: 10.2887,
+        latitude: 36.79815678252651,
+        longtitude: 10.17148154717776,
+        rating: 5,
+        rating_count: 1,
         opening_time: new Date("2019-01-16 09:00:00"),
         closing_time: new Date("2019-01-16 01:00:00"),
         status: "Approved",
         ownerId: 5,
+        accountType: "PREMIUM",
       },
       {
         name: "La Villa Bleue",
@@ -156,12 +171,15 @@ const createRestaurants = async () => {
         City: "Tunis",
         phone_number: 71742000,
         reservation_quota: 20,
-        latitude: 365213.8,
-        longtitude: 102107.5,
+        latitude: 36.870065438846574,
+        longtitude: 10.352298422611625,
+        rating: 5,
+        rating_count: 1,
         opening_time: new Date("2019-01-16 12:00:00"),
         closing_time: new Date("2019-01-16 01:00:00"),
         status: "Approved",
         ownerId: 6,
+        accountType: "PREMIUM",
       },
       {
         name: "Fondouk El Attarine",
@@ -182,12 +200,13 @@ const createRestaurants = async () => {
         City: "Tunis",
         phone_number: 71322244,
         reservation_quota: 20,
-        latitude: 36.8677,
-        longtitude: 10.2887,
+        latitude: 36.7980763263958,
+        longtitude: 10.171570283076912,
         opening_time: new Date("2019-01-16 12:00:00"),
         closing_time: new Date("2019-01-16 01:00:00"),
         status: "Approved",
         ownerId: 7,
+        accountType: "BASIC",
       },
       {
         name: "El Fondouk",
@@ -209,12 +228,13 @@ const createRestaurants = async () => {
         City: "Djerba",
         phone_number: 28988276,
         reservation_quota: 20,
-        latitude: 33.8777,
-        longtitude: 10.8591,
+        latitude: 33.87772877126408,
+        longtitude: 10.859115282284892,
         opening_time: new Date("2019-01-16 12:00:00"),
         closing_time: new Date("2019-01-16 23:00:00"),
         status: "Approved",
         ownerId: 8,
+        accountType: "BASIC",
       },
       {
         name: "Farmers",
@@ -234,12 +254,13 @@ const createRestaurants = async () => {
         City: "Sousse",
         phone_number: 20155733,
         reservation_quota: 20,
-        latitude: 35.8515,
-        longtitude: 10.6153,
+        latitude: 35.84270435311194,
+        longtitude: 10.624899765004185,
         opening_time: new Date("2019-01-16 20:00:00"),
         closing_time: new Date("2019-01-16 00:00:00"),
         status: "Approved",
         ownerId: 9,
+        accountType: "BASIC",
       },
       {
         name: "L'AROMATE",
@@ -259,12 +280,13 @@ const createRestaurants = async () => {
         City: "Sousse",
         phone_number: 23732731,
         reservation_quota: 20,
-        latitude: 35.8399,
-        longtitude: 10.6033,
+        latitude: 35.83983463018077,
+        longtitude: 10.603282264432702,
         opening_time: new Date("2019-01-16 21:00:00"),
         closing_time: new Date("2019-01-16 00:00:00"),
         status: "Approved",
         ownerId: 10,
+        accountType: "PREMIUM",
       },
       {
         name: "Le Pirate",
@@ -283,12 +305,13 @@ const createRestaurants = async () => {
         City: "Monastir",
         phone_number: 73468126,
         reservation_quota: 20,
-        latitude: 35.7602,
-        longtitude: 10.8386,
+        latitude: 35.76014073133161,
+        longtitude: 10.838634611246771,
         opening_time: new Date("2019-01-16 21:00:00"),
         closing_time: new Date("2019-01-16 00:00:00"),
         status: "Approved",
         ownerId: 11,
+        accountType: "PREMIUM",
       },
       {
         name: "Sushi&Co",
@@ -307,12 +330,14 @@ const createRestaurants = async () => {
         City: "Nabel",
         phone_number: 29250150,
         reservation_quota: 20,
-        latitude: 362721.82,
-        longtitude: 104415.47,
+        latitude: 36.4374347795606,
+        longtitude: 10.691230121045788,
+
         opening_time: new Date("2019-01-16 08:00:00"),
         closing_time: new Date("2019-01-16 01:00:00"),
         status: "Approved",
         ownerId: 12,
+        accountType: "BASIC",
       },
     ],
   });
@@ -350,7 +375,7 @@ const createOwner = async () => {
     data: [
       {
         fullname: "Hamadi Labyedh",
-        email: "Labyedh@gmail.com",
+        email: "Labyath@gmail.com",
         password: encryptedPassword1,
         role: "OWNER",
         isVerified: true,
@@ -391,8 +416,8 @@ const createOwner = async () => {
         isVerified: true,
       },
       {
-        fullname: "Adam Didoo",
-        email: "didoo@gmail.com",
+        fullname: "Ashley  Alexander",
+        email: "Ash@gmail.com",
         password: encryptedPassword7,
         role: "OWNER",
         isVerified: true,
@@ -444,5 +469,212 @@ const createOwner = async () => {
   });
 };
 
+const createCustomers = async () => {
+  const password1 = "1234";
+  const password2 = "1234789";
+  const password3 = "123489";
+
+  const encryptedPassword1 = await bcrypt.hash(password1, 10);
+  const encryptedPassword2 = await bcrypt.hash(password2, 10);
+  const encryptedPassword3 = await bcrypt.hash(password3, 10);
+
+  await prisma.user.createMany({
+    data: [
+      {
+        fullname: "Hichem Sboui",
+        email: "hichem@gmail.com",
+        password: encryptedPassword1,
+        role: "CUSTOMER",
+        isVerified: true,
+      },
+      {
+        fullname: "Abderrahmen Louhichi",
+        email: "abderrahmen@gmail.com",
+        password: encryptedPassword2,
+        role: "CUSTOMER",
+        isVerified: true,
+      },
+      {
+        fullname: "Haithem Chaouch",
+        email: "haithem@gmail.com",
+        password: encryptedPassword3,
+        role: "CUSTOMER",
+        isVerified: true,
+      },
+    ],
+  });
+};
+
+const newReview = async () => {
+  await prisma.review.createMany({
+    data: [
+      {
+        review_title: "love it",
+        review_body: "the food was amazing ",
+        rating: 3,
+        customerId: 14,
+        restaurantId: 1,
+      },
+      {
+        review_title: "BEST PLACE",
+        review_body:
+          "The attention to detail in both presentation and taste makes every visit to this restaurant a memorable experience.",
+        rating: 4,
+        customerId: 15,
+        restaurantId: 2,
+      },
+      {
+        review_title: "Happy",
+        review_body:
+          "The diverse menu caters to various dietary preferences, making this restaurant a go-to destination for all food enthusiasts.",
+        rating: 4,
+        customerId: 15,
+        restaurantId: 3,
+      },
+      {
+        review_title: "COZY",
+        review_body:
+          "The cozy setting and delectable menu make this spot ideal for both intimate dinners and celebratory gatherings.",
+        rating: 3,
+        customerId: 16,
+        restaurantId: 4,
+      },
+      {
+        review_title: "Elegance on a Plate",
+        review_body:
+          "From the first-class service to the inspired menu choices, every aspect of this restaurant reflects a commitment to excellence.",
+        rating: 5,
+        customerId: 16,
+        restaurantId: 5,
+      },
+      {
+        review_title: "Beyond Expectations",
+        review_body:
+          "The cozy setting and delectable menu make this spot ideal for both intimate dinners and celebratory gatherings.",
+        rating: 5,
+        customerId: 14,
+        restaurantId: 6,
+      },
+    ],
+  });
+};
+const Reservation = async () => {
+  await prisma.reservation.createMany({
+    data: [
+      {
+        createdAt: new Date("2023-12-05").toISOString(),
+        notification: false,
+        updatedAt: new Date("2023-12-05").toISOString(),
+        status: "Approved",
+        date: new Date("2023-12-05").toISOString(),
+        time: new Date("2023-12-05T18:30:00").toISOString(),
+        canReview: "Yes",
+        customerId: 3,
+        restaurantId: 1,
+        guest_number: 2,
+      },
+      {
+        createdAt: new Date("2023-12-05").toISOString(),
+        notification: false,
+        updatedAt: new Date("2023-12-05").toISOString(),
+        status: "Approved",
+        date: new Date("2023-12-05").toISOString(),
+        time: new Date("2023-12-05T18:30:00").toISOString(),
+        canReview: "Yes",
+        customerId: 15,
+        restaurantId: 1,
+        guest_number: 4,
+      },
+      {
+        createdAt: new Date("2023-12-05").toISOString(),
+        notification: false,
+        updatedAt: new Date("2023-12-05").toISOString(),
+        status: "Approved",
+        date: new Date("2023-12-05").toISOString(),
+        time: new Date("2023-12-05T18:30:00").toISOString(),
+        canReview: "Yes",
+        customerId: 14,
+        restaurantId: 2,
+        guest_number: 1,
+      },
+      {
+        createdAt: new Date("2023-12-05").toISOString(),
+        notification: false,
+        updatedAt: new Date("2023-12-05").toISOString(),
+        status: "Approved",
+        date: new Date("2023-12-05").toISOString(),
+        time: new Date("2023-12-05T18:30:00").toISOString(),
+        canReview: "Yes",
+        customerId: 16,
+        restaurantId: 3,
+        guest_number: 3,
+      },
+      {
+        createdAt: new Date("2023-12-05").toISOString(),
+        notification: false,
+        updatedAt: new Date("2023-12-05").toISOString(),
+        status: "Approved",
+        date: new Date("2023-12-05").toISOString(),
+        time: new Date("2023-12-05T18:30:00").toISOString(),
+        canReview: "Yes",
+        customerId: 14,
+        restaurantId: 1,
+        guest_number: 2,
+      },
+      {
+        createdAt: new Date("2023-12-05").toISOString(),
+        notification: false,
+        updatedAt: new Date("2023-12-05").toISOString(),
+        status: "Approved",
+        date: new Date("2023-12-05").toISOString(),
+        time: new Date("2023-12-05T18:30:00").toISOString(),
+        canReview: "Yes",
+        customerId: 15,
+        restaurantId: 1,
+        guest_number: 5,
+      },
+      {
+        createdAt: new Date("2023-12-05").toISOString(),
+        notification: false,
+        updatedAt: new Date("2023-12-05").toISOString(),
+        status: "Declined",
+        date: new Date("2023-12-05").toISOString(),
+        time: new Date("2023-12-05T18:30:00").toISOString(),
+        canReview: "Yes",
+        customerId: 14,
+        restaurantId: 1,
+        guest_number: 4,
+      },
+      {
+        createdAt: new Date("2023-12-05").toISOString(),
+        notification: false,
+        updatedAt: new Date("2023-12-05").toISOString(),
+        status: "Declined",
+        date: new Date("2023-12-05").toISOString(),
+        time: new Date("2023-12-05T18:30:00").toISOString(),
+        canReview: "Yes",
+        customerId: 16,
+        restaurantId: 2,
+        guest_number: 4,
+      },
+      {
+        createdAt: new Date("2023-12-05").toISOString(),
+        notification: false,
+        updatedAt: new Date("2023-12-05").toISOString(),
+        status: "Declined",
+        date: new Date("2023-12-05").toISOString(),
+        time: new Date("2023-12-05T18:30:00").toISOString(),
+        canReview: "Yes",
+        customerId: 15,
+        restaurantId: 3,
+        guest_number: 3,
+      },
+    ],
+  });
+};
+
 // createOwner();
-createRestaurants();
+// createRestaurants();
+// createCustomers();
+// newReview();
+// Reservation()

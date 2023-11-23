@@ -1,21 +1,46 @@
+
 const { restaurant, reservation, user } = require("../model/index");
 const uploadToCloudinary = require("./helpers/cloudinary");
+
 
 module.exports = {
   getRestaurants: async (req, res) => {
     try {
+      const { sortBy } = req.query;
+      let sortOption;
+      switch (sortBy) {
+        case "date_asc":
+          sortOption = { createdAt: 'asc' };
+          break;
+        case "date_desc":
+          sortOption = { createdAt: 'desc' };
+          break;
+        case "rating_asc":
+          sortOption = { rating: 'asc' };
+          break;
+        case "rating_desc":
+          sortOption = { rating: 'desc' };
+          break;
+        default:
+          sortOption = { createdAt: 'asc' };
+      }
+
       const restaurants = await restaurant.findMany({
         where: {
           status: "Approved",
           isBanned: false,
         },
+        orderBy: sortOption,
       });
+
       res.status(200).json(restaurants);
+
     } catch (error) {
       console.error(error);
       res.status(500).send(error);
     }
   },
+
   getOne: async (req, res) => {
     const id = req.userId;
 
@@ -71,7 +96,7 @@ module.exports = {
         data: {
           name,
           description,
-          phone_number: parseInt(phoneNumber),
+          phone_number: BigInt(phoneNumber),
           category: categories,
           City,
           opening_time: openingTime,
@@ -97,13 +122,13 @@ module.exports = {
         });
       } catch (error) {
         console.log("Failed to change admin notification status:", error);
-        res.status(500).send("Failed to change admin notification status");
+        return res.status(500).send("Failed to change admin notification status");
       }
 
-      res.status(201).json(createdRestaurant);
+      return res.status(201).json(createdRestaurant);
     } catch (error) {
       console.error(error);
-      res.status(500).json({ error: "Internal Server Error" });
+      return res.status(500).json({ error: "Internal Server Error" });
     }
   },
 
@@ -454,12 +479,85 @@ module.exports = {
         },
       });
 
-      return res
-        .status(200)
-        .json({ message: "Restaurant unbanned successfully" });
+      return res.status(200).json({ message: 'Restaurant unbanned successfully' });
     } catch (error) {
-      console.error("Error unblocking restaurant:", error);
-      return res.status(500).json({ message: "Internal server error" });
+      console.error('Error unblocking restaurant:', error);
+      return res.status(500).json({ message: 'Internal server error' });
     }
   },
+  getReviewByRestaurantID: async (req, res) => {
+
+    const restaurantId = req.params.id
+
+    try {
+      const restaurantData = await restaurant.findUnique({
+        where: {
+          id: +restaurantId,
+        },
+        include: {
+          Review: true,
+        },
+      });
+      const reviews = restaurantData.Review;
+      if (reviews.length === 0) {
+        return res.status(200).json({ message: 'No reviews found for this restaurant' });
+      }
+      res.status(200).json({ reviews });
+    } catch (error) {
+      console.error('Error fetching reviews:', error);
+      res.status(500).json({ error: 'Internal Server Error', details: error.message });
+    }
+  },
+  calculateReservationRate: async (req, res) => {
+    try {
+
+      const restaurantReservations = await reservation.findMany({
+        include: {
+          restaurant: true,
+        },
+      });
+
+      const restaurants = await restaurant.findMany({
+        where: {
+          status: "Approved",
+          isBanned: false,
+        },
+      });
+
+      const premiumReservations = restaurantReservations.filter(
+        (reservation) => reservation.restaurant && reservation.restaurant.accountType === 'PREMIUM'
+      );
+      const basicReservations = restaurantReservations.filter(
+        (reservation) => reservation.restaurant && reservation.restaurant.accountType === 'BASIC'
+      );
+
+      const approvedPremiumReservations = premiumReservations.filter(
+        (reservation) => reservation.status === 'Approved'
+      );
+      const approvedBasicReservations = basicReservations.filter(
+        (reservation) => reservation.status === 'Approved'
+      );
+      const premiumReservationRate =
+        approvedPremiumReservations.length === 0
+          ? 0
+          : (approvedPremiumReservations.length / premiumReservations.length) * 100;
+
+      const basicReservationRate =
+        approvedBasicReservations.length === 0
+          ? 0
+          : (approvedBasicReservations.length / basicReservations.length) * 100;
+
+
+      res.status(200).json({
+        premiumReservationRate: premiumReservationRate.toFixed(2),
+        basicReservationRate: basicReservationRate.toFixed(2),
+        totalRestaurantNumber: restaurants.length ?? 0,
+      });
+    } catch (error) {
+      console.error('Error calculating reservation rate:', error);
+      res.status(500).json({ error: 'Internal server error' });
+    }
+  }
+
+
 };
