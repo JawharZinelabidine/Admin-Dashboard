@@ -1,98 +1,81 @@
-import Navbar from "./Navbar";
+import React, { useState, useEffect } from "react";
+import Summary from "./Summary.jsx";
+import RestaurantStats from "./RestaurantStats.jsx";
+import CustomerStats from "./CustomerStats.jsx";
+import ReviewStats from "./ReviewStats.jsx";
+import MonthlyGrowth from "./MonthlyGrowth.jsx";
+import axios from "../services/axiosInterceptor.js";
+import PaymentHistory from "./PaymentHistory.jsx";
+import Navbar from "./Navbar.jsx";
 
-import React, { useEffect } from "react";
-
-import axios from "../services/axiosInterceptor";
-
-import { Link } from "react-router-dom";
-import StatisticsChart from "./Statistics";
-
-function Dashboard() {
-  const fetchRestaurants = async () => {
-    try {
-      const { data } = await axios.get(
-        "http://localhost:3000/api/admin/restaurants"
-      );
-    } catch (error) {
-      console.log(error);
-      if (
-        (error && error.response.status === 403) ||
-        (error && error.response.status === 401)
-      ) {
-        localStorage.clear();
-        navigate("/login");
-      }
-    }
-  };
+const Dashboard = () => {
+  const [dashboardData, setDashboardData] = useState(null);
 
   useEffect(() => {
-    fetchRestaurants();
-  });
+    const fetchDashboardData = async () => {
+      try {
+        const response = await axios.get(`http://localhost:3000/api/stats`);
+        if (response.status === 200) setDashboardData(response.data);
+      } catch (error) {
+        console.error("Error fetching reservation rate:", error);
+      }
+    };
+
+    fetchDashboardData();
+  }, []);
 
   return (
     <>
       <Navbar />
 
-      <main className="p-6  space-y-28">
-        <div>
-          <StatisticsChart />
-        </div>
+      <div className="container mx-auto py-8">
+        <h1 className="text-2xl font-bold mb-4">Admin Dashboard</h1>
 
-        <section className="grid md:grid-cols-2 xl:grid-cols-4 gap-6">
-          <div className="flex items-center p-8 bg-gray-800 shadow-lg rounded-lg">
-            <div className="inline-flex flex-shrink-0 items-center justify-center h-16 w-16 text-purple-600 bg-purple-100 rounded-full mr-6">
-              <svg
-                aria-hidden="true"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-                className="h-6 w-6"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M12 2l1.146 1.146a2 2 0 002.708 0L12 2zM3 10a9 9 0 0 1 9 9 1 1 0 0 0 2 0 9 9 0 0 1 9-9 1 1 0 0 0 2 0 11 11 0 0 0-15-10.294V3a1 1 0 1 0-2 0v2.706A11 11 0 0 0 3 10z"
-                />
-              </svg>
+        {dashboardData && (
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="md:col-span-2">
+              <Summary
+                numberOfReviews={dashboardData.totalReviews}
+                numberOfRestaurants={dashboardData.restaurantCount}
+                numberOfBannedRestaurants={
+                  dashboardData.activeRestaurants.bannedCount
+                }
+                totalReservations={
+                  dashboardData.totalApprovedReservations +
+                  dashboardData.totalDeclinedReservations
+                }
+                premiumCount={dashboardData.premiumCount}
+              />
             </div>
 
-            <div>
-              <div>
-                <Link to="/RestaurantList" className="block text-gray-500">
-                  Restaurants
-                </Link>
-              </div>
+            <div className="md:col-span-2">
+              <RestaurantStats
+                totalPremiumReservations={dashboardData.premiumCount}
+                totalBasicReservations={dashboardData.basicCount}
+                totalApprovedReservations={
+                  dashboardData.totalApprovedReservations
+                }
+                totalDeclinedReservations={
+                  dashboardData.totalDeclinedReservations
+                }
+              />
             </div>
+            <CustomerStats
+              userCount={dashboardData.userCount}
+              activeCustomers={dashboardData.totalCustomersWithReservations}
+            />
+            <ReviewStats
+              totalReviews={dashboardData.totalReviews}
+              averageReviewRating={dashboardData.averageReviewRating}
+            />
+
+            <MonthlyGrowth monthlyGrowth={dashboardData.monthlyGrowth} />
+            <PaymentHistory />
           </div>
-          <div className="flex items-center p-8 bg-gray-800 shadow-lg rounded-lg">
-            <div className="inline-flex flex-shrink-0 items-center justify-center h-16 w-16 text-green-600 bg-green-100 rounded-full mr-6">
-              <svg
-                aria-hidden="true"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-                className="h-6 w-6"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"
-                />
-              </svg>
-            </div>
-
-            <div>
-              <Link to="/ban" className="block text-gray-500">
-                Ban List
-              </Link>
-            </div>
-          </div>
-        </section>
-      </main>
+        )}
+      </div>
     </>
   );
-}
+};
 
 export default Dashboard;

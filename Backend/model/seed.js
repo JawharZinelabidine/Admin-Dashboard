@@ -34,6 +34,7 @@ const createRestaurants = async () => {
         status: "Approved",
         ownerId: 1,
         accountType: "BASIC",
+        createdAt: new Date("2023-06-05").toISOString(),
       },
       {
         name: "La Villa",
@@ -63,6 +64,7 @@ const createRestaurants = async () => {
         status: "Approved",
         ownerId: 2,
         accountType: "PREMIUM",
+        createdAt: new Date("2023-07-05").toISOString(),
       },
       {
         name: "Dar El Jeld",
@@ -93,6 +95,7 @@ const createRestaurants = async () => {
         status: "Approved",
         ownerId: 3,
         accountType: "PREMIUM",
+        createdAt: new Date("2023-07-05").toISOString(),
       },
       {
         name: "L'Astragale",
@@ -122,6 +125,7 @@ const createRestaurants = async () => {
         status: "Approved",
         ownerId: 4,
         accountType: "BASIC",
+        createdAt: new Date("2023-07-05").toISOString(),
       },
       {
         name: "Dar Belhadj",
@@ -180,6 +184,7 @@ const createRestaurants = async () => {
         status: "Approved",
         ownerId: 6,
         accountType: "PREMIUM",
+        createdAt: new Date("2023-08-05").toISOString(),
       },
       {
         name: "Fondouk El Attarine",
@@ -207,6 +212,7 @@ const createRestaurants = async () => {
         status: "Approved",
         ownerId: 7,
         accountType: "BASIC",
+        createdAt: new Date("2023-08-05").toISOString(),
       },
       {
         name: "El Fondouk",
@@ -235,6 +241,7 @@ const createRestaurants = async () => {
         status: "Approved",
         ownerId: 8,
         accountType: "BASIC",
+        createdAt: new Date("2023-08-05").toISOString(),
       },
       {
         name: "Farmers",
@@ -261,6 +268,7 @@ const createRestaurants = async () => {
         status: "Approved",
         ownerId: 9,
         accountType: "BASIC",
+        createdAt: new Date("2023-09-05").toISOString(),
       },
       {
         name: "L'AROMATE",
@@ -287,6 +295,8 @@ const createRestaurants = async () => {
         status: "Approved",
         ownerId: 10,
         accountType: "PREMIUM",
+        createdAt: new Date("2023-09-05").toISOString(),
+
       },
       {
         name: "Le Pirate",
@@ -312,6 +322,9 @@ const createRestaurants = async () => {
         status: "Approved",
         ownerId: 11,
         accountType: "PREMIUM",
+        createdAt: new Date("2023-09-05").toISOString(),
+
+
       },
       {
         name: "Sushi&Co",
@@ -338,7 +351,365 @@ const createRestaurants = async () => {
         status: "Approved",
         ownerId: 12,
         accountType: "BASIC",
+        createdAt: new Date("2023-09-05").toISOString(),
+
+
       },
+      {
+        name: " Le Golfe",
+        category: ["French"],
+        description:
+          "Le gulf Mediterranean restaurant with sea view. A Marseille institution since 1955",
+        main_image:
+          "https://lh3.googleusercontent.com/p/AF1QipNt83eBN_jc3UwCvn_l6kqrcDSskvfr2wt3YhBE=s680-w680-h510",
+        menu_images: [
+          "https://www.kharjet.tn/wp-content/uploads/2019/04/menu-Golf-la-marsa-1.png",
+          "https://www.kharjet.tn/wp-content/uploads/2019/04/menu-Golf-la-marsa-2.png",
+          "https://www.kharjet.tn/wp-content/uploads/2019/04/menu-Golf-la-marsa-3.png"
+        ],
+        extra_images: [
+          "https://lh3.googleusercontent.com/p/AF1QipNt83eBN_jc3UwCvn_l6kqrcDSskvfr2wt3YhBE=s680-w680-h510",
+          "https://lh3.googleusercontent.com/p/AF1QipPtBXjZTxUIqmLeifeUU8Y_u8Y5J-mJOSuAAPUv=s680-w680-h510",
+          "https://www.kharjet.tn/wp-content/uploads/2019/04/Golf-la-marsa-2.jpg",
+          "https://scontent.ftun7-1.fna.fbcdn.net/v/t39.30808-6/387872640_18115299595325874_5130809332677735491_n.jpg?_nc_cat=111&ccb=1-7&_nc_sid=5f2048&_nc_ohc=ARmJr248I4oAX8gYVdz&_nc_ht=scontent.ftun7-1.fna&oh=00_AfCejhrswZ4mKkBIpqd2lwZDprUqJ4b96pI2pOX0tM1dxw&oe=65610D13"
+        ],
+        City: "Tunis",
+        phone_number: 71748219,
+        reservation_quota: 20,
+        latitude: 36.8908,
+        longtitude: 10.3238,
+        opening_time: new Date("2019-01-16 21:00:00"),
+        closing_time: new Date("2019-01-16 00:00:00"),
+        status: "Approved",
+        ownerId: 13,
+        accountType: "PREMIUM",
+        createdAt: new Date("2023-10-05").toISOString(),
+
+      },
+      {
+        name: "La Falaise",
+        category: ["Tunisian"],
+        description:
+          "It is a restaurant right next to the sea. From the terrace you have a breathtaking view and you can see the sunset. The food is delicious,",
+        main_image:
+          "https://thecliff.tn/wp-content/uploads/2021/06/3-TRP_7045-1-1024x622.jpg",
+        menu_images: [
+          "https://www.kharjet.tn/wp-content/uploads/2019/03/menu-the-cliff-2.png",
+        ],
+        extra_images: [
+          "https://thecliff.tn/wp-content/uploads/2021/06/3-TRP_7045-1-1024x622.jpg",
+          "https://thecliff.tn/wp-content/uploads/2021/06/2-TRP_6959-Edit.jpg",
+          "https://www.marhba.com/images/lifestyle2021/vuemertunis/cliff.jpg",
+        ],
+        City: "Tunis",
+        phone_number:53157471,
+        reservation_quota: 20,
+        latitude:36.8158,
+        longtitude:10.1270,
+        opening_time: new Date("2019-01-16 21:00:00"),
+        closing_time: new Date("2019-01-16 00:00:00"),
+        status: "Approved",
+        ownerId: 14,
+        accountType: "PREMIUM",
+        createdAt: new Date("2023-10-05").toISOString(),
+
+      },
+      {
+        name: "Restaurant Lemdina",
+        category: ["Tunisian"],
+        description:
+          " this restaurant offers a dining experience that seamlessly blends tradition with innovation.",
+        main_image:
+          "https://lh3.googleusercontent.com/p/AF1QipOIhykjWw-3DO7TyCeoxVKU1R76pI3OZDUDcZk9=s680-w680-h510",
+        menu_images: [
+          "https://www.onamangepourvous.tn/wp-content/uploads/2021/04/1-4.jpg",
+        ],
+        extra_images: [
+          "https://lh3.googleusercontent.com/p/AF1QipOIhykjWw-3DO7TyCeoxVKU1R76pI3OZDUDcZk9=s680-w680-h510",
+          "https://lh3.googleusercontent.com/p/AF1QipOlvWoKbwfuM-yLGb5Vr1I6fE9xC3PcZvdbAeyb=s680-w680-h510",
+         
+        ],
+        City: "Tunis",
+        phone_number:  55113333,
+        reservation_quota: 20,
+        latitude: 36.83528,
+        longtitude: 10.24056 ,
+        opening_time: new Date("2019-01-16 21:00:00"),
+        closing_time: new Date("2019-01-16 00:00:00"),
+        status: "Approved",
+        ownerId: 15,
+        accountType: "PREMIUM",
+        createdAt: new Date("2023-10-05").toISOString(),
+
+      },
+      {
+        name: "Go Sushi",
+        category: ["Japanese"],
+        description:
+          "GO! SUSHI IS A CATERING BUT ALSO A JAPANESE RESTAURANT. YOU CAN TASTE OUR SUSHIS BOTH TRADITIONAL AND CREATIVE.",
+        main_image:
+          "https://lh3.googleusercontent.com/p/AF1QipOqeM3AYLXLT6WbuoYsHJMjIEeShoJ7POrrI4NF=s680-w680-h510",
+        menu_images: [
+          "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQsksuQLcVr_aPor1Lg3fH7h7TDeKcFkDo-N1t-d4D2JXEAO_jwvZQqASODeIOSDRpJkQc&usqp=CAU",
+        ],
+        extra_images: [
+          "https://lh3.googleusercontent.com/p/AF1QipOqeM3AYLXLT6WbuoYsHJMjIEeShoJ7POrrI4NF=s680-w680-h510",
+          "https://lh3.googleusercontent.com/p/AF1QipPEbbxnWFHs2tCocvY_PARNbS5vZfGeF_YAXZJ8=s680-w680-h510",
+        ],
+        City: "Tunis",
+        phone_number: 25701107,
+        reservation_quota: 20,
+        latitude: 35.76014073133161,
+        longtitude: 10.838634611246771,
+        opening_time: new Date("2019-01-16 21:00:00"),
+        closing_time: new Date("2019-01-16 00:00:00"),
+        status: "Approved",
+        ownerId: 16,
+        accountType: "PREMIUM",
+        createdAt: new Date("2023-10-05").toISOString(),
+
+      },
+      {
+        name: "L’italien de Davide",
+        category: ["Italian"],
+        description:
+          "Savor the explosion of flavors with our succulent dishes",
+        main_image:
+          "https://lh3.googleusercontent.com/p/AF1QipPqkygf57LmUKVU3p5qy75vKaF3mMJa52Wt4J9N=s680-w680-h510",
+        menu_images: [
+          "https://cdn.eat-list.fr/establishment/menu/gallery_menu/13100-le-tholonet/l-italien_143602_390.jpg",
+        ],
+        extra_images: [
+          "https://lh3.googleusercontent.com/p/AF1QipPqkygf57LmUKVU3p5qy75vKaF3mMJa52Wt4J9N=s680-w680-h510",
+          "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRXdSAcFx_xLIdDJK4qPgWXHMqsl1A4fixymPx80vp3Kai_dnLW1mEUUnlWd_h-o-iTe_0&usqp=CAU",
+        ],
+        City: "Tunis",
+        phone_number: 24730481,
+        reservation_quota: 20,
+        latitude: 36.901014,
+        longtitude: 10.317086,
+        opening_time: new Date("2019-01-16 21:00:00"),
+        closing_time: new Date("2019-01-16 00:00:00"),
+        status: "Approved",
+        ownerId: 17,
+        accountType: "PREMIUM",
+        createdAt: new Date("2023-11-05").toISOString(),
+      },
+     
+      {
+        name: "Le Rest'Ô , Villa Didon",
+        category: ["French"],
+        description:
+          "Delicious food, lovely service, beautiful view. ",
+        main_image:
+          "https://media-cdn.tripadvisor.com/media/photo-s/13/86/8b/4c/villa-didon.jpg",
+        menu_images: [
+          "https://cdn1.webmanagercenter.com/tekiano/wp-content/uploads/2020/07/menu-resto-rotated-e1595241704407.jpg",
+        ],
+        extra_images: [
+          "https://media-cdn.tripadvisor.com/media/photo-s/13/86/8b/4c/villa-didon.jpg",
+          "https://www.bnina.tn/wp-content/uploads/2019/03/68260772_2520400441383839_3171491365620023296_o.jpg",
+        ],
+        City: "Tunis",
+        phone_number: 71733433,
+        reservation_quota: 20,
+        latitude: 36.8524,
+        longtitude: 10.3252,
+        opening_time: new Date("2019-01-16 21:00:00"),
+        closing_time: new Date("2019-01-16 00:00:00"),
+        status: "Approved",
+        ownerId: 18,
+        accountType: "BASIC",
+        createdAt: new Date("2023-11-05").toISOString(),
+      },
+      {
+        name: "Le Qg",
+        category: ["French"],
+        description:
+          "Located directly on the beach, Le Qg benefits from an exceptional sea view guaranteeing that it will be a delightful moment day or night",
+        main_image:
+          "https://lh3.googleusercontent.com/p/AF1QipP7X2uusZmYlybH3Qe_27Kse3PscVgtRbaFTe7d=s680-w680-h510",
+        menu_images: [
+          "https://10619-2.s.cdn12.com/m9/menu-Restaurant-Le-QG.jpg",
+        ],
+        extra_images: [
+          "https://lh3.googleusercontent.com/p/AF1QipP7X2uusZmYlybH3Qe_27Kse3PscVgtRbaFTe7d=s680-w680-h510",
+          "https://lh3.googleusercontent.com/p/AF1QipMZXyH-PfPxHFNoaIsPmtijRHbqiCg5XNdoqwyO=s680-w680-h510",
+        ],
+        City: "Sousse",
+        phone_number: 58931000,
+        reservation_quota: 20,
+        latitude:35.8666,
+        longtitude: 10.6080,
+        opening_time: new Date("2019-01-16 21:00:00"),
+        closing_time: new Date("2019-01-16 00:00:00"),
+        status: "Approved",
+        ownerId:19,
+        accountType: "BASIC",
+        createdAt: new Date("2023-11-05").toISOString(),
+      },
+      {
+        name: "Legend's",
+        category: ["Tunisian"],
+        description:
+          "All visitors love the superb Tunisian cuisine of this restaurant. Here where you can  eat tasty shrimps at Le Pirate.",
+        main_image:
+          "https://lh3.googleusercontent.com/p/AF1QipNOJ1jjiKEUotWOIVPrKejGbKNkgjmH4zsxxXDk=s680-w680-h510",
+        menu_images: [
+          "https://lh3.googleusercontent.com/p/AF1QipPurE8eeHhf6TpHCBgWCGM3KzlWB72ArwL977iD=s680-w680-h510",
+        ],
+        extra_images: [
+          "https://lh3.googleusercontent.com/p/AF1QipNOJ1jjiKEUotWOIVPrKejGbKNkgjmH4zsxxXDk=s680-w680-h510",
+          "https://lh3.googleusercontent.com/p/AF1QipMaeTOrpNpm0MFQdzfURwxhdYhrK9xRyjNzkTzm=s680-w680-h510",
+        ],
+        City: "Monastir",
+        phone_number: 73468126,
+        reservation_quota: 20,
+        latitude: 35.8402,
+        longtitude: 10.6266,
+        opening_time: new Date("2019-01-16 21:00:00"),
+        closing_time: new Date("2019-01-16 00:00:00"),
+        status: "Approved",
+        ownerId: 20,
+        accountType: "BASIC",
+        createdAt: new Date("2023-11-05").toISOString(),
+
+      },
+      {
+        name: "Le 12 ème",
+        category: ["French"],
+        description:
+          "A delicious candlelit dinner with a magnificent view of the city! It feels like somewhere other than Tunisia. Warm setting and very welcoming staff.",
+        main_image:
+          "https://media-cdn.tripadvisor.com/media/photo-s/1c/ac/0f/0b/le-12eme.jpg",
+        menu_images: [
+          "https://www.kharjet.tn/wp-content/uploads/2020/06/Le-12-eme-menu-1.jpg",
+        ],
+        extra_images: [
+          "https://media-cdn.tripadvisor.com/media/photo-s/1c/ac/0f/0b/le-12eme.jpg",
+          "https://media-cdn.tripadvisor.com/media/photo-s/1c/ac/0f/0a/le-12eme.jpg",
+        ],
+        City: "Sousse",
+        phone_number: 58260260,
+        reservation_quota: 20,
+        latitude: 35.8309,
+        longtitude: 10.6406,
+        opening_time: new Date("2019-01-16 21:00:00"),
+        closing_time: new Date("2019-01-16 00:00:00"),
+        status: "Approved",
+        ownerId: 21,
+        accountType: "BASIC",
+        createdAt: new Date("2023-11-05").toISOString(),
+      },
+      {
+        name: "Dar Abderrahman Zarrouk",
+        category: ["Tunisian"],
+        description:
+          "A nice restaurant near the UNLESCO accredited mosque in Kairouan and locates in a traditional house with a courtyard ",
+        main_image:
+          "https://femmesetrealites.com.tn/wp-content/uploads/2023/03/336352468_585425356950634_8925172848684306914_n.jpg",
+        menu_images: [
+          "https://www.onamangepourvous.tn/wp-content/uploads/2017/04/1-6.png",
+        ],
+        extra_images: [
+          "https://femmesetrealites.com.tn/wp-content/uploads/2023/03/336352468_585425356950634_8925172848684306914_n.jpg",
+          "https://www.onamangepourvous.tn/wp-content/uploads/2017/11/15-2.jpg",
+        ],
+        City: "Kairouan",
+        phone_number: 94670670,
+        reservation_quota: 20,
+        latitude:  35.679337,
+        longtitude: 10.099445,
+        opening_time: new Date("2019-01-16 21:00:00"),
+        closing_time: new Date("2019-01-16 00:00:00"),
+        status: "Approved",
+        ownerId: 22,
+        accountType: "BASIC",
+        createdAt: new Date("2023-11-05").toISOString(),
+      },
+      {
+        name: "El Brija",
+        category: ["Tunisian"],
+        description:
+          "Beautifil restaurant with intimate indoor seating or you can enjoy sitting outdoors on the lovely terrace. Our food is excellent.",
+        main_image:
+          "https://lh3.googleusercontent.com/p/AF1QipOHRMT1sZ6s_-dF2dfpHhcPMPzMxDiQ2fssmLfw=s680-w680-h510",
+        menu_images: [
+          "https://lh3.googleusercontent.com/p/AF1QipOX7TOYjGnsEQRqmulAeqkfRxsPMmLe_UFoPzyb=s680-w680-h510",
+        ],
+        extra_images: [
+          "https://lh3.googleusercontent.com/p/AF1QipOHRMT1sZ6s_-dF2dfpHhcPMPzMxDiQ2fssmLfw=s680-w680-h510",
+          "https://lh3.googleusercontent.com/p/AF1QipN344gJ8XBK-ezRJIEPXXPsvfbI3pO9KJn3grTf=s680-w680-h510",
+        ],
+        City: "Kairouan",
+        phone_number: 73468126,
+        reservation_quota: 20,
+        latitude:35.6830305,
+        longtitude: 10.1040736,
+        opening_time: new Date("2019-01-16 21:00:00"),
+        closing_time: new Date("2019-01-16 00:00:00"),
+        status: "Approved",
+        ownerId: 23,
+        accountType: "BASIC",
+        createdAt: new Date("2023-11-05").toISOString(),
+
+      },
+      {
+        name: "Nakcha Restaurant",
+        category: ["Tunisian"],
+        description:
+          "Nakcha Restaurant is where tradition and tranquility",
+        main_image:
+          "https://lh3.googleusercontent.com/p/AF1QipNh6lUNQnfhzsY83QuI5-_1tFV3P4aDzjaiif4K=s680-w680-h510",
+        menu_images: [
+          "https://lh3.googleusercontent.com/p/AF1QipOynfMjD74ka9CHzLHy_NbvXtIwj31v6g48azTp=s680-w680-h510",
+        ],
+        extra_images: [
+          "https://lh3.googleusercontent.com/p/AF1QipNh6lUNQnfhzsY83QuI5-_1tFV3P4aDzjaiif4K=s680-w680-h510",
+          "https://lh3.googleusercontent.com/p/AF1QipMXz5LJekEtPePQhVPO6RTEtSwyjFpsmPmUE4jp=s680-w680-h510",
+        ],
+        City: "Kairouan",
+        phone_number: 24224222,
+        reservation_quota: 20,
+        latitude: 35.6807,
+        longtitude:10.0913,
+        opening_time: new Date("2019-01-16 21:00:00"),
+        closing_time: new Date("2019-01-16 00:00:00"),
+        status: "Approved",
+        ownerId: 24,
+        accountType: "PREMIUM",
+        createdAt: new Date("2023-11-05").toISOString(),
+
+      },
+      {
+        name: "La Table du Chef",
+        category: ["Tunisian"],
+        description:
+          "the best",
+        main_image:
+          "https://lh3.googleusercontent.com/p/AF1QipNnhe3EmLFLd1yc6zQTV-8dzU4jeXrIusOQb5R-=s680-w680-h510",
+        menu_images: [
+          "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQnE0SdO12ZXYuJ4MRXEJjL9POvIZlWHkhoxQ&usqp=CAU",
+        ],
+        extra_images: [
+          "https://lh3.googleusercontent.com/p/AF1QipNnhe3EmLFLd1yc6zQTV-8dzU4jeXrIusOQb5R-=s680-w680-h510",
+          "https://lh3.googleusercontent.com/p/AF1QipNnhe3EmLFLd1yc6zQTV-8dzU4jeXrIusOQb5R-=s680-w680-h510",
+        ],
+        City: "Tunis",
+        phone_number:21386000,
+        reservation_quota: 20,
+        latitude:  36.86250,
+        longtitude:10.19556,
+        opening_time: new Date("2019-01-16 21:00:00"),
+        closing_time: new Date("2019-01-16 00:00:00"),
+        status: "Approved",
+        ownerId: 25,
+        accountType: "PREMIUM",
+        createdAt: new Date("2023-11-05").toISOString(),
+
+      },
+
+
     ],
   });
 };
@@ -465,7 +836,94 @@ const createOwner = async () => {
         role: "ADMIN",
         isVerified: true,
       },
-    ],
+
+      {
+        fullname: "Hanoud Labyedh",
+        email: "hanoudh@gmail.com",
+        password: encryptedPassword1,
+        role: "OWNER",
+        isVerified: true,
+      },
+      {
+        fullname: "iselm selmi",
+        email: "islem@gmail.com",
+        password: encryptedPassword1,
+        role: "OWNER",
+        isVerified: true,
+      },
+      {
+        fullname: "Sana sahnoun",
+        email: "Sahnoun@gmail.com",
+        password: encryptedPassword1,
+        role: "OWNER",
+        isVerified: true,
+      },
+      {
+        fullname: "Amel dhaya",
+        email: "Dhaya@gmail.com",
+        password: encryptedPassword1,
+        role: "OWNER",
+        isVerified: true,
+      },
+      {
+        fullname: "Marwen farhat",
+        email: "Marwen@gmail.com",
+        password: encryptedPassword1,
+        role: "OWNER",
+        isVerified: true,
+      },
+      {
+        fullname: "Mohsen zarouk",
+        email: "Zarouk@gmail.com",
+        password: encryptedPassword1,
+        role: "OWNER",
+        isVerified: true,
+      },
+      {
+        fullname: "Hanen Ayedi",
+        email: "Hanen@gmail.com",
+        password: encryptedPassword1,
+        role: "OWNER",
+        isVerified: true,
+      },
+      {
+        fullname: "Hejer garoui",
+        email: "Hejer@gmail.com",
+        password: encryptedPassword1,
+        role: "OWNER",
+        isVerified: true,
+      },
+      {
+        fullname: "Mahmoud hamdi",
+        email: "hamdi@gmail.com",
+        password: encryptedPassword1,
+        role: "OWNER",
+        isVerified: true,
+      },
+      {
+        fullname: "Nour Selmi",
+        email: "Nour@gmail.com",
+        password: encryptedPassword1,
+        role: "OWNER",
+        isVerified: true,
+      },
+      {
+        fullname: "Noura khelil",
+        email: "khelil@gmail.com",
+        password: encryptedPassword1,
+        role: "OWNER",
+        isVerified: true,
+      },
+      {
+        fullname: "khalil layouni",
+        email: "khalil@gmail.com",
+        password: encryptedPassword1,
+        role: "OWNER",
+        isVerified: true,
+      },
+
+    ]
+
   });
 };
 
@@ -501,9 +959,47 @@ const createCustomers = async () => {
         role: "CUSTOMER",
         isVerified: true,
       },
-    ],
+      {
+        fullname: "Hane Chaouch",
+        email: "hanem@gmail.com",
+        password: encryptedPassword3,
+        role: "CUSTOMER",
+        isVerified: true,
+      },
+      {
+        fullname: "Hiba hndaoui",
+        email: "hiba@gmail.com",
+        password: encryptedPassword3,
+        role: "CUSTOMER",
+        isVerified: true,
+      },
+      {
+        fullname: "Hlima meskni",
+        email: "hlima@gmail.com",
+        password: encryptedPassword3,
+        role: "CUSTOMER",
+        isVerified: true,
+      },
+      {
+        fullname: "Hassen werghi",
+        email: "hassenm@gmail.com",
+        password: encryptedPassword3,
+        role: "CUSTOMER",
+        isVerified: true,
+      },
+      {
+        fullname: "zied arfaoui",
+        email: "zied@gmail.com",
+        password: encryptedPassword3,
+        role: "CUSTOMER",
+        isVerified: true,
+      },
+    ]
+  })
+}
   });
 };
+
 
 const newReview = async () => {
   await prisma.review.createMany({
@@ -536,7 +1032,7 @@ const newReview = async () => {
         review_body:
           "The cozy setting and delectable menu make this spot ideal for both intimate dinners and celebratory gatherings.",
         rating: 3,
-        customerId: 16,
+        customerId: 14,
         restaurantId: 4,
       },
       {
@@ -544,7 +1040,7 @@ const newReview = async () => {
         review_body:
           "From the first-class service to the inspired menu choices, every aspect of this restaurant reflects a commitment to excellence.",
         rating: 5,
-        customerId: 16,
+        customerId: 15,
         restaurantId: 5,
       },
       {
@@ -555,6 +1051,76 @@ const newReview = async () => {
         customerId: 14,
         restaurantId: 6,
       },
+      {
+        review_title: "Lovely atmosphere",
+        review_body: "Cozy place with delicious food.",
+        rating: 4,
+        customerId: 25,
+        restaurantId: 3,
+      },
+      {
+        review_title: "Excellent service",
+        review_body: "Staff was very attentive and polite.",
+        rating: 5,
+        customerId: 12,
+        restaurantId: 3,
+      },
+      {
+        review_title: "Mixed feelings",
+        review_body: "Food was good, but the wait time was too long.",
+        rating: 3,
+        customerId: 16,
+        restaurantId: 2,
+      },
+      {
+        review_title: "Terrible experience",
+        review_body: "Unpleasant service and tasteless food.",
+        rating: 1,
+        customerId: 15,
+        restaurantId: 8,
+      },
+      {
+        review_title: "Delightful",
+        review_body: "Amazing flavors, will definitely visit again!",
+        rating: 5,
+        customerId: 15,
+        restaurantId: 5,
+      },
+      {
+        review_title: "Not recommended",
+        review_body: "Poor quality food and unclean atmosphere.",
+        rating: 2,
+        customerId: 14,
+        restaurantId:10,
+      },
+      {
+       review_title: "Satisfactory",
+        review_body: "Decent place with reasonable food quality.",
+        rating: 3,
+        customerId: 14,
+        restaurantId: 12,
+      },
+      {
+        review_title: "Amazing dishes",
+        review_body: "Each dish was a delight, loved the variety!",
+        rating: 5,
+        customerId: 14,
+        restaurantId: 18,
+      },
+      {
+        review_title: "Needs improvement",
+        review_body: "Food was okay, but the service needs to be better.",
+        rating: 3,
+        customerId: 15,
+        restaurantId: 19,
+      },
+      {
+        review_title: "Worth a try",
+        review_body: "Unique menu items and pleasant service.",
+        rating: 4,
+        customerId: 15,
+        restaurantId:20,
+      }
     ],
   });
 };
@@ -562,119 +1128,142 @@ const Reservation = async () => {
   await prisma.reservation.createMany({
     data: [
       {
-        createdAt: new Date("2023-12-05").toISOString(),
+
+
+        createdAt: new Date("2023-09-20").toISOString(),
+
         notification: false,
-        updatedAt: new Date("2023-12-05").toISOString(),
+        updatedAt: new Date("2023-11-29").toISOString(),
         status: "Approved",
-        date: new Date("2023-12-05").toISOString(),
-        time: new Date("2023-12-05T18:30:00").toISOString(),
+        date: new Date("2023-10-05").toISOString(),
+        time: new Date("2023-10-05T18:30:00").toISOString(),
         canReview: "Yes",
         customerId: 3,
         restaurantId: 1,
         guest_number: 2,
       },
       {
-        createdAt: new Date("2023-12-05").toISOString(),
+
+
+        createdAt: new Date("2023-10-05").toISOString(),
+
         notification: false,
-        updatedAt: new Date("2023-12-05").toISOString(),
-        status: "Approved",
-        date: new Date("2023-12-05").toISOString(),
-        time: new Date("2023-12-05T18:30:00").toISOString(),
+        updatedAt: new Date("2023-10-05").toISOString(),
+        status: "Declined",
+        date: new Date("2023-11-05").toISOString(),
+        time: new Date("2023-11-05T18:30:00").toISOString(),
         canReview: "Yes",
         customerId: 15,
         restaurantId: 1,
         guest_number: 4,
       },
       {
-        createdAt: new Date("2023-12-05").toISOString(),
+
+        createdAt: new Date("2023-08-05").toISOString(),
+
         notification: false,
-        updatedAt: new Date("2023-12-05").toISOString(),
+        updatedAt: new Date("2023-08-05").toISOString(),
         status: "Approved",
-        date: new Date("2023-12-05").toISOString(),
-        time: new Date("2023-12-05T18:30:00").toISOString(),
+        date: new Date("2023-08-05").toISOString(),
+        time: new Date("2023-08-05T18:30:00").toISOString(),
         canReview: "Yes",
         customerId: 14,
         restaurantId: 2,
         guest_number: 1,
       },
       {
-        createdAt: new Date("2023-12-05").toISOString(),
+
+        createdAt: new Date("2023-08-05").toISOString(),
+
         notification: false,
-        updatedAt: new Date("2023-12-05").toISOString(),
+        updatedAt: new Date("2023-08-05").toISOString(),
         status: "Approved",
-        date: new Date("2023-12-05").toISOString(),
-        time: new Date("2023-12-05T18:30:00").toISOString(),
+        date: new Date("2023-08-05").toISOString(),
+        time: new Date("2023-08-05T18:30:00").toISOString(),
         canReview: "Yes",
         customerId: 16,
         restaurantId: 3,
         guest_number: 3,
       },
       {
-        createdAt: new Date("2023-12-05").toISOString(),
+
+
+        createdAt: new Date("2023-08-05").toISOString(),
+
         notification: false,
-        updatedAt: new Date("2023-12-05").toISOString(),
+        updatedAt: new Date("2023-08-05").toISOString(),
         status: "Approved",
-        date: new Date("2023-12-05").toISOString(),
-        time: new Date("2023-12-05T18:30:00").toISOString(),
+        date: new Date("2023-08-05").toISOString(),
+        time: new Date("2023-08-05T18:30:00").toISOString(),
         canReview: "Yes",
         customerId: 14,
-        restaurantId: 1,
+        restaurantId: 10,
         guest_number: 2,
       },
       {
-        createdAt: new Date("2023-12-05").toISOString(),
+
+
+        createdAt: new Date("2023-11-05").toISOString(),
+
         notification: false,
-        updatedAt: new Date("2023-12-05").toISOString(),
+        updatedAt: new Date("2023-11-05").toISOString(),
         status: "Approved",
-        date: new Date("2023-12-05").toISOString(),
-        time: new Date("2023-12-05T18:30:00").toISOString(),
+        date: new Date("2023-11-05").toISOString(),
+        time: new Date("2023-11-05T18:30:00").toISOString(),
         canReview: "Yes",
         customerId: 15,
-        restaurantId: 1,
+        restaurantId:20,
         guest_number: 5,
       },
       {
-        createdAt: new Date("2023-12-05").toISOString(),
+
+
+        createdAt: new Date("2023-11-05").toISOString(),
+
         notification: false,
-        updatedAt: new Date("2023-12-05").toISOString(),
+        updatedAt: new Date("2023-11-05").toISOString(),
         status: "Declined",
-        date: new Date("2023-12-05").toISOString(),
-        time: new Date("2023-12-05T18:30:00").toISOString(),
+        date: new Date("2023-11-05").toISOString(),
+        time: new Date("2023-11-05T18:30:00").toISOString(),
         canReview: "Yes",
         customerId: 14,
-        restaurantId: 1,
+        restaurantId: 14,
         guest_number: 4,
       },
       {
-        createdAt: new Date("2023-12-05").toISOString(),
+
+
+        createdAt: new Date("2023-11-05").toISOString(),
+
         notification: false,
-        updatedAt: new Date("2023-12-05").toISOString(),
+        updatedAt: new Date("2023-11-05").toISOString(),
         status: "Declined",
-        date: new Date("2023-12-05").toISOString(),
-        time: new Date("2023-12-05T18:30:00").toISOString(),
+        date: new Date("2023-11-05").toISOString(),
+        time: new Date("2023-11-05T18:30:00").toISOString(),
         canReview: "Yes",
         customerId: 16,
         restaurantId: 2,
         guest_number: 4,
       },
       {
-        createdAt: new Date("2023-12-05").toISOString(),
+        createdAt: new Date("2023-11-05").toISOString(),
         notification: false,
-        updatedAt: new Date("2023-12-05").toISOString(),
+        updatedAt: new Date("2023-11-05").toISOString(),
         status: "Declined",
-        date: new Date("2023-12-05").toISOString(),
-        time: new Date("2023-12-05T18:30:00").toISOString(),
+        date: new Date("2023-11-05").toISOString(),
+        time: new Date("2023-11-05T18:30:00").toISOString(),
         canReview: "Yes",
         customerId: 15,
         restaurantId: 3,
-        guest_number: 3,
+        guest_number: 3
       },
     ],
   });
 };
 
 // createOwner();
-// createRestaurants();
+//  createRestaurants();
 // createCustomers();
 // newReview();
 // Reservation()
+
