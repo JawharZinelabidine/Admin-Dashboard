@@ -70,10 +70,16 @@ io.on('connection', (socket) => {
 module.exports = {
 
     ownerSend: async (req, res) => {
-        const id = req.userId
+        const ownerId = req.userId
         const customerId = req.params.customerId
         const msg = req.body.message
         try {
+            const { id } = await restaurant.findUnique({
+                where: {
+                    ownerId: ownerId
+                }
+            })
+
 
             const messageSent = await message.create({
                 data: {
@@ -206,8 +212,14 @@ module.exports = {
 
     getRestaurantConversations: async (req, res) => {
 
-        const id = req.userId
+        const ownerId = req.userId
         try {
+
+            const { id } = await restaurant.findUnique({
+                where: {
+                    ownerId: ownerId
+                }
+            })
 
             const conversations = await message.groupBy({
                 by: ['customerId', 'createdAt'],
@@ -218,7 +230,6 @@ module.exports = {
                     createdAt: 'desc'
                 }
             })
-
             res.status(200).json(conversations)
 
 
@@ -257,9 +268,16 @@ module.exports = {
 
     getRestaurantMessages: async (req, res) => {
 
-        const id = req.userId
+        const ownerId = req.userId
         const customerId = req.params.customerId
         try {
+
+
+            const { id } = await restaurant.findUnique({
+                where: {
+                    ownerId: ownerId
+                }
+            })
 
             const messages = await message.findMany({
                 where: {

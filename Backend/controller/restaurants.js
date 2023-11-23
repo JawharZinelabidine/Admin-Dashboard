@@ -96,7 +96,7 @@ module.exports = {
         data: {
           name,
           description,
-          phone_number: BigInt(phoneNumber),
+          phone_number: parseInt(phoneNumber),
           category: categories,
           City,
           opening_time: openingTime,
