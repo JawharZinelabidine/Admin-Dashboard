@@ -6,7 +6,7 @@
   }
 
 
-/* Scrollbar */
+
 ::-webkit-scrollbar {
   width: 8px;
 }
@@ -20,8 +20,47 @@
   background-color: #4a5568; 
   border-radius: 4px;
 }
+.logo-container {
+  display: flex;
+  gap: 4px;
+}
+
+
+.logo-container {
+  display: flex;
+  gap: 4px;
+}
+
+
 
 .logo-image {
+  width: 90px;
+  height: 60px;
+  object-fit: cover;
+}
 
-  background: transparent;
+.separator {
+  
+  height: 60px;
+  width: 2px;
+  border-radius: 8px;
+  background-color: red;
+}
+
+.text-container {
+  
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.title {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #ff0608; 
+}
+
+.subtitle {
+  font-size: 0.7rem;
+  color: #888;
 }
