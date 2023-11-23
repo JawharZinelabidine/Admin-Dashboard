@@ -4,3 +4,19 @@
     margin-left: 15%;
 
   }
+
+
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+
+::-webkit-scrollbar-track {
+  background: #333333; 
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #4a5568; 
+  border-radius: 4px;
+}
