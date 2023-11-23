@@ -28,7 +28,6 @@ router
     createOwner
   );
 
-
 router.route("/home").get(isAuthenticated, getOwners);
 router
   .route("/notification")
@@ -38,8 +37,9 @@ router.route("/signin").post(signin);
 
 router.route("/verify/:token").post(verifyEmail);
 
-router.route("/customers/:customerId").get(isAuthenticated, isOwnerAuthorized, getOneCustomers);
-router.route("/:ownerId").get(getOwnerById)
-
+router
+  .route("/customers/:customerId")
+  .get(isAuthenticated, isOwnerAuthorized, getOneCustomers);
+router.route("/:ownerId").get(getOwnerById);
 
 module.exports = router;
