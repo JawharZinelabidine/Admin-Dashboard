@@ -46,7 +46,7 @@ model Restaurant {
   main_image        String        @db.Text
   menu_images       String[]      @db.Text
   extra_images      String[]      @default([]) @db.Text
-  phone_number      Int
+  phone_number      String
   reservation_quota Int
   latitude          Float
   longtitude        Float

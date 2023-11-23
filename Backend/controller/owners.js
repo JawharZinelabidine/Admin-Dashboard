@@ -146,27 +146,32 @@ module.exports = {
           },
         });
         if (!myRestaurant) {
-          res.status(201).json({
+          return res.status(201).json({
             message: "User hasn't created a restaurant",
             token: token,
           });
         }
         if (myRestaurant.isBanned) {
-          res.status(403).json({ message: 'This account was banned by the admin.' })
+          return res
+            .status(403)
+            .json({ message: "This account was banned by the admin." });
         }
-        if (myRestaurant.status === 'Declined') {
-          res.status(403).json({ message: 'This account was declined by the admin.' })
+        if (myRestaurant.status === "Declined") {
+          return res
+            .status(403)
+            .json({ message: "This account was declined by the admin." });
         }
-        if (myRestaurant.status === 'Pending') {
-          res.status(403).json({ message: "This account is pending the admin's decision." })
+        if (myRestaurant.status === "Pending") {
+          return res
+            .status(403)
+            .json({ message: "This account is pending the admin's decision." });
         }
 
-
-        if (myRestaurant.accountType === 'NONE') {
-          res.status(201).json({ message: "User hasn't chosen account type", token: token })
-        }
-
-        else {
+        if (myRestaurant.accountType === "NONE") {
+          return res
+            .status(201)
+            .json({ message: "User hasn't chosen account type", token: token });
+        } else {
           return res
             .status(201)
             .json({ message: "owner successfully logged in", token: token });
@@ -221,16 +226,13 @@ module.exports = {
       });
 
       if (!owner) {
-        return res.status(404).json({ error: 'Owner not found' });
+        return res.status(404).json({ error: "Owner not found" });
       }
 
       res.json(owner);
     } catch (error) {
       console.error(error);
-      res.status(500).json({ error: 'Internal Server Error' });
+      res.status(500).json({ error: "Internal Server Error" });
     }
-
-
-  }
-
+  },
 };
