@@ -324,6 +324,7 @@ const createRestaurants = async () => {
         accountType: "PREMIUM",
         createdAt: new Date("2023-09-05").toISOString(),
 
+
       },
       {
         name: "Sushi&Co",
@@ -351,6 +352,7 @@ const createRestaurants = async () => {
         ownerId: 12,
         accountType: "BASIC",
         createdAt: new Date("2023-09-05").toISOString(),
+
 
       },
       {
@@ -834,6 +836,7 @@ const createOwner = async () => {
         role: "ADMIN",
         isVerified: true,
       },
+
       {
         fullname: "Hanoud Labyedh",
         email: "hanoudh@gmail.com",
@@ -921,8 +924,6 @@ const createOwner = async () => {
 
     ]
 
-
-
   });
 };
 
@@ -996,6 +997,9 @@ const createCustomers = async () => {
     ]
   })
 }
+  });
+};
+
 
 const newReview = async () => {
   await prisma.review.createMany({
@@ -1005,112 +1009,117 @@ const newReview = async () => {
         review_body: "the food was amazing ",
         rating: 3,
         customerId: 14,
-        restaurantId: 31,
+        restaurantId: 1,
       },
       {
         review_title: "BEST PLACE",
-        review_body: "The attention to detail in both presentation and taste makes every visit to this restaurant a memorable experience.",
+        review_body:
+          "The attention to detail in both presentation and taste makes every visit to this restaurant a memorable experience.",
         rating: 4,
         customerId: 15,
-        restaurantId: 32,
+        restaurantId: 2,
       },
       {
         review_title: "Happy",
-        review_body: "The diverse menu caters to various dietary preferences, making this restaurant a go-to destination for all food enthusiasts.",
+        review_body:
+          "The diverse menu caters to various dietary preferences, making this restaurant a go-to destination for all food enthusiasts.",
         rating: 4,
         customerId: 15,
-        restaurantId: 33,
+        restaurantId: 3,
       },
       {
         review_title: "COZY",
-        review_body: "The cozy setting and delectable menu make this spot ideal for both intimate dinners and celebratory gatherings.",
+        review_body:
+          "The cozy setting and delectable menu make this spot ideal for both intimate dinners and celebratory gatherings.",
         rating: 3,
         customerId: 14,
-        restaurantId: 34,
+        restaurantId: 4,
       },
       {
         review_title: "Elegance on a Plate",
-        review_body: "From the first-class service to the inspired menu choices, every aspect of this restaurant reflects a commitment to excellence.",
+        review_body:
+          "From the first-class service to the inspired menu choices, every aspect of this restaurant reflects a commitment to excellence.",
         rating: 5,
         customerId: 15,
-        restaurantId: 35,
+        restaurantId: 5,
       },
       {
         review_title: "Beyond Expectations",
-        review_body: "The cozy setting and delectable menu make this spot ideal for both intimate dinners and celebratory gatherings.",
+        review_body:
+          "The cozy setting and delectable menu make this spot ideal for both intimate dinners and celebratory gatherings.",
         rating: 5,
         customerId: 14,
-        restaurantId: 36,
+        restaurantId: 6,
       },
       {
         review_title: "Lovely atmosphere",
         review_body: "Cozy place with delicious food.",
         rating: 4,
         customerId: 25,
-        restaurantId: 33,
+        restaurantId: 3,
       },
       {
         review_title: "Excellent service",
         review_body: "Staff was very attentive and polite.",
         rating: 5,
         customerId: 12,
-        restaurantId: 33,
+        restaurantId: 3,
       },
       {
         review_title: "Mixed feelings",
         review_body: "Food was good, but the wait time was too long.",
         rating: 3,
         customerId: 16,
-        restaurantId: 32,
+        restaurantId: 2,
       },
       {
         review_title: "Terrible experience",
         review_body: "Unpleasant service and tasteless food.",
         rating: 1,
         customerId: 15,
-        restaurantId: 38,
+        restaurantId: 8,
       },
       {
         review_title: "Delightful",
         review_body: "Amazing flavors, will definitely visit again!",
         rating: 5,
         customerId: 15,
-        restaurantId: 35,
+        restaurantId: 5,
       },
       {
         review_title: "Not recommended",
         review_body: "Poor quality food and unclean atmosphere.",
         rating: 2,
         customerId: 14,
-        restaurantId:40,
+        restaurantId:10,
       },
       {
        review_title: "Satisfactory",
         review_body: "Decent place with reasonable food quality.",
         rating: 3,
         customerId: 14,
-        restaurantId: 42,
+        restaurantId: 12,
       },
       {
         review_title: "Amazing dishes",
         review_body: "Each dish was a delight, loved the variety!",
         rating: 5,
         customerId: 14,
-        restaurantId: 48,
+        restaurantId: 18,
       },
       {
         review_title: "Needs improvement",
         review_body: "Food was okay, but the service needs to be better.",
         rating: 3,
         customerId: 15,
-        restaurantId: 49,
+        restaurantId: 19,
       },
       {
         review_title: "Worth a try",
         review_body: "Unique menu items and pleasant service.",
         rating: 4,
         customerId: 15,
-        restaurantId:50,
+        restaurantId:20,
       }
     ],
   });
@@ -1120,7 +1129,9 @@ const Reservation = async () => {
     data: [
       {
 
+
         createdAt: new Date("2023-09-20").toISOString(),
+
         notification: false,
         updatedAt: new Date("2023-11-29").toISOString(),
         status: "Approved",
@@ -1128,12 +1139,14 @@ const Reservation = async () => {
         time: new Date("2023-10-05T18:30:00").toISOString(),
         canReview: "Yes",
         customerId: 3,
-        restaurantId: 31,
+        restaurantId: 1,
         guest_number: 2,
       },
       {
 
+
         createdAt: new Date("2023-10-05").toISOString(),
+
         notification: false,
         updatedAt: new Date("2023-10-05").toISOString(),
         status: "Declined",
@@ -1141,12 +1154,13 @@ const Reservation = async () => {
         time: new Date("2023-11-05T18:30:00").toISOString(),
         canReview: "Yes",
         customerId: 15,
-        restaurantId: 31,
+        restaurantId: 1,
         guest_number: 4,
       },
       {
 
         createdAt: new Date("2023-08-05").toISOString(),
+
         notification: false,
         updatedAt: new Date("2023-08-05").toISOString(),
         status: "Approved",
@@ -1154,12 +1168,13 @@ const Reservation = async () => {
         time: new Date("2023-08-05T18:30:00").toISOString(),
         canReview: "Yes",
         customerId: 14,
-        restaurantId: 32,
+        restaurantId: 2,
         guest_number: 1,
       },
       {
 
         createdAt: new Date("2023-08-05").toISOString(),
+
         notification: false,
         updatedAt: new Date("2023-08-05").toISOString(),
         status: "Approved",
@@ -1167,12 +1182,14 @@ const Reservation = async () => {
         time: new Date("2023-08-05T18:30:00").toISOString(),
         canReview: "Yes",
         customerId: 16,
-        restaurantId: 33,
+        restaurantId: 3,
         guest_number: 3,
       },
       {
 
+
         createdAt: new Date("2023-08-05").toISOString(),
+
         notification: false,
         updatedAt: new Date("2023-08-05").toISOString(),
         status: "Approved",
@@ -1180,12 +1197,14 @@ const Reservation = async () => {
         time: new Date("2023-08-05T18:30:00").toISOString(),
         canReview: "Yes",
         customerId: 14,
-        restaurantId: 40,
+        restaurantId: 10,
         guest_number: 2,
       },
       {
 
+
         createdAt: new Date("2023-11-05").toISOString(),
+
         notification: false,
         updatedAt: new Date("2023-11-05").toISOString(),
         status: "Approved",
@@ -1193,12 +1212,14 @@ const Reservation = async () => {
         time: new Date("2023-11-05T18:30:00").toISOString(),
         canReview: "Yes",
         customerId: 15,
-        restaurantId:50,
+        restaurantId:20,
         guest_number: 5,
       },
       {
 
+
         createdAt: new Date("2023-11-05").toISOString(),
+
         notification: false,
         updatedAt: new Date("2023-11-05").toISOString(),
         status: "Declined",
@@ -1206,12 +1227,14 @@ const Reservation = async () => {
         time: new Date("2023-11-05T18:30:00").toISOString(),
         canReview: "Yes",
         customerId: 14,
-        restaurantId: 44,
+        restaurantId: 14,
         guest_number: 4,
       },
       {
 
+
         createdAt: new Date("2023-11-05").toISOString(),
+
         notification: false,
         updatedAt: new Date("2023-11-05").toISOString(),
         status: "Declined",
@@ -1219,7 +1242,7 @@ const Reservation = async () => {
         time: new Date("2023-11-05T18:30:00").toISOString(),
         canReview: "Yes",
         customerId: 16,
-        restaurantId: 32,
+        restaurantId: 2,
         guest_number: 4,
       },
       {
@@ -1231,19 +1254,16 @@ const Reservation = async () => {
         time: new Date("2023-11-05T18:30:00").toISOString(),
         canReview: "Yes",
         customerId: 15,
-        restaurantId: 33,
+        restaurantId: 3,
         guest_number: 3
       },
-    ]
-  })
-
-}
-
-
+    ],
+  });
+};
 
 // createOwner();
 //  createRestaurants();
 // createCustomers();
 // newReview();
-Reservation()
+// Reservation()
 
