@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { setNotificationBadge } from "../features/notificationSlice.js";
 import axios from "../services/axiosInterceptor.js";
 import { useSelector, useDispatch } from "react-redux";
+import logo from "../components/logo.png";
 
 function Navbar() {
   const navigate = useNavigate();
@@ -54,7 +55,11 @@ function Navbar() {
   return (
     <>
       <header className="flex items-center h-20 px-6 sm:px-10 bg-white shadow-lg border border-red-600">
+      <img src ={logo}  alt ="logo"   
+     className="logo-image"
+     style={{ width: '200px', height: '300px', objectFit: 'contain' }}/>
         <div className="relative w-full sm:-ml-2 flex">
+        
           <Link to="/dashboard">
             <button className="mx-8 inline-flex px-5 py-3 text-black hover:text-black focus:text-black hover:bg-gray-200 focus:bg-red-100 rounded-md mb-3 ">
               Home
