@@ -1,7 +1,71 @@
-const { message } = require("../model/index");
-const axios = require('axios');
+const { message, user, restaurant } = require("../model/index");
 require('dotenv').config();
+const axios = require('axios');
 
+const authenticateSocket = require('../middlwares/authenticateSocket.js')
+const io = require("socket.io")(8900, {
+    cors: {
+        origin: ["http://localhost:5173", "http://192.168.137.69:8081"],
+    },
+});
+
+
+io.use((socket, next) => {
+    authenticateSocket(socket, next);
+});
+
+let users = [];
+
+const addUser = (userId, socketId) => {
+
+    users.push({ userId, socketId });
+};
+
+const removeUser = (socketId) => {
+    users = users.filter((user) => user.socketId !== socketId);
+};
+
+const getUser = (receiverId) => {
+    return users.find((user) => user.userId === receiverId);
+};
+
+
+io.on('connection', (socket) => {
+    //when ceonnect
+    console.log('a user connected', socket.id);
+
+    //take userId and socketId from user
+    socket.on("addUser", () => {
+        addUser(socket.userId, socket.id);
+        io.emit("getUsers", users)
+    });
+
+
+    //send message
+    socket.on('sendMessage', ({ receiverId, text }) => {
+        const user = getUser(receiverId)
+        console.log(users)
+        if (user) {
+            console.log(user.socketId)
+            io.to(user.socketId).emit("getMessage", {
+                senderId: socket.userId,
+                text
+            });
+        }
+
+
+
+    })
+
+    // //when disconnect
+    socket.on("disconnect", () => {
+        console.log("a user disconnected!");
+        removeUser(socket.id);
+    });
+
+
+
+});
 
 module.exports = {
 
@@ -21,12 +85,65 @@ module.exports = {
                 }
             })
 
+            const customer = users.find((user) => user.userId === +customerId)
+
+            if (!customer) {
+
+                const { expoToken } = await user.findUnique({
+                    where: {
+                        id: +customerId
+                    }
+                })
+                const { name } = await restaurant.findUnique({
+                    where: {
+                        id: id
+                    }
+                })
+                const title = `${name} has send you a message`;
+                const body = `${msg.substring(0, 20)}`;
+                const route = 'Conversations'
+                const messageId = messageSent.id
+                try {
+                    await axios.post(
+                        'https://exp.host/--/api/v2/push/send',
+                        {
+                            to: expoToken,
+                            title,
+                            body,
+                            data: {
+                                route,
+                                messageId
+                            }
+
+                        }
+                    );
+                    console.log('notification sent!')
+
+                } catch (notificationError) {
+                    console.error('Failed to send notification:', notificationError);
+                }
+
+                try {
+                    await user.update({
+                        where: {
+                            id: +customerId,
+                        },
+                        data: {
+                            hasNotification: true,
+                        },
+                    });
+                } catch (error) {
+                    console.log("Failed to change notification status:", error);
+                }
+
+            }
+
             res.status(201).json(messageSent)
 
         }
         catch (error) {
             console.log(error)
-            res.status(500).json({ error: error })
+            res.status(500).json({ error: "couldn't send message" })
 
         }
 
@@ -47,13 +164,41 @@ module.exports = {
 
                 }
             })
-            res.status(201).json(messageSent)
+            const thisRestaurant = await restaurant.findUnique({
+                where: { id: +restaurantId },
+            });
+
+            const owner = users.find((user) => user.userId === +thisRestaurant.ownerId)
+            if (!owner) {
+
+                try {
+
+                    await user.update({
+                        where: {
+                            id: +thisRestaurant.ownerId,
+                        },
+                        data: {
+                            hasNewMessage: true,
+                        },
+                    });
+
+                    res.status(201).json(messageSent)
+
+
+                } catch (error) {
+                    console.log("Failed to change notification status:", error);
+                    res.status(500).send('failed')
+                }
+            }
+            else {
+                res.status(201).json(messageSent)
+            }
 
         }
         catch (error) {
             console.log(error)
 
-            res.status(500).json({ error: error })
+            res.status(500).json({ error: "couldn't send message" })
 
         }
 
@@ -99,8 +244,6 @@ module.exports = {
             })
 
 
-
-
             res.status(200).json(conversations)
 
 
@@ -143,7 +286,7 @@ module.exports = {
             const messages = await message.findMany({
                 where: {
                     customerId: id,
-                    restaurantId: restaurantId
+                    restaurantId: +restaurantId
                 }
             })
 
@@ -154,6 +297,44 @@ module.exports = {
             res.status(500).send('Couldnt get messages')
 
         }
-    }
+    },
+
+    checkNotification: async (req, res) => {
+        const id = req.userId;
+
+        try {
+            const { hasNewMessage } = await user.findUnique({
+                where: {
+                    id: id,
+                },
+            });
+            res.status(200).send(hasNewMessage);
+        } catch (error) {
+            console.log(error);
+            res
+                .status(500)
+                .json({ message: "Failed to retrieve notification status" });
+        }
+    },
+    removeNotification: async (req, res) => {
+        const id = req.userId;
+
+        try {
+            const { hasNewMessage } = await user.update({
+                where: {
+                    id: id,
+                },
+                data: {
+                    hasNewMessage: false,
+                },
+            });
+            res.status(200).send(hasNewMessage);
+        } catch (error) {
+            console.log(error);
+            res.status(500).json({ message: "Failed to update notification status" });
+        }
+    },
+
+
 
 }

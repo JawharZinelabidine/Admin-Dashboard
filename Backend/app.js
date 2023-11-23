@@ -8,6 +8,7 @@ const reservationsRouter = require('./routes/reservations')
 const reviewsRouter = require('./routes/reviews')
 const messagesRouter = require('./routes/messages')
 const paymentsRouter = require('./routes/payments')
+const statsRouter = require('./routes/stats')
 const prisma = require("./model/index");
 var bodyParser = require('body-parser');
 
@@ -38,9 +39,6 @@ const connect = async () => {
 connect()
 
 
-
-
-
 app.use('/api/admin', adminRouter)
 app.use('/api/customers', customersRouter)
 app.use('/api/owners', ownersRouter)
@@ -49,6 +47,7 @@ app.use('/api/reservations', reservationsRouter)
 app.use('/api/reviews', reviewsRouter)
 app.use('/api/messages', messagesRouter)
 app.use('/api/payments', paymentsRouter)
+app.use('/api/stats', statsRouter)
 
 app.listen(port, () => {
     console.log(`app listening on port ${port}`)
