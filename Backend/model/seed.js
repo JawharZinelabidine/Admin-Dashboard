@@ -296,7 +296,6 @@ const createRestaurants = async () => {
         ownerId: 10,
         accountType: "PREMIUM",
         createdAt: new Date("2023-09-05").toISOString(),
-
       },
       {
         name: "Le Pirate",
@@ -323,8 +322,6 @@ const createRestaurants = async () => {
         ownerId: 11,
         accountType: "PREMIUM",
         createdAt: new Date("2023-09-05").toISOString(),
-
-
       },
       {
         name: "Sushi&Co",
@@ -352,8 +349,6 @@ const createRestaurants = async () => {
         ownerId: 12,
         accountType: "BASIC",
         createdAt: new Date("2023-09-05").toISOString(),
-
-
       },
       {
         name: " Le Golfe",
@@ -365,16 +360,16 @@ const createRestaurants = async () => {
         menu_images: [
           "https://www.kharjet.tn/wp-content/uploads/2019/04/menu-Golf-la-marsa-1.png",
           "https://www.kharjet.tn/wp-content/uploads/2019/04/menu-Golf-la-marsa-2.png",
-          "https://www.kharjet.tn/wp-content/uploads/2019/04/menu-Golf-la-marsa-3.png"
+          "https://www.kharjet.tn/wp-content/uploads/2019/04/menu-Golf-la-marsa-3.png",
         ],
         extra_images: [
           "https://lh3.googleusercontent.com/p/AF1QipNt83eBN_jc3UwCvn_l6kqrcDSskvfr2wt3YhBE=s680-w680-h510",
           "https://lh3.googleusercontent.com/p/AF1QipPtBXjZTxUIqmLeifeUU8Y_u8Y5J-mJOSuAAPUv=s680-w680-h510",
           "https://www.kharjet.tn/wp-content/uploads/2019/04/Golf-la-marsa-2.jpg",
-          "https://scontent.ftun7-1.fna.fbcdn.net/v/t39.30808-6/387872640_18115299595325874_5130809332677735491_n.jpg?_nc_cat=111&ccb=1-7&_nc_sid=5f2048&_nc_ohc=ARmJr248I4oAX8gYVdz&_nc_ht=scontent.ftun7-1.fna&oh=00_AfCejhrswZ4mKkBIpqd2lwZDprUqJ4b96pI2pOX0tM1dxw&oe=65610D13"
+          "https://scontent.ftun7-1.fna.fbcdn.net/v/t39.30808-6/387872640_18115299595325874_5130809332677735491_n.jpg?_nc_cat=111&ccb=1-7&_nc_sid=5f2048&_nc_ohc=ARmJr248I4oAX8gYVdz&_nc_ht=scontent.ftun7-1.fna&oh=00_AfCejhrswZ4mKkBIpqd2lwZDprUqJ4b96pI2pOX0tM1dxw&oe=65610D13",
         ],
         City: "Tunis",
-        phone_number: 71748219,
+        phone_number: "+21671748219",
         reservation_quota: 20,
         latitude: 36.8908,
         longtitude: 10.3238,
@@ -384,7 +379,6 @@ const createRestaurants = async () => {
         ownerId: 13,
         accountType: "PREMIUM",
         createdAt: new Date("2023-10-05").toISOString(),
-
       },
       {
         name: "La Falaise",
@@ -402,17 +396,16 @@ const createRestaurants = async () => {
           "https://www.marhba.com/images/lifestyle2021/vuemertunis/cliff.jpg",
         ],
         City: "Tunis",
-        phone_number:53157471,
+        phone_number: "+21653157471",
         reservation_quota: 20,
-        latitude:36.8158,
-        longtitude:10.1270,
+        latitude: 36.8158,
+        longtitude: 10.127,
         opening_time: new Date("2019-01-16 21:00:00"),
         closing_time: new Date("2019-01-16 00:00:00"),
         status: "Approved",
         ownerId: 14,
         accountType: "PREMIUM",
         createdAt: new Date("2023-10-05").toISOString(),
-
       },
       {
         name: "Restaurant Lemdina",
@@ -427,20 +420,18 @@ const createRestaurants = async () => {
         extra_images: [
           "https://lh3.googleusercontent.com/p/AF1QipOIhykjWw-3DO7TyCeoxVKU1R76pI3OZDUDcZk9=s680-w680-h510",
           "https://lh3.googleusercontent.com/p/AF1QipOlvWoKbwfuM-yLGb5Vr1I6fE9xC3PcZvdbAeyb=s680-w680-h510",
-         
         ],
         City: "Tunis",
-        phone_number:  55113333,
+        phone_number: "+21655113333",
         reservation_quota: 20,
         latitude: 36.83528,
-        longtitude: 10.24056 ,
+        longtitude: 10.24056,
         opening_time: new Date("2019-01-16 21:00:00"),
         closing_time: new Date("2019-01-16 00:00:00"),
         status: "Approved",
         ownerId: 15,
         accountType: "PREMIUM",
         createdAt: new Date("2023-10-05").toISOString(),
-
       },
       {
         name: "Go Sushi",
@@ -457,7 +448,7 @@ const createRestaurants = async () => {
           "https://lh3.googleusercontent.com/p/AF1QipPEbbxnWFHs2tCocvY_PARNbS5vZfGeF_YAXZJ8=s680-w680-h510",
         ],
         City: "Tunis",
-        phone_number: 25701107,
+        phone_number: "+21625701107",
         reservation_quota: 20,
         latitude: 35.76014073133161,
         longtitude: 10.838634611246771,
@@ -467,13 +458,11 @@ const createRestaurants = async () => {
         ownerId: 16,
         accountType: "PREMIUM",
         createdAt: new Date("2023-10-05").toISOString(),
-
       },
       {
         name: "L’italien de Davide",
         category: ["Italian"],
-        description:
-          "Savor the explosion of flavors with our succulent dishes",
+        description: "Savor the explosion of flavors with our succulent dishes",
         main_image:
           "https://lh3.googleusercontent.com/p/AF1QipPqkygf57LmUKVU3p5qy75vKaF3mMJa52Wt4J9N=s680-w680-h510",
         menu_images: [
@@ -484,7 +473,7 @@ const createRestaurants = async () => {
           "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRXdSAcFx_xLIdDJK4qPgWXHMqsl1A4fixymPx80vp3Kai_dnLW1mEUUnlWd_h-o-iTe_0&usqp=CAU",
         ],
         City: "Tunis",
-        phone_number: 24730481,
+        phone_number: "+21624730481",
         reservation_quota: 20,
         latitude: 36.901014,
         longtitude: 10.317086,
@@ -495,12 +484,11 @@ const createRestaurants = async () => {
         accountType: "PREMIUM",
         createdAt: new Date("2023-11-05").toISOString(),
       },
-     
+
       {
         name: "Le Rest'Ô , Villa Didon",
         category: ["French"],
-        description:
-          "Delicious food, lovely service, beautiful view. ",
+        description: "Delicious food, lovely service, beautiful view. ",
         main_image:
           "https://media-cdn.tripadvisor.com/media/photo-s/13/86/8b/4c/villa-didon.jpg",
         menu_images: [
@@ -511,7 +499,7 @@ const createRestaurants = async () => {
           "https://www.bnina.tn/wp-content/uploads/2019/03/68260772_2520400441383839_3171491365620023296_o.jpg",
         ],
         City: "Tunis",
-        phone_number: 71733433,
+        phone_number: "+21671733433",
         reservation_quota: 20,
         latitude: 36.8524,
         longtitude: 10.3252,
@@ -537,14 +525,14 @@ const createRestaurants = async () => {
           "https://lh3.googleusercontent.com/p/AF1QipMZXyH-PfPxHFNoaIsPmtijRHbqiCg5XNdoqwyO=s680-w680-h510",
         ],
         City: "Sousse",
-        phone_number: 58931000,
+        phone_number: "+21658931000",
         reservation_quota: 20,
-        latitude:35.8666,
-        longtitude: 10.6080,
+        latitude: 35.8666,
+        longtitude: 10.608,
         opening_time: new Date("2019-01-16 21:00:00"),
         closing_time: new Date("2019-01-16 00:00:00"),
         status: "Approved",
-        ownerId:19,
+        ownerId: 19,
         accountType: "BASIC",
         createdAt: new Date("2023-11-05").toISOString(),
       },
@@ -563,7 +551,7 @@ const createRestaurants = async () => {
           "https://lh3.googleusercontent.com/p/AF1QipMaeTOrpNpm0MFQdzfURwxhdYhrK9xRyjNzkTzm=s680-w680-h510",
         ],
         City: "Monastir",
-        phone_number: 73468126,
+        phone_number: "+21673468126",
         reservation_quota: 20,
         latitude: 35.8402,
         longtitude: 10.6266,
@@ -573,7 +561,6 @@ const createRestaurants = async () => {
         ownerId: 20,
         accountType: "BASIC",
         createdAt: new Date("2023-11-05").toISOString(),
-
       },
       {
         name: "Le 12 ème",
@@ -590,7 +577,7 @@ const createRestaurants = async () => {
           "https://media-cdn.tripadvisor.com/media/photo-s/1c/ac/0f/0a/le-12eme.jpg",
         ],
         City: "Sousse",
-        phone_number: 58260260,
+        phone_number: "+21658260260",
         reservation_quota: 20,
         latitude: 35.8309,
         longtitude: 10.6406,
@@ -616,9 +603,9 @@ const createRestaurants = async () => {
           "https://www.onamangepourvous.tn/wp-content/uploads/2017/11/15-2.jpg",
         ],
         City: "Kairouan",
-        phone_number: 94670670,
+        phone_number: "+21694670670",
         reservation_quota: 20,
-        latitude:  35.679337,
+        latitude: 35.679337,
         longtitude: 10.099445,
         opening_time: new Date("2019-01-16 21:00:00"),
         closing_time: new Date("2019-01-16 00:00:00"),
@@ -642,9 +629,9 @@ const createRestaurants = async () => {
           "https://lh3.googleusercontent.com/p/AF1QipN344gJ8XBK-ezRJIEPXXPsvfbI3pO9KJn3grTf=s680-w680-h510",
         ],
         City: "Kairouan",
-        phone_number: 73468126,
+        phone_number: "+21673468126",
         reservation_quota: 20,
-        latitude:35.6830305,
+        latitude: 35.6830305,
         longtitude: 10.1040736,
         opening_time: new Date("2019-01-16 21:00:00"),
         closing_time: new Date("2019-01-16 00:00:00"),
@@ -652,13 +639,11 @@ const createRestaurants = async () => {
         ownerId: 23,
         accountType: "BASIC",
         createdAt: new Date("2023-11-05").toISOString(),
-
       },
       {
         name: "Nakcha Restaurant",
         category: ["Tunisian"],
-        description:
-          "Nakcha Restaurant is where tradition and tranquility",
+        description: "Nakcha Restaurant is where tradition and tranquility",
         main_image:
           "https://lh3.googleusercontent.com/p/AF1QipNh6lUNQnfhzsY83QuI5-_1tFV3P4aDzjaiif4K=s680-w680-h510",
         menu_images: [
@@ -669,23 +654,21 @@ const createRestaurants = async () => {
           "https://lh3.googleusercontent.com/p/AF1QipMXz5LJekEtPePQhVPO6RTEtSwyjFpsmPmUE4jp=s680-w680-h510",
         ],
         City: "Kairouan",
-        phone_number: 24224222,
+        phone_number: "+21624224222",
         reservation_quota: 20,
         latitude: 35.6807,
-        longtitude:10.0913,
+        longtitude: 10.0913,
         opening_time: new Date("2019-01-16 21:00:00"),
         closing_time: new Date("2019-01-16 00:00:00"),
         status: "Approved",
         ownerId: 24,
         accountType: "PREMIUM",
         createdAt: new Date("2023-11-05").toISOString(),
-
       },
       {
         name: "La Table du Chef",
         category: ["Tunisian"],
-        description:
-          "the best",
+        description: "the best",
         main_image:
           "https://lh3.googleusercontent.com/p/AF1QipNnhe3EmLFLd1yc6zQTV-8dzU4jeXrIusOQb5R-=s680-w680-h510",
         menu_images: [
@@ -696,20 +679,17 @@ const createRestaurants = async () => {
           "https://lh3.googleusercontent.com/p/AF1QipNnhe3EmLFLd1yc6zQTV-8dzU4jeXrIusOQb5R-=s680-w680-h510",
         ],
         City: "Tunis",
-        phone_number:21386000,
+        phone_number: "+21621386000",
         reservation_quota: 20,
-        latitude:  36.86250,
-        longtitude:10.19556,
+        latitude: 36.8625,
+        longtitude: 10.19556,
         opening_time: new Date("2019-01-16 21:00:00"),
         closing_time: new Date("2019-01-16 00:00:00"),
         status: "Approved",
         ownerId: 25,
         accountType: "PREMIUM",
         createdAt: new Date("2023-11-05").toISOString(),
-
       },
-
-
     ],
   });
 };
@@ -921,9 +901,7 @@ const createOwner = async () => {
         role: "OWNER",
         isVerified: true,
       },
-
-    ]
-
+    ],
   });
 };
 
@@ -994,12 +972,9 @@ const createCustomers = async () => {
         role: "CUSTOMER",
         isVerified: true,
       },
-    ]
-  })
-}
+    ],
   });
 };
-
 
 const newReview = async () => {
   await prisma.review.createMany({
@@ -1091,10 +1066,10 @@ const newReview = async () => {
         review_body: "Poor quality food and unclean atmosphere.",
         rating: 2,
         customerId: 14,
-        restaurantId:10,
+        restaurantId: 10,
       },
       {
-       review_title: "Satisfactory",
+        review_title: "Satisfactory",
         review_body: "Decent place with reasonable food quality.",
         rating: 3,
         customerId: 14,
@@ -1119,8 +1094,8 @@ const newReview = async () => {
         review_body: "Unique menu items and pleasant service.",
         rating: 4,
         customerId: 15,
-        restaurantId:20,
-      }
+        restaurantId: 20,
+      },
     ],
   });
 };
@@ -1128,8 +1103,6 @@ const Reservation = async () => {
   await prisma.reservation.createMany({
     data: [
       {
-
-
         createdAt: new Date("2023-09-20").toISOString(),
 
         notification: false,
@@ -1143,8 +1116,6 @@ const Reservation = async () => {
         guest_number: 2,
       },
       {
-
-
         createdAt: new Date("2023-10-05").toISOString(),
 
         notification: false,
@@ -1158,7 +1129,6 @@ const Reservation = async () => {
         guest_number: 4,
       },
       {
-
         createdAt: new Date("2023-08-05").toISOString(),
 
         notification: false,
@@ -1172,7 +1142,6 @@ const Reservation = async () => {
         guest_number: 1,
       },
       {
-
         createdAt: new Date("2023-08-05").toISOString(),
 
         notification: false,
@@ -1186,8 +1155,6 @@ const Reservation = async () => {
         guest_number: 3,
       },
       {
-
-
         createdAt: new Date("2023-08-05").toISOString(),
 
         notification: false,
@@ -1201,8 +1168,6 @@ const Reservation = async () => {
         guest_number: 2,
       },
       {
-
-
         createdAt: new Date("2023-11-05").toISOString(),
 
         notification: false,
@@ -1212,12 +1177,10 @@ const Reservation = async () => {
         time: new Date("2023-11-05T18:30:00").toISOString(),
         canReview: "Yes",
         customerId: 15,
-        restaurantId:20,
+        restaurantId: 20,
         guest_number: 5,
       },
       {
-
-
         createdAt: new Date("2023-11-05").toISOString(),
 
         notification: false,
@@ -1231,8 +1194,6 @@ const Reservation = async () => {
         guest_number: 4,
       },
       {
-
-
         createdAt: new Date("2023-11-05").toISOString(),
 
         notification: false,
@@ -1255,7 +1216,7 @@ const Reservation = async () => {
         canReview: "Yes",
         customerId: 15,
         restaurantId: 3,
-        guest_number: 3
+        guest_number: 3,
       },
     ],
   });
@@ -1266,4 +1227,3 @@ const Reservation = async () => {
 // createCustomers();
 // newReview();
 // Reservation()
-
