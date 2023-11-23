@@ -149,7 +149,7 @@ module.exports = {
       const admin = await user.findUnique({
         where: {
           email: email,
-        }
+        },
       });
       if (!admin) return res.status(410).json({ error: "Email doesn't exist" });
       const passwordMatch = await bcrypt.compare(password, admin.password);
@@ -165,7 +165,9 @@ module.exports = {
           { expiresIn: "1d" }
         );
 
-        return res.status(201).json({ message: "Admin successfully logged in", token: token });
+        return res
+          .status(201)
+          .json({ message: "Admin successfully logged in", token: token });
       }
     } catch (error) {
       res.status(500).send(error);
@@ -179,13 +181,10 @@ module.exports = {
     try {
       const { hasNotification } = await user.findUnique({
         where: {
-
-          id: id
-        }
-      })
-      res.status(200).send(hasNotification)
-
-
+          id: id,
+        },
+      });
+      res.status(200).send(hasNotification);
     } catch (error) {
       console.log(error);
       res
