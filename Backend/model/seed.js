@@ -244,7 +244,7 @@ const createRestaurants = async () => {
         createdAt: new Date("2023-08-05").toISOString(),
       },
       {
-        name: "Farmers",
+        name: "Farmer's",
         category: ["Steakhouse"],
         description:
           "A classic steakhouse known for its premium cuts of meat, expertly grilled to perfection, and complemented by a selection of fine wines and indulgent sides.",
@@ -263,7 +263,7 @@ const createRestaurants = async () => {
         reservation_quota: 20,
         latitude: 35.84270435311194,
         longtitude: 10.624899765004185,
-        opening_time: new Date("2019-01-16 20:00:00"),
+        opening_time: new Date("2019-01-16 09:00:00"),
         closing_time: new Date("2019-01-16 00:00:00"),
         status: "Approved",
         ownerId: 9,
@@ -290,7 +290,7 @@ const createRestaurants = async () => {
         reservation_quota: 20,
         latitude: 35.83983463018077,
         longtitude: 10.603282264432702,
-        opening_time: new Date("2019-01-16 21:00:00"),
+        opening_time: new Date("2019-01-16 09:00:00"),
         closing_time: new Date("2019-01-16 00:00:00"),
         status: "Approved",
         ownerId: 10,
@@ -317,7 +317,7 @@ const createRestaurants = async () => {
         reservation_quota: 20,
         latitude: 35.76014073133161,
         longtitude: 10.838634611246771,
-        opening_time: new Date("2019-01-16 21:00:00"),
+        opening_time: new Date("2019-01-16 09:00:00"),
         closing_time: new Date("2019-01-16 00:00:00"),
         status: "Approved",
         ownerId: 11,
@@ -378,7 +378,7 @@ const createRestaurants = async () => {
         reservation_quota: 20,
         latitude: 36.8908,
         longtitude: 10.3238,
-        opening_time: new Date("2019-01-16 21:00:00"),
+        opening_time: new Date("2019-01-16 09:00:00"),
         closing_time: new Date("2019-01-16 00:00:00"),
         status: "Approved",
         ownerId: 13,
@@ -402,11 +402,11 @@ const createRestaurants = async () => {
           "https://www.marhba.com/images/lifestyle2021/vuemertunis/cliff.jpg",
         ],
         City: "Tunis",
-        phone_number:53157471,
+        phone_number: 53157471,
         reservation_quota: 20,
-        latitude:36.8158,
-        longtitude:10.1270,
-        opening_time: new Date("2019-01-16 21:00:00"),
+        latitude: 36.8158,
+        longtitude: 10.1270,
+        opening_time: new Date("2019-01-16 09:00:00"),
         closing_time: new Date("2019-01-16 00:00:00"),
         status: "Approved",
         ownerId: 14,
@@ -427,14 +427,14 @@ const createRestaurants = async () => {
         extra_images: [
           "https://lh3.googleusercontent.com/p/AF1QipOIhykjWw-3DO7TyCeoxVKU1R76pI3OZDUDcZk9=s680-w680-h510",
           "https://lh3.googleusercontent.com/p/AF1QipOlvWoKbwfuM-yLGb5Vr1I6fE9xC3PcZvdbAeyb=s680-w680-h510",
-         
+
         ],
         City: "Tunis",
-        phone_number:  55113333,
+        phone_number: 55113333,
         reservation_quota: 20,
         latitude: 36.83528,
-        longtitude: 10.24056 ,
-        opening_time: new Date("2019-01-16 21:00:00"),
+        longtitude: 10.24056,
+        opening_time: new Date("2019-01-16 09:00:00"),
         closing_time: new Date("2019-01-16 00:00:00"),
         status: "Approved",
         ownerId: 15,
@@ -461,7 +461,7 @@ const createRestaurants = async () => {
         reservation_quota: 20,
         latitude: 35.76014073133161,
         longtitude: 10.838634611246771,
-        opening_time: new Date("2019-01-16 21:00:00"),
+        opening_time: new Date("2019-01-16 09:00:00"),
         closing_time: new Date("2019-01-16 00:00:00"),
         status: "Approved",
         ownerId: 16,
@@ -488,14 +488,14 @@ const createRestaurants = async () => {
         reservation_quota: 20,
         latitude: 36.901014,
         longtitude: 10.317086,
-        opening_time: new Date("2019-01-16 21:00:00"),
+        opening_time: new Date("2019-01-16 09:00:00"),
         closing_time: new Date("2019-01-16 00:00:00"),
         status: "Approved",
         ownerId: 17,
         accountType: "PREMIUM",
         createdAt: new Date("2023-11-05").toISOString(),
       },
-     
+
       {
         name: "Le Rest'Ô , Villa Didon",
         category: ["French"],
@@ -515,7 +515,7 @@ const createRestaurants = async () => {
         reservation_quota: 20,
         latitude: 36.8524,
         longtitude: 10.3252,
-        opening_time: new Date("2019-01-16 21:00:00"),
+        opening_time: new Date("2019-01-16 09:00:00"),
         closing_time: new Date("2019-01-16 00:00:00"),
         status: "Approved",
         ownerId: 18,
@@ -539,12 +539,12 @@ const createRestaurants = async () => {
         City: "Sousse",
         phone_number: 58931000,
         reservation_quota: 20,
-        latitude:35.8666,
+        latitude: 35.8666,
         longtitude: 10.6080,
-        opening_time: new Date("2019-01-16 21:00:00"),
+        opening_time: new Date("2019-01-16 09:00:00"),
         closing_time: new Date("2019-01-16 00:00:00"),
         status: "Approved",
-        ownerId:19,
+        ownerId: 19,
         accountType: "BASIC",
         createdAt: new Date("2023-11-05").toISOString(),
       },
@@ -594,7 +594,7 @@ const createRestaurants = async () => {
         reservation_quota: 20,
         latitude: 35.8309,
         longtitude: 10.6406,
-        opening_time: new Date("2019-01-16 21:00:00"),
+        opening_time: new Date("2019-01-16 09:00:00"),
         closing_time: new Date("2019-01-16 00:00:00"),
         status: "Approved",
         ownerId: 21,
@@ -618,9 +618,9 @@ const createRestaurants = async () => {
         City: "Kairouan",
         phone_number: 94670670,
         reservation_quota: 20,
-        latitude:  35.679337,
+        latitude: 35.679337,
         longtitude: 10.099445,
-        opening_time: new Date("2019-01-16 21:00:00"),
+        opening_time: new Date("2019-01-16 09:00:00"),
         closing_time: new Date("2019-01-16 00:00:00"),
         status: "Approved",
         ownerId: 22,
@@ -644,9 +644,9 @@ const createRestaurants = async () => {
         City: "Kairouan",
         phone_number: 73468126,
         reservation_quota: 20,
-        latitude:35.6830305,
+        latitude: 35.6830305,
         longtitude: 10.1040736,
-        opening_time: new Date("2019-01-16 21:00:00"),
+        opening_time: new Date("2019-01-16 09:00:00"),
         closing_time: new Date("2019-01-16 00:00:00"),
         status: "Approved",
         ownerId: 23,
@@ -672,7 +672,7 @@ const createRestaurants = async () => {
         phone_number: 24224222,
         reservation_quota: 20,
         latitude: 35.6807,
-        longtitude:10.0913,
+        longtitude: 10.0913,
         opening_time: new Date("2019-01-16 21:00:00"),
         closing_time: new Date("2019-01-16 00:00:00"),
         status: "Approved",
@@ -696,11 +696,11 @@ const createRestaurants = async () => {
           "https://lh3.googleusercontent.com/p/AF1QipNnhe3EmLFLd1yc6zQTV-8dzU4jeXrIusOQb5R-=s680-w680-h510",
         ],
         City: "Tunis",
-        phone_number:21386000,
+        phone_number: 21386000,
         reservation_quota: 20,
-        latitude:  36.86250,
-        longtitude:10.19556,
-        opening_time: new Date("2019-01-16 21:00:00"),
+        latitude: 36.86250,
+        longtitude: 10.19556,
+        opening_time: new Date("2019-01-16 09:00:00"),
         closing_time: new Date("2019-01-16 00:00:00"),
         status: "Approved",
         ownerId: 25,
@@ -927,6 +927,7 @@ const createOwner = async () => {
   });
 };
 
+
 const createCustomers = async () => {
   const password1 = "1234";
   const password2 = "1234789";
@@ -997,8 +998,6 @@ const createCustomers = async () => {
     ]
   })
 }
-  });
-};
 
 
 const newReview = async () => {
@@ -1091,10 +1090,10 @@ const newReview = async () => {
         review_body: "Poor quality food and unclean atmosphere.",
         rating: 2,
         customerId: 14,
-        restaurantId:10,
+        restaurantId: 10,
       },
       {
-       review_title: "Satisfactory",
+        review_title: "Satisfactory",
         review_body: "Decent place with reasonable food quality.",
         rating: 3,
         customerId: 14,
@@ -1119,7 +1118,7 @@ const newReview = async () => {
         review_body: "Unique menu items and pleasant service.",
         rating: 4,
         customerId: 15,
-        restaurantId:20,
+        restaurantId: 20,
       }
     ],
   });
@@ -1212,7 +1211,7 @@ const Reservation = async () => {
         time: new Date("2023-11-05T18:30:00").toISOString(),
         canReview: "Yes",
         customerId: 15,
-        restaurantId:20,
+        restaurantId: 20,
         guest_number: 5,
       },
       {
@@ -1261,13 +1260,8 @@ const Reservation = async () => {
   });
 };
 
-<<<<<<< HEAD
 createOwner();
 // createRestaurants();
-=======
-// createOwner();
-//  createRestaurants();
->>>>>>> 06a8981d81b7898e76ce22f1a36df44e6e9974c1
 // createCustomers();
 // newReview();
 // Reservation()
