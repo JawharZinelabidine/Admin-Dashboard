@@ -5,6 +5,9 @@ const crypto = require("crypto");
 const { sendingMail } = require("../utils/mailing");
 require("dotenv").config();
 const jwt = require("jsonwebtoken");
+const cloudinary = require("../utils/cloudinary.js")
+const { Readable } = require('stream')
+const uploadToCloudinary = require("./helpers/cloudinary");
 
 
 module.exports = {
@@ -36,7 +39,7 @@ module.exports = {
 
   getLoggedInUser: async (req, res) => {
     try {
-      const userId = req.userId; 
+      const userId = req.userId;
 
       if (!userId) {
         return res.status(401).json({ error: "Unauthorized: User not logged in" });
@@ -313,5 +316,37 @@ module.exports = {
     }
 
   },
+
+  changeProfilePic: async (req, res) => {
+    const id = req.userId
+    const imageBuffer = req.file.buffer;
+    const imageStream = Readable.from(imageBuffer)
+    try {
+
+      const cloudinaryResult = await cloudinary.uploader.upload_stream({
+        resource_type: 'image',
+      },
+        async (error, result) => {
+          if (error) {
+            console.error('Error uploading image to Cloudinary:', error);
+            res.status(500).json({ error: 'Image upload failed' });
+          }
+
+          const profile = await user.update({
+            where: { id: id },
+            data: { profilePic: result.secure_url }
+          });
+          res.status(203).json(profile)
+        }
+      )
+
+      imageStream.pipe(cloudinaryResult);
+
+    } catch (error) {
+      console.log(error)
+      res.status(500).json({ message: "couldn't update image" })
+
+    }
+  }
 
 };

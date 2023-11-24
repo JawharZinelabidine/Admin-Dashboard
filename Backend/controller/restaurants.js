@@ -528,19 +528,18 @@ module.exports = {
         },
       });
 
-      const formattedData = premiumRestaurants.map(
-        ({ name, owner, createdAt }) => ({
-          restaurantName: name,
-          ownerName: owner ? owner.fullname : null,
-          ownerEmail: owner ? owner.email : null,
-          paymentCreatedAt: moment(createdAt).format("DD/MM/YYYY"),
-        })
-      );
+      const formattedData = premiumRestaurants.map(({ name, owner, createdAt }) => ({
+        restaurantName: name,
+        ownerName: owner ? owner.fullname : null,
+        ownerEmail: owner ? owner.email : null,
+        paymentCreatedAt: moment(createdAt).format('DD/MM/YYYY'),
+      }));
 
       res.status(200).json(formattedData);
     } catch (error) {
       console.error("Error fetching premium restaurants with owners:", error);
       res.status(500).json({ error: "Internal server error" });
     }
-  },
+  }
+
 };
