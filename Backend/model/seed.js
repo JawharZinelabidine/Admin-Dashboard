@@ -296,7 +296,6 @@ const createRestaurants = async () => {
         ownerId: 10,
         accountType: "PREMIUM",
         createdAt: new Date("2023-09-05").toISOString(),
-
       },
       {
         name: "Le Pirate",
@@ -323,8 +322,6 @@ const createRestaurants = async () => {
         ownerId: 11,
         accountType: "PREMIUM",
         createdAt: new Date("2023-09-05").toISOString(),
-
-
       },
       {
         name: "Sushi&Co",
@@ -352,8 +349,6 @@ const createRestaurants = async () => {
         ownerId: 12,
         accountType: "BASIC",
         createdAt: new Date("2023-09-05").toISOString(),
-
-
       },
       {
         name: " Le Golfe",
@@ -365,13 +360,13 @@ const createRestaurants = async () => {
         menu_images: [
           "https://www.kharjet.tn/wp-content/uploads/2019/04/menu-Golf-la-marsa-1.png",
           "https://www.kharjet.tn/wp-content/uploads/2019/04/menu-Golf-la-marsa-2.png",
-          "https://www.kharjet.tn/wp-content/uploads/2019/04/menu-Golf-la-marsa-3.png"
+          "https://www.kharjet.tn/wp-content/uploads/2019/04/menu-Golf-la-marsa-3.png",
         ],
         extra_images: [
           "https://lh3.googleusercontent.com/p/AF1QipNt83eBN_jc3UwCvn_l6kqrcDSskvfr2wt3YhBE=s680-w680-h510",
           "https://lh3.googleusercontent.com/p/AF1QipPtBXjZTxUIqmLeifeUU8Y_u8Y5J-mJOSuAAPUv=s680-w680-h510",
           "https://www.kharjet.tn/wp-content/uploads/2019/04/Golf-la-marsa-2.jpg",
-          "https://scontent.ftun7-1.fna.fbcdn.net/v/t39.30808-6/387872640_18115299595325874_5130809332677735491_n.jpg?_nc_cat=111&ccb=1-7&_nc_sid=5f2048&_nc_ohc=ARmJr248I4oAX8gYVdz&_nc_ht=scontent.ftun7-1.fna&oh=00_AfCejhrswZ4mKkBIpqd2lwZDprUqJ4b96pI2pOX0tM1dxw&oe=65610D13"
+          "https://scontent.ftun7-1.fna.fbcdn.net/v/t39.30808-6/387872640_18115299595325874_5130809332677735491_n.jpg?_nc_cat=111&ccb=1-7&_nc_sid=5f2048&_nc_ohc=ARmJr248I4oAX8gYVdz&_nc_ht=scontent.ftun7-1.fna&oh=00_AfCejhrswZ4mKkBIpqd2lwZDprUqJ4b96pI2pOX0tM1dxw&oe=65610D13",
         ],
         City: "Tunis",
         phone_number: '+21671748219',
@@ -384,7 +379,6 @@ const createRestaurants = async () => {
         ownerId: 13,
         accountType: "PREMIUM",
         createdAt: new Date("2023-10-05").toISOString(),
-
       },
       {
         name: "La Falaise",
@@ -412,7 +406,6 @@ const createRestaurants = async () => {
         ownerId: 14,
         accountType: "PREMIUM",
         createdAt: new Date("2023-10-05").toISOString(),
-
       },
       {
         name: "Restaurant Lemdina",
@@ -440,7 +433,6 @@ const createRestaurants = async () => {
         ownerId: 15,
         accountType: "PREMIUM",
         createdAt: new Date("2023-10-05").toISOString(),
-
       },
       {
         name: "Go Sushi",
@@ -467,13 +459,11 @@ const createRestaurants = async () => {
         ownerId: 16,
         accountType: "PREMIUM",
         createdAt: new Date("2023-10-05").toISOString(),
-
       },
       {
         name: "L’italien de Davide",
         category: ["Italian"],
-        description:
-          "Savor the explosion of flavors with our succulent dishes",
+        description: "Savor the explosion of flavors with our succulent dishes",
         main_image:
           "https://lh3.googleusercontent.com/p/AF1QipPqkygf57LmUKVU3p5qy75vKaF3mMJa52Wt4J9N=s680-w680-h510",
         menu_images: [
@@ -499,8 +489,7 @@ const createRestaurants = async () => {
       {
         name: "Le Rest'Ô , Villa Didon",
         category: ["French"],
-        description:
-          "Delicious food, lovely service, beautiful view. ",
+        description: "Delicious food, lovely service, beautiful view. ",
         main_image:
           "https://media-cdn.tripadvisor.com/media/photo-s/13/86/8b/4c/villa-didon.jpg",
         menu_images: [
@@ -573,7 +562,6 @@ const createRestaurants = async () => {
         ownerId: 20,
         accountType: "BASIC",
         createdAt: new Date("2023-11-05").toISOString(),
-
       },
       {
         name: "Le 12 ème",
@@ -652,13 +640,11 @@ const createRestaurants = async () => {
         ownerId: 23,
         accountType: "BASIC",
         createdAt: new Date("2023-11-05").toISOString(),
-
       },
       {
         name: "Nakcha Restaurant",
         category: ["Tunisian"],
-        description:
-          "Nakcha Restaurant is where tradition and tranquility",
+        description: "Nakcha Restaurant is where tradition and tranquility",
         main_image:
           "https://lh3.googleusercontent.com/p/AF1QipNh6lUNQnfhzsY83QuI5-_1tFV3P4aDzjaiif4K=s680-w680-h510",
         menu_images: [
@@ -679,13 +665,11 @@ const createRestaurants = async () => {
         ownerId: 24,
         accountType: "PREMIUM",
         createdAt: new Date("2023-11-05").toISOString(),
-
       },
       {
         name: "La Table du Chef",
         category: ["Tunisian"],
-        description:
-          "the best",
+        description: "the best",
         main_image:
           "https://lh3.googleusercontent.com/p/AF1QipNnhe3EmLFLd1yc6zQTV-8dzU4jeXrIusOQb5R-=s680-w680-h510",
         menu_images: [
@@ -706,10 +690,7 @@ const createRestaurants = async () => {
         ownerId: 25,
         accountType: "PREMIUM",
         createdAt: new Date("2023-11-05").toISOString(),
-
       },
-
-
     ],
   });
 };
@@ -921,9 +902,7 @@ const createOwner = async () => {
         role: "OWNER",
         isVerified: true,
       },
-
-    ]
-
+    ],
   });
 };
 
@@ -998,7 +977,6 @@ const createCustomers = async () => {
     ]
   })
 }
-
 
 const newReview = async () => {
   await prisma.review.createMany({
@@ -1127,8 +1105,6 @@ const Reservation = async () => {
   await prisma.reservation.createMany({
     data: [
       {
-
-
         createdAt: new Date("2023-09-20").toISOString(),
 
         notification: false,
@@ -1142,8 +1118,6 @@ const Reservation = async () => {
         guest_number: 2,
       },
       {
-
-
         createdAt: new Date("2023-10-05").toISOString(),
 
         notification: false,
@@ -1157,7 +1131,6 @@ const Reservation = async () => {
         guest_number: 4,
       },
       {
-
         createdAt: new Date("2023-08-05").toISOString(),
 
         notification: false,
@@ -1171,7 +1144,6 @@ const Reservation = async () => {
         guest_number: 1,
       },
       {
-
         createdAt: new Date("2023-08-05").toISOString(),
 
         notification: false,
@@ -1185,8 +1157,6 @@ const Reservation = async () => {
         guest_number: 3,
       },
       {
-
-
         createdAt: new Date("2023-08-05").toISOString(),
 
         notification: false,
@@ -1200,8 +1170,6 @@ const Reservation = async () => {
         guest_number: 2,
       },
       {
-
-
         createdAt: new Date("2023-11-05").toISOString(),
 
         notification: false,
@@ -1215,8 +1183,6 @@ const Reservation = async () => {
         guest_number: 5,
       },
       {
-
-
         createdAt: new Date("2023-11-05").toISOString(),
 
         notification: false,
@@ -1230,8 +1196,6 @@ const Reservation = async () => {
         guest_number: 4,
       },
       {
-
-
         createdAt: new Date("2023-11-05").toISOString(),
 
         notification: false,
@@ -1254,7 +1218,7 @@ const Reservation = async () => {
         canReview: "Yes",
         customerId: 15,
         restaurantId: 3,
-        guest_number: 3
+        guest_number: 3,
       },
     ],
   });
@@ -1265,4 +1229,3 @@ createOwner();
 // createCustomers();
 // newReview();
 // Reservation()
-

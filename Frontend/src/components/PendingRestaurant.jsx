@@ -1,10 +1,14 @@
-import React from 'react';
-import axios from "../services/axiosInterceptor";
+import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { setRestaurantId, setShowRestaurantDetails } from "../features/restaurantSlice";
 import { setOwnerId, setShowOwnerDetails } from "../features/ownerSlice";
+import AcceptRestaurantModal from './AcceptRestaurantModal';
+import DeclineRestaurantModal from './DeclineRestaurantModal';
 
 function PendingRestaurant({ restaurant, fetchRestaurants }) {
+    const [acceptRestaurantModal, setAcceptRestaurantModal] = useState(false);
+    const [declineRestaurantModal, setDeclineRestaurantModal] = useState(false);
+
     const dispatch = useDispatch();
     const { showRestaurantDetails } = useSelector(state => state.restaurant);
     const { showOwnerDetails } = useSelector(state => state.owner);
@@ -19,23 +23,11 @@ function PendingRestaurant({ restaurant, fetchRestaurants }) {
 
 
     const handleAcceptClick = async () => {
-        const decision = "approved"
-        try {
-            await axios.post(`http://localhost:3000/api/admin/restaurant/${restaurant.id}`, { decision });
-            fetchRestaurants();
-        } catch (error) {
-            console.error(error);
-        }
+        setAcceptRestaurantModal(true)
     };
 
     const handleDeclineClick = async () => {
-        const decision = "declined";
-        try {
-            await axios.post(`http://localhost:3000/api/admin/restaurant/${restaurant.id}`, { decision });
-            fetchRestaurants();
-        } catch (error) {
-            console.error(error);
-        }
+        setDeclineRestaurantModal(true)
     };
     return (
         <>
@@ -66,6 +58,8 @@ function PendingRestaurant({ restaurant, fetchRestaurants }) {
                     Decline
                 </button>
             </div>
+            {acceptRestaurantModal && <AcceptRestaurantModal setAcceptRestaurantModal={setAcceptRestaurantModal} restaurant={restaurant} fetchRestaurants={fetchRestaurants} />}
+            {declineRestaurantModal && <DeclineRestaurantModal setDeclineRestaurantModal={setDeclineRestaurantModal} restaurant={restaurant} fetchRestaurants={fetchRestaurants} />}
         </>
     );
 }
