@@ -1,6 +1,6 @@
 const { restaurant, reservation, user } = require("../model/index");
 const uploadToCloudinary = require("./helpers/cloudinary");
-const moment = require('moment-timezone');
+const moment = require("moment-timezone");
 
 module.exports = {
   getRestaurants: async (req, res) => {
@@ -516,7 +516,7 @@ module.exports = {
     try {
       const premiumRestaurants = await restaurant.findMany({
         where: {
-          accountType: 'PREMIUM',
+          accountType: "PREMIUM",
         },
         include: {
           owner: {
@@ -527,27 +527,19 @@ module.exports = {
           },
         },
       });
-  
-      const formattedData = premiumRestaurants.map(({ name, owner,createdAt }) => ({
+
+      const formattedData = premiumRestaurants.map(({ name, owner, createdAt }) => ({
         restaurantName: name,
         ownerName: owner ? owner.fullname : null,
         ownerEmail: owner ? owner.email : null,
-        paymentCreatedAt: moment(createdAt).format('DD/MM/YYYY'), 
+        paymentCreatedAt: moment(createdAt).format('DD/MM/YYYY'),
       }));
-  
+
       res.status(200).json(formattedData);
     } catch (error) {
-      console.error('Error fetching premium restaurants with owners:', error);
-      res.status(500).json({ error: 'Internal server error' });
+      console.error("Error fetching premium restaurants with owners:", error);
+      res.status(500).json({ error: "Internal server error" });
     }
   }
-  
-  
-  
-  
 
-  
-  
-  
-  
 };
