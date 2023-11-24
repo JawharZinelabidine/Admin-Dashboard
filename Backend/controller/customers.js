@@ -319,25 +319,28 @@ module.exports = {
 
   changeProfilePic: async (req, res) => {
     const id = req.userId
-    const { profilePic } = req.body
+    const imageBuffer = req.file.buffer;
+    const imageStream = Readable.from(imageBuffer)
     try {
 
-      const profilePicUrl = await uploadToCloudinary(profilePic);
+      const cloudinaryResult = await cloudinary.uploader.upload_stream({
+        resource_type: 'image',
+      },
+        async (error, result) => {
+          if (error) {
+            console.error('Error uploading image to Cloudinary:', error);
+            res.status(500).json({ error: 'Image upload failed' });
+          }
 
-      console.log(profilePicUrl)
-
-      const updatedProfile = await user.update({
-        where: {
-          id: id
-        },
-        data:
-        {
-          profilePic: profilePicUrl
+          const profile = await user.update({
+            where: { id: id },
+            data: { profilePic: result.secure_url }
+          });
+          res.status(203).json(profile)
         }
-      });
-      console.log(updatedProfile)
-      res.status(200).json(updatedProfile)
+      )
 
+      imageStream.pipe(cloudinaryResult);
 
     } catch (error) {
       console.log(error)
