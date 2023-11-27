@@ -371,9 +371,9 @@ module.exports = {
     let newRating;
 
     if (thisRestaurant.rating_count > 0) {
-      newRating = Math.min(
+      newRating = Math.max(
         5,
-        Math.max(1, newTotalRating / newRatingCount)
+        Math.min(1, newTotalRating / newRatingCount)
       ).toFixed(1);
     } else newRating = rating;
 

@@ -25,12 +25,12 @@ const RestaurantList = () => {
       const restaurantsWithOwners = await Promise.all(
         Array.isArray(data)
           ? data.map(async (restaurant) => {
-              const ownerResponse = await axios.get(
-                `http://localhost:3000/api/owners/${restaurant.ownerId}`
-              );
-              const owner = ownerResponse.data;
-              return { ...restaurant, owner };
-            })
+            const ownerResponse = await axios.get(
+              `http://localhost:3000/api/owners/${restaurant.ownerId}`
+            );
+            const owner = ownerResponse.data;
+            return { ...restaurant, owner };
+          })
           : []
       );
 
@@ -60,7 +60,7 @@ const RestaurantList = () => {
 
   const handleBanRestaurant = async (id, isBanned) => {
     try {
-      await toggleBanStatus(id, isBanned ? "unban" : "ban"); 
+      await toggleBanStatus(id, isBanned ? "unban" : "ban");
 
       const updatedRestaurants = restaurants.map((restaurant) =>
         restaurant.id === id
