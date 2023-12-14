@@ -1,13 +1,12 @@
 const prisma = require("../model/index");
 const { user } = require("../model/index");
-const bcrypt = require("bcrypt");
+const bcrypt = require("bcryptjs");
 const crypto = require("crypto");
 const { sendingMail } = require("../utils/mailing");
 require("dotenv").config();
 const jwt = require("jsonwebtoken");
 const cloudinary = require("../utils/cloudinary.js")
 const { Readable } = require('stream')
-const uploadToCloudinary = require("./helpers/cloudinary");
 
 
 module.exports = {

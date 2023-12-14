@@ -1,6 +1,6 @@
 const { user, restaurant } = require("../model/index");
 const uploadToCloudinary = require("../helpers/CloudinaryUpload");
-const bcrypt = require("bcrypt");
+const bcrypt = require("bcryptjs");
 const crypto = require("crypto");
 const jwt = require("jsonwebtoken");
 

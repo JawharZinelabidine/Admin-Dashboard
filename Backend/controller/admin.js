@@ -1,7 +1,7 @@
 const { user, restaurant } = require("../model/index");
 const { sendingMail } = require("../utils/mailing");
 require("dotenv").config();
-const bcrypt = require("bcrypt");
+const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 
 module.exports = {

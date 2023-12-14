@@ -1,5 +1,5 @@
 const prisma = require("./index");
-const bcrypt = require("bcrypt");
+const bcrypt = require("bcryptjs");
 
 const createRestaurants = async () => {
   await prisma.restaurant.createMany({
